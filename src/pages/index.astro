@@ -1,0 +1,701 @@
+---
+// SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
+// The landing page. Plain HTML and CSS: no web fonts, no scripts, no
+// trackers. The numbers come from the smoke test runs in hatchrun/images.
+
+const title = "hatchrun: GitHub Actions runners in your own AWS account";
+const description =
+  "Open-source autoscaler that starts a fresh EC2 instance for every GitHub Actions job, in your AWS account. A job starts about 30 seconds after launch.";
+const beta = "mailto:support@hatchrun.dev?subject=hatchrun%20beta";
+
+// Seconds since the instance was launched, t4g.medium in ap-south-1.
+const timeline = [
+  { t: "0.0", event: "instance launched", detail: "t4g.medium, arm64" },
+  { t: "6.2", event: "kernel started", detail: "Ubuntu 26.04 arm64" },
+  { t: "18.2", event: "hatchrun-agent started", detail: "runner config claimed" },
+  { t: "24.0", event: "runner connected", detail: "github.com" },
+  { t: "29.5", event: "job running", detail: "smoke" },
+];
+
+const features = [
+  {
+    title: "Your account, your prices",
+    body: "Runners are EC2 instances in your AWS account. Your discounts, Savings Plans and Spot prices apply to CI like to everything else.",
+  },
+  {
+    title: "A clean machine per job",
+    body: "Every job gets a new instance that terminates when the job ends. Nothing carries over: no files, no processes, no credentials.",
+  },
+  {
+    title: "Inside your network",
+    body: "Runners start in the subnets you choose, next to your databases and registries. Their security group allows no inbound traffic.",
+  },
+  {
+    title: "Single-use runner configs",
+    body: "The config that registers a runner is claimed once with a random ticket. It never sits in user data and job steps never see it.",
+  },
+  {
+    title: "Scanned, attested images",
+    body: "Ubuntu 26.04 AMIs for amd64 and arm64, built from pinned inputs, scanned with Trivy and published with an SBOM and provenance.",
+  },
+  {
+    title: "Open source, end to end",
+    body: "Scaler, agent and images are Apache-2.0. Use the hosted control plane or run every part of it yourself.",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://hatchrun.dev/" />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href="https://hatchrun.dev/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#0b0d10" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap nav-inner">
+        <a class="logo" href="/" aria-label="hatchrun home">
+          <span class="mark" aria-hidden="true"></span>hatchrun
+        </a>
+        <nav aria-label="Main">
+          <a href="#how">How it works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="/docs/overview/">Docs</a>
+          <a href="https://github.com/hatchrun">GitHub</a>
+        </nav>
+        <a class="btn btn-small" href={beta}>Join the beta</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <p class="eyebrow">Open source · Apache-2.0</p>
+          <h1>GitHub Actions runners in your own AWS&nbsp;account.</h1>
+          <p class="lede">
+            hatchrun starts a fresh EC2 instance for every job and terminates it
+            when the job ends. Your instances, your VPC, your prices. A job
+            starts about 30 seconds after launch.
+          </p>
+          <div class="actions">
+            <a class="btn" href={beta}>Join the hosted beta</a>
+            <a class="btn btn-ghost" href="/docs/how-it-works/">How it works</a>
+          </div>
+        </div>
+        <figure class="terminal" aria-label="Boot timeline of a runner instance">
+          <div class="terminal-bar">
+            <span></span><span></span><span></span>
+            <p>boot timeline · t4g.medium · ap-south-1</p>
+          </div>
+          <ol class="timeline">
+            {
+              timeline.map((step) => (
+                <li>
+                  <span class="t">{step.t}s</span>
+                  <span class="event">{step.event}</span>
+                  <span class="detail">{step.detail}</span>
+                </li>
+              ))
+            }
+          </ol>
+          <figcaption>Measured on the hatchrun runner image.</figcaption>
+        </figure>
+      </section>
+
+      <section class="stats wrap" aria-label="In numbers">
+        <div><strong>~30 s</strong><span>from launch to the first step</span></div>
+        <div><strong>1</strong><span>job per instance, then it terminates</span></div>
+        <div><strong>0</strong><span>inbound ports open on runners</span></div>
+        <div><strong>17</strong><span>AWS regions with ready images</span></div>
+      </section>
+
+      <section class="boot wrap" aria-labelledby="boot-title">
+        <div class="section-head">
+          <p class="eyebrow">Fast boot</p>
+          <h2 id="boot-title">Boot is paid on every job, so we made it short.</h2>
+          <p>
+            Launch to job start, same instance type, same smoke test. The runner
+            image skips cloud-init, reads the runner's files ahead of time and
+            starts Docker while the runner connects to GitHub.
+          </p>
+        </div>
+        <div class="bars">
+          <div class="bar-row">
+            <span class="bar-label">Ubuntu cloud image</span>
+            <span class="bar"><span style="width: 100%"></span></span>
+            <span class="bar-value">71 s</span>
+          </div>
+          <div class="bar-row accent">
+            <span class="bar-label">hatchrun image</span>
+            <span class="bar"><span style="width: 41%"></span></span>
+            <span class="bar-value">29 s</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="how" class="how wrap" aria-labelledby="how-title">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2 id="how-title">Three steps, then change one line.</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="num">01</span>
+            <h3>Install the GitHub App</h3>
+            <p>On your organization. It lets hatchrun register just-in-time runners for your jobs.</p>
+          </li>
+          <li>
+            <span class="num">02</span>
+            <h3>Launch the stack</h3>
+            <p>One CloudFormation stack creates the IAM role, launch template and security group in your account.</p>
+          </li>
+          <li>
+            <span class="num">03</span>
+            <h3>Point jobs at hatchrun</h3>
+            <p>Each queued job gets its own instance, which runs the job and terminates.</p>
+          </li>
+        </ol>
+        <pre class="code" aria-label="Workflow example"><code><span class="c">.github/workflows/ci.yml</span>
+jobs:
+  test:
+    <span class="hl">runs-on: hatchrun-linux-arm64</span>
+    steps:
+      - uses: actions/checkout@v7
+      - run: make test</code></pre>
+      </section>
+
+      <section class="features wrap" aria-labelledby="features-title">
+        <div class="section-head">
+          <p class="eyebrow">Why hatchrun</p>
+          <h2 id="features-title">Self-hosted runners without running the fleet yourself.</h2>
+        </div>
+        <ul class="grid">
+          {
+            features.map((f) => (
+              <li>
+                <h3>{f.title}</h3>
+                <p>{f.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section id="pricing" class="pricing wrap" aria-labelledby="pricing-title">
+        <div class="price-card">
+          <div>
+            <p class="eyebrow">Pricing</p>
+            <h2 id="pricing-title">Free during the beta.</h2>
+            <p>
+              You pay AWS for the instances your jobs use. After the beta, the
+              hosted control plane becomes a flat subscription per GitHub
+              organization. Self-hosting stays free.
+            </p>
+          </div>
+          <div class="price-actions">
+            <a class="btn" href={beta}>Join the hosted beta</a>
+            <a class="btn btn-ghost" href="/docs/costs/">What it costs to run</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <a class="logo" href="/"><span class="mark" aria-hidden="true"></span>hatchrun</a>
+        <nav aria-label="Footer">
+          <a href="/docs/overview/">Docs</a>
+          <a href="/docs/security/">Security</a>
+          <a href="/docs/roadmap/">Roadmap</a>
+          <a href="https://github.com/hatchrun">GitHub</a>
+          <a href="mailto:support@hatchrun.dev">support@hatchrun.dev</a>
+        </nav>
+        <p>Apache-2.0 · Not affiliated with GitHub or AWS.</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #0b0d10;
+    --bg-raised: #12151a;
+    --line: #20252d;
+    --text: #e7eaee;
+    --muted: #98a1ad;
+    --accent: #f5a524;
+    --accent-ink: #1a1203;
+    --code: #c9d1d9;
+    --ok: #4ade80;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #fbfaf8;
+      --bg-raised: #ffffff;
+      --line: #e6e2dc;
+      --text: #15181c;
+      --muted: #5c6470;
+      --accent: #c97b00;
+      --accent-ink: #ffffff;
+      --code: #2a3038;
+      --ok: #15803d;
+      color-scheme: light;
+    }
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: inherit;
+  }
+  .wrap {
+    width: min(1120px, 100% - 32px);
+    margin-inline: auto;
+  }
+  .eyebrow {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font: 600 12px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  h1,
+  h2,
+  h3 {
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    font-weight: 650;
+  }
+  h2 {
+    font-size: clamp(28px, 3.6vw, 40px);
+    font-weight: 620;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  p {
+    margin: 0;
+  }
+
+  /* Nav */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 60px;
+  }
+  .nav nav {
+    display: flex;
+    gap: 22px;
+    margin-left: auto;
+    font-size: 14px;
+  }
+  .nav nav a,
+  .footer nav a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .nav nav a:hover,
+  .footer nav a:hover {
+    color: var(--text);
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .mark {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    background:
+      linear-gradient(135deg, transparent 45%, var(--bg) 45% 55%, transparent 55%),
+      var(--accent);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 20px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    white-space: nowrap;
+    border: 1px solid var(--accent);
+  }
+  .btn:hover {
+    filter: brightness(1.08);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover {
+    border-color: var(--muted);
+  }
+  .btn-small {
+    height: 36px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    align-items: center;
+    padding: 96px 0 72px;
+  }
+  .lede {
+    margin-top: 22px;
+    max-width: 34em;
+    color: var(--muted);
+    font-size: 18px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .terminal {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-raised);
+    overflow: hidden;
+    box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.6);
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .terminal-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .terminal-bar p {
+    margin-left: 10px;
+    color: var(--muted);
+    font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 20px 20px 8px;
+    font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 4.5em 1fr;
+    column-gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .timeline li:last-child {
+    border-bottom: 0;
+  }
+  .timeline .t {
+    grid-row: span 2;
+    color: var(--accent);
+    text-align: right;
+  }
+  .timeline .event {
+    color: var(--code);
+  }
+  .timeline li:last-child .event {
+    color: var(--ok);
+  }
+  .timeline .detail {
+    color: var(--muted);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+  }
+  .terminal figcaption {
+    padding: 0 20px 16px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-block: 1px solid var(--line);
+  }
+  .stats div {
+    padding: 28px 20px;
+    border-right: 1px solid var(--line);
+  }
+  .stats div:last-child {
+    border-right: 0;
+  }
+  .stats strong {
+    display: block;
+    font-size: 32px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+  .stats span {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* Sections */
+  section.boot,
+  section.how,
+  section.features,
+  section.pricing {
+    padding: 96px 0 0;
+  }
+  .section-head {
+    max-width: 44em;
+    margin-bottom: 40px;
+  }
+  .section-head p:not(.eyebrow) {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  /* Boot bars */
+  .bars {
+    display: grid;
+    gap: 14px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-raised);
+  }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 11em 1fr 3.5em;
+    gap: 16px;
+    align-items: center;
+    font-size: 14px;
+  }
+  .bar-label {
+    color: var(--muted);
+  }
+  .bar {
+    height: 14px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--line) 60%, transparent);
+    overflow: hidden;
+  }
+  .bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--muted);
+  }
+  .bar-row.accent .bar span {
+    background: var(--accent);
+  }
+  .bar-value {
+    font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    text-align: right;
+  }
+
+  /* Steps */
+  .steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 0 32px;
+    padding: 0;
+  }
+  .steps li {
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .num {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--accent);
+    font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  .steps p,
+  .grid p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .code {
+    margin: 0;
+    padding: 22px 24px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-raised);
+    color: var(--code);
+    font: 14px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    overflow-x: auto;
+  }
+  .code .c {
+    color: var(--muted);
+  }
+  .code .hl {
+    color: var(--accent);
+  }
+
+  /* Features */
+  .grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--line);
+    overflow: hidden;
+  }
+  .grid li {
+    padding: 28px;
+    background: var(--bg);
+  }
+
+  /* Pricing */
+  .price-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 40px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background:
+      radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
+      var(--bg-raised);
+  }
+  .price-card > div:first-child {
+    max-width: 36em;
+  }
+  .price-card p:not(.eyebrow) {
+    margin-top: 14px;
+    color: var(--muted);
+  }
+  .price-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 96px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+    padding: 32px 0 48px;
+    font-size: 14px;
+  }
+  .footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+  .footer p {
+    margin-left: auto;
+    color: var(--muted);
+  }
+
+  /* Small screens */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding-top: 56px;
+    }
+    .stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stats div:nth-child(2) {
+      border-right: 0;
+    }
+    .stats div:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--line);
+    }
+    .steps,
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .nav nav {
+      display: none;
+    }
+    .nav .btn-small {
+      margin-left: auto;
+    }
+    .bar-row {
+      grid-template-columns: 1fr 3.5em;
+    }
+    .bar-label {
+      grid-column: 1 / -1;
+    }
+    .footer p {
+      margin-left: 0;
+    }
+  }
+</style>
