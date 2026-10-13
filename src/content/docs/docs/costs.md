@@ -1,0 +1,36 @@
+---
+title: Costs
+description: What you pay for when you run jobs with hatchrun.
+---
+
+## Runners
+
+Runners are EC2 instances in your account, so AWS bills you for them
+directly:
+
+- **Instance time**, per second, from launch until the instance
+  terminates. That is the job plus about 30 seconds of boot.
+- **The root volume**, gp3, for the same time.
+- **A public IPv4 address**, if runners get one, per hour while they run.
+
+As an example, a c7g.large (2 vCPU, 4 GiB, arm64) costs $0.0725 an hour
+on demand in us-east-1 at the time of writing, about 1.2 cents for a
+ten-minute job. Spot prices are usually far lower. Check current prices
+for your region and instance types.
+
+Runners need outbound internet access. A NAT gateway costs about $32 a
+month before data, so the default setup puts runners in public subnets
+with a security group that allows no inbound traffic.
+
+## Control plane
+
+- **Hosted**: free during the [beta](/docs/beta/). After the beta it
+  becomes a flat subscription per GitHub organization; prices will be
+  announced before the beta ends.
+- **Self-hosted**: the scaler is one small container or instance in your
+  account, a few dollars a month. See [Self-hosting](/docs/self-hosting/).
+
+## Images
+
+Public hatchrun AMIs cost you nothing to use beyond the volumes of the
+instances you launch from them.
