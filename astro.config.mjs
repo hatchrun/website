@@ -10,6 +10,9 @@ export default defineConfig({
   // Static files only: the site needs no server and no cookies.
   output: "static",
   telemetry: false,
+  redirects: {
+    "/docs": "/docs/overview/",
+  },
   integrations: [
     starlight({
       title: "hatchrun",
