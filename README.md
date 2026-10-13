@@ -14,6 +14,9 @@ npm run dev      # http://localhost:4321
 npm run build    # static site in dist/
 ```
 
+Every push to `main` is published to Cloudflare Pages by the
+[deploy workflow](.github/workflows/deploy.yml).
+
 Dependencies are pinned to exact versions at least two weeks old, and
 Dependabot proposes new ones only after the same wait.
 
