@@ -10,7 +10,7 @@ an instance for that job, the job runs, and the instance terminates.
 ```yaml
 jobs:
   build:
-    runs-on: hatchrun-linux-arm64
+    runs-on: hatchrun/arm64
     steps:
       - uses: actions/checkout@v7
       - run: make test
@@ -23,10 +23,14 @@ It is built for teams that want:
 - their AWS discounts, Savings Plans and Spot prices applied to CI;
 - a clean machine for every job, without running a Kubernetes cluster.
 
+`hatchrun/arm64` asks for an arm64 runner; see
+[Choosing a runner](/docs/runs-on/) for the other options.
+
 ## Parts
 
-- **Scaler**: talks to GitHub's runner scale set API and launches or
-  removes instances as jobs queue and finish.
+- **Control plane**: takes jobs from GitHub and launches an instance
+  for each. The hosted service gets jobs from the hatchrun GitHub App;
+  a self-hosted scaler uses GitHub's runner scale set API.
 - **Agent**: runs on each instance, fetches the instance's single-use
   runner config, runs one job and powers the instance off.
 - **Runner images**: Ubuntu 26.04 AMIs for amd64 and arm64 with the

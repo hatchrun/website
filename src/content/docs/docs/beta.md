@@ -12,11 +12,15 @@ and free. To get an invite, email
 [support@hatchrun.dev](mailto:support@hatchrun.dev) with your GitHub
 organization and the AWS regions you run in.
 
-Setting up will take two steps:
+Setting up will take two steps, both coming in the beta:
 
 1. Install the hatchrun GitHub App on your organization.
 2. Create the hatchrun IAM role and launch template in your AWS account
-   with the CloudFormation stack the dashboard links to.
+   with the connect CloudFormation stack, from a Launch Stack link in
+   the dashboard.
+
+[How it works](/docs/how-it-works/) describes what happens after that,
+and [Security](/docs/security/) what the role allows.
 
 After the beta, the hosted control plane becomes a flat subscription
 per GitHub organization. Self-hosting stays free.
