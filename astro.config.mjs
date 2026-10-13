@@ -33,6 +33,7 @@ export default defineConfig({
           label: "Concepts",
           items: [
             { label: "How it works", slug: "docs/how-it-works" },
+            { label: "Choosing a runner", slug: "docs/runs-on" },
             { label: "Runner images", slug: "docs/images" },
             { label: "Security", slug: "docs/security" },
             { label: "Costs", slug: "docs/costs" },
@@ -40,7 +41,7 @@ export default defineConfig({
         },
         {
           label: "Self-hosting",
-          items: [{ label: "Status", slug: "docs/self-hosting" }],
+          items: [{ label: "Self-hosting", slug: "docs/self-hosting" }],
         },
         {
           label: "Project",
