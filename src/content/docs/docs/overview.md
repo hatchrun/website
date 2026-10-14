@@ -36,7 +36,9 @@ It is built for teams that want:
 - **Runner images**: Ubuntu 26.04 AMIs for amd64 and arm64 with the
   GitHub runner, Docker and common build tools.
 
-See [How it works](/docs/how-it-works/) for the details.
+See [How it works](/docs/how-it-works/) for the details, and
+[Downloads](/docs/downloads/) for the release files, the scaler image
+and how to verify them.
 
 ## Status
 

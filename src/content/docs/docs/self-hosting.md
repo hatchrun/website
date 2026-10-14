@@ -16,6 +16,8 @@ scale set in one step, with a Launch Stack button per region, is in
 progress. Until then, see the READMEs in
 [hatchrun/hatchrun](https://github.com/hatchrun/hatchrun) and
 [hatchrun/images](https://github.com/hatchrun/images).
+[Downloads](/docs/downloads/) lists the scaler binaries, the scaler
+image and the runner AMIs, and how to verify them.
 
 ## What you will run
 

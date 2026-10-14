@@ -41,7 +41,10 @@ export default defineConfig({
         },
         {
           label: "Self-hosting",
-          items: [{ label: "Self-hosting", slug: "docs/self-hosting" }],
+          items: [
+            { label: "Self-hosting", slug: "docs/self-hosting" },
+            { label: "Downloads", slug: "docs/downloads" },
+          ],
         },
         {
           label: "Project",
