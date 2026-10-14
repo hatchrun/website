@@ -27,8 +27,9 @@ jobs a different way, described in [Self-hosting](/docs/self-hosting/).
 
 ## From queued job to running runner
 
-1. A workflow job asks for a runner with `runs-on: hatchrun` or
-   `runs-on: hatchrun/<options>`. See [Choosing a runner](/docs/runs-on/).
+1. A workflow job asks for a runner by naming a runner profile in
+   `runs-on`, such as `hatchrun-4cpu`, optionally with overrides like
+   `hatchrun-4cpu/disk=200`. See [Choosing a runner](/docs/runs-on/).
 2. The hatchrun GitHub App, installed on your organization, sends a
    `workflow_job` webhook to the hatchrun.io Worker, which runs on
    Cloudflare. The Worker checks the webhook's signature and skips jobs
