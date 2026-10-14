@@ -39,12 +39,12 @@ AWS needs before the first Spot launch in an account.
 
 ## No access keys
 
-The role has no access keys, so hatchrun.dev holds none that could leak.
-It trusts the OIDC issuer at `oidc.hatchrun.dev` and only tokens whose
+The role has no access keys, so hatchrun.io holds none that could leak.
+It trusts the OIDC issuer at `oidc.hatchrun.io` and only tokens whose
 subject is `tenant:<your tenant id>`. For each use the control plane
 signs a short-lived token and trades it with AWS STS for credentials
 that expire within an hour. A token for another tenant gets nothing.
-Deleting the stack, or the role, cuts hatchrun.dev off.
+Deleting the stack, or the role, cuts hatchrun.io off.
 
 Runners get no instance profile either. The agent claims its runner
 config from the broker with a single-use ticket, and jobs that need AWS

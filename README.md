@@ -1,6 +1,6 @@
-# hatchrun.dev
+# hatchrun.io
 
-Source of [hatchrun.dev](https://hatchrun.dev), the website and
+Source of [hatchrun.io](https://hatchrun.io), the website and
 documentation of [hatchrun](https://github.com/hatchrun/hatchrun). It is
 an [Astro Starlight](https://starlight.astro.build) site built to static
 files.

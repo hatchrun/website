@@ -1,6 +1,6 @@
 name: deploy
 
-# Publishes main to hatchrun.dev on Cloudflare Pages. The API token can
+# Publishes main to hatchrun.io on Cloudflare Pages. The API token can
 # only edit Pages projects, and only this job, on main, in the protected
 # production environment, can read it.
 on:
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: https://hatchrun.dev
+      url: https://hatchrun.io
     permissions:
       contents: read
     steps:

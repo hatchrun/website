@@ -6,7 +6,7 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
 export default defineConfig({
-  site: "https://hatchrun.dev",
+  site: "https://hatchrun.io",
   // Static files only: the site needs no server and no cookies.
   output: "static",
   telemetry: false,
