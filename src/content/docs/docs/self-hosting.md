@@ -5,7 +5,7 @@ description: Running the hatchrun control plane in your own account.
 
 Everything in hatchrun is open source under the Apache-2.0 licence, and
 you can run all of it yourself. A self-hosted install needs no GitHub
-App and no hatchrun.dev account: a scaler in your account talks to
+App and no hatchrun.io account: a scaler in your account talks to
 GitHub directly.
 
 ## Status

@@ -15,9 +15,9 @@ description: What is done and what comes next.
 - Ubuntu 26.04 runner images for amd64 and arm64, scanned and attested,
   in every AWS region enabled by default.
 - Boot in about 30 seconds from launch to job start.
-- Connect CloudFormation stack: the role hatchrun.dev assumes through
+- Connect CloudFormation stack: the role hatchrun.io assumes through
   OIDC, the launch template and the runner network.
-- hatchrun.dev Worker that records jobs from GitHub App webhooks and
+- hatchrun.io Worker that records jobs from GitHub App webhooks and
   reads the [`runs-on` label](/docs/runs-on/).
 
 ## Next

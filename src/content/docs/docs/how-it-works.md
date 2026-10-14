@@ -7,8 +7,8 @@ This page describes the hosted service. The self-hosted scaler takes
 jobs a different way, described in [Self-hosting](/docs/self-hosting/).
 
 ```text
- GitHub                 hatchrun.dev                    your AWS account
- ------                 ------------                    ----------------
+ GitHub                 hatchrun.io                     your AWS account
+ ------                 -----------                     ----------------
  workflow_job  ──────►  Worker ── D1 (jobs)
  webhook                  │
                           │ OIDC token, sub tenant:<id>
@@ -30,7 +30,7 @@ jobs a different way, described in [Self-hosting](/docs/self-hosting/).
 1. A workflow job asks for a runner with `runs-on: hatchrun` or
    `runs-on: hatchrun/<options>`. See [Choosing a runner](/docs/runs-on/).
 2. The hatchrun GitHub App, installed on your organization, sends a
-   `workflow_job` webhook to the hatchrun.dev Worker, which runs on
+   `workflow_job` webhook to the hatchrun.io Worker, which runs on
    Cloudflare. The Worker checks the webhook's signature and skips jobs
    that do not ask for a hatchrun runner.
 3. The Worker records the job in D1, keyed by GitHub's job id. GitHub
@@ -55,7 +55,7 @@ the Worker is being built for the [beta](/docs/beta/).
 You connect an AWS account and region with a CloudFormation stack. It
 creates an IAM role, a launch template, a security group and, if you do
 not pick one, a VPC. The role trusts the OIDC issuer at
-`oidc.hatchrun.dev`, and only for tokens whose subject is
+`oidc.hatchrun.io`, and only for tokens whose subject is
 `tenant:<your tenant id>`.
 
 For each use, the Worker signs a short-lived token for your tenant and
