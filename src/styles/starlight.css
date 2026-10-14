@@ -1,0 +1,38 @@
+/*
+ * SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Incubator palette for the docs, from hatchrun/brand colors/tokens.json. */
+
+/* Dark theme (default). */
+:root {
+  --sl-color-accent-low: #3d3210;
+  --sl-color-accent: #ffcf33; /* chick */
+  --sl-color-accent-high: #ffe38a; /* chick light */
+  --sl-color-white: #f6f2e9;
+  --sl-color-gray-1: #ece6d6; /* bone */
+  --sl-color-gray-2: #d3c9b2; /* bone shade */
+  --sl-color-gray-3: #9a9fa6; /* fog */
+  --sl-color-gray-4: #5e636a;
+  --sl-color-gray-5: #34373c; /* rivet */
+  --sl-color-gray-6: #1e2023; /* housing */
+  --sl-color-black: #141517; /* graphite */
+}
+
+/* Light theme. */
+:root[data-theme="light"] {
+  --sl-color-accent-low: #f7e3a1;
+  --sl-color-accent: #7a5a00; /* chick, ink on light */
+  --sl-color-accent-high: #3d2d00;
+  --sl-color-white: #141517; /* graphite */
+  --sl-color-gray-1: #1e2023;
+  --sl-color-gray-2: #34373c;
+  --sl-color-gray-3: #5e636a; /* fog, ink on light */
+  --sl-color-gray-4: #8a8f96;
+  --sl-color-gray-5: #d3c9b2; /* bone shade */
+  --sl-color-gray-6: #e4ddcc;
+  --sl-color-gray-7: #ece6d6; /* bone */
+  --sl-color-black: #f6f2e9;
+}

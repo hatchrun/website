@@ -18,6 +18,7 @@ export default defineConfig({
       title: "hatchrun",
       logo: { src: "./src/assets/brand/hatchrun-mark-micro.svg", alt: "" },
       favicon: "/favicon.svg",
+      customCss: ["./src/styles/starlight.css"],
       head: [
         { tag: "link", attrs: { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" } },
         { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
