@@ -20,6 +20,15 @@ Every push to `main` is published to Cloudflare Pages by the
 Dependencies are pinned to exact versions at least two weeks old, and
 Dependabot proposes new ones only after the same wait.
 
+## Before you commit
+
+Run `pre-commit install` once after cloning. The hook runs gitleaks on
+staged changes with the rules in `.gitleaks.toml` and stops the commit
+when it finds a secret or a Cloudflare or AWS account ID. CI scans the
+full history with the same rules. Pass account IDs through CI secrets
+or variables; a finding that is not a secret goes in `.gitleaksignore`
+by fingerprint, with a comment saying why.
+
 ## Licence
 
 Apache License, Version 2.0. See [LICENSE](LICENSE).
