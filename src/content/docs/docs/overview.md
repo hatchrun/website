@@ -10,7 +10,7 @@ an instance for that job, the job runs, and the instance terminates.
 ```yaml
 jobs:
   build:
-    runs-on: hatchrun/arm64
+    runs-on: hatchrun-4cpu-arm64
     steps:
       - uses: actions/checkout@v7
       - run: make test
@@ -23,8 +23,9 @@ It is built for teams that want:
 - their AWS discounts, Savings Plans and Spot prices applied to CI;
 - a clean machine for every job, without running a Kubernetes cluster.
 
-`hatchrun/arm64` asks for an arm64 runner; see
-[Choosing a runner](/docs/runs-on/) for the other options.
+`hatchrun-4cpu-arm64` names a built-in runner profile: 4 vCPUs and
+16 GiB on Arm. See [Choosing a runner](/docs/runs-on/) for the other
+profiles and how to make your own.
 
 ## Parts
 

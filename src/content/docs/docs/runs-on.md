@@ -1,40 +1,67 @@
 ---
 title: Choosing a runner
-description: The runs-on label that asks hatchrun for a runner, and why it must be the only one.
+description: The runs-on label that names a runner profile, the overrides it takes, and why it must be the only label.
 ---
 
-A job asks the hosted service for a runner with one label: `hatchrun`,
-or `hatchrun/` followed by options separated by `/`, in any order.
+A job asks the hosted service for a runner by naming one runner profile
+in `runs-on`:
 
 ```yaml
 jobs:
   test:
     runs-on: hatchrun
   build:
-    runs-on: hatchrun/arm64/cpu=8/spot
-  release:
-    runs-on: hatchrun/type=c7i.2xlarge/disk=100
+    runs-on: hatchrun-4cpu-arm64
 ```
 
-## Options
+## Built-in profiles
 
-| Option | Meaning |
+Every organization has these profiles, with 4 GiB of memory per vCPU,
+on-demand:
+
+| Profile | vCPU | Memory | Architecture |
+| --- | --- | --- | --- |
+| `hatchrun-2cpu` (also `hatchrun`) | 2 | 8 GiB | x86-64 |
+| `hatchrun-4cpu` | 4 | 16 GiB | x86-64 |
+| `hatchrun-8cpu` | 8 | 32 GiB | x86-64 |
+| `hatchrun-16cpu` | 16 | 64 GiB | x86-64 |
+| `hatchrun-2cpu-arm64` to `hatchrun-16cpu-arm64` | 2 to 16 | 8 to 64 GiB | Arm (Graviton) |
+
+x86-64 profiles run on m8i, or m7i where a region has no m8i. Arm
+profiles run on m8g, or m7g.
+
+## Your own profiles
+
+Owners add profiles under Runners in
+[app.hatchrun.io](https://app.hatchrun.io): instance families in order
+of preference, vCPU and memory, root volume, Spot or on-demand, and
+image. Names start with `hatchrun-`. A profile named like a built-in
+replaces it for your organization. The Runners page shows the instance
+type each profile gets in your region and its on-demand price.
+
+## Overrides
+
+One job can change its profile in the same label, with overrides
+separated by `/`:
+
+```yaml
+runs-on: hatchrun-4cpu/disk=200/spot=true
+```
+
+| Override | Meaning |
 | --- | --- |
-| `amd64` or `arm64` | CPU architecture. `amd64` when not given. |
-| `cpu=N` | At least N vCPUs, 1 to 192. |
-| `ram=N` | At least N GiB of memory, 1 to 1536. |
-| `disk=N` | A root volume of N GiB, 10 to 16384. |
-| `spot` | A Spot instance. |
-| `type=X` | This instance type, such as `c7g.xlarge`, instead of `cpu` and `ram`. |
+| `cpu=N` | At least N vCPUs. |
+| `ram=N` | At least N GiB of memory. |
+| `disk=N` | A root volume of N GiB. |
+| `spot=true` or `spot=false` | Spot, falling back to on-demand when Spot has no capacity, or on-demand. |
 
-Labels are compared without regard to case, as GitHub does. Numbers are
-written plainly, without leading zeros or signs. A label with an unknown
-option, an option given twice or `type` together with `cpu` or `ram`
-gets no runner.
+A job with an unknown profile or an unknown override is skipped, and
+the GitHub App's webhook delivery log says why.
 
-The limits you set in the connect stack still apply: AWS refuses an
-instance type you did not allow or a root volume larger than your
-limit, whatever the label asks for. See [Security](/docs/security/).
+The connect stack has the final word. Its `InstanceTypes` and
+`VolumeSizeLimit` parameters limit what hatchrun can launch, the
+Runners page offers only what they allow, and a job that asks for more
+fails with the reason on the Jobs page. See [Security](/docs/security/).
 
 ## One label only
 
@@ -43,16 +70,17 @@ jobs and they stay queued in GitHub:
 
 ```yaml
 runs-on: [self-hosted, hatchrun]
-runs-on: [hatchrun, hatchrun/arm64]
+runs-on: [hatchrun, hatchrun-4cpu-arm64]
 ```
 
 GitHub gives a job any idle runner whose labels include all of the
 job's labels. If labels could be combined, a job asking only for
-`hatchrun` could take the runner launched for `[hatchrun, cpu=8]`, and
-the job that asked for eight CPUs would wait for a runner nobody
-launches. With one label, each runner registers with exactly its job's
-label, jobs with the same label get identical runners, and it does not
-matter which of them takes which runner.
+`hatchrun` could take the runner launched for
+`[hatchrun, hatchrun-8cpu]`, and the job that asked for eight CPUs
+would wait for a runner nobody launches. With one label, each runner
+registers with exactly its job's label, jobs with the same label get
+identical runners, and it does not matter which of them takes which
+runner.
 
 Self-hosted scale sets use their own labels. See
 [Self-hosting](/docs/self-hosting/).
