@@ -61,13 +61,15 @@ const features = [
     <meta property="og:type" content="website" />
     <link rel="canonical" href="https://hatchrun.io/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#0b0d10" />
   </head>
   <body>
     <header class="nav">
       <div class="wrap nav-inner">
         <a class="logo" href="/" aria-label="hatchrun home">
-          <span class="mark" aria-hidden="true"></span>hatchrun
+          <img class="mark" src="/brand/hatchrun-mark-micro.svg" alt="" width="28" height="28" />hatchrun
         </a>
         <nav aria-label="Main">
           <a href="#how">How it works</a>
@@ -214,7 +216,7 @@ jobs:
 
     <footer class="footer">
       <div class="wrap footer-inner">
-        <a class="logo" href="/"><span class="mark" aria-hidden="true"></span>hatchrun</a>
+        <a class="logo" href="/"><img class="mark" src="/brand/hatchrun-mark-micro.svg" alt="" width="28" height="28" />hatchrun</a>
         <nav aria-label="Footer">
           <a href="/docs/overview/">Docs</a>
           <a href="/docs/security/">Security</a>
@@ -345,12 +347,9 @@ jobs:
     text-decoration: none;
   }
   .mark {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    background:
-      linear-gradient(135deg, transparent 45%, var(--bg) 45% 55%, transparent 55%),
-      var(--accent);
+    width: 28px;
+    height: 28px;
+    flex: none;
   }
 
   /* Buttons */
