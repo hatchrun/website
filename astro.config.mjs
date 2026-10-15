@@ -34,6 +34,7 @@ export default defineConfig({
           items: [
             { label: "Overview", slug: "docs/overview" },
             { label: "Hosted beta", slug: "docs/beta" },
+            { label: "Getting started", slug: "docs/getting-started" },
           ],
         },
         {
