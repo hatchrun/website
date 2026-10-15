@@ -4,7 +4,17 @@ description: What the hatchrun AMIs contain and how they are built and checked.
 ---
 
 hatchrun publishes Ubuntu 26.04 AMIs for amd64 and arm64 every week from
-[hatchrun/images](https://github.com/hatchrun/images).
+[hatchrun/images](https://github.com/hatchrun/images), through AWS
+Marketplace: [amd64](https://aws.amazon.com/marketplace/pp/prodview-znhn62372z6jq) and
+[arm64](https://aws.amazon.com/marketplace/pp/prodview-nchg6i6uzlfr2). The images are free.
+Subscribe each AWS account that launches runners to both once; EC2
+refuses to launch them in an account that has not subscribed.
+
+Marketplace scans every version before it serves it and makes it
+available in every region enabled by default. The AMI of a version in a
+region is the SSM parameter
+`/aws/service/marketplace/<product id>/<version>`, and `latest` names
+the newest version.
 
 ## Contents
 
@@ -35,9 +45,10 @@ Scripts in user data do not run on these images: user data is read by
   sum, and Docker's signing key against its fingerprint.
 - Trivy scans the image before the AMI is made. A fixable HIGH or
   CRITICAL vulnerability in an operating system package stops the build.
+- AWS Marketplace scans each new version again before it serves it.
 - Each release carries a CycloneDX SBOM per architecture and a
-  `manifest.json` with the AMI id of every region, with a build
-  provenance attestation:
+  `manifest.json` with the Marketplace AMI id of every region, with a
+  build provenance attestation:
 
 ```sh
 gh attestation verify manifest.json --repo hatchrun/images

@@ -118,11 +118,15 @@ it.
 ## Runner AMIs
 
 [hatchrun/images](https://github.com/hatchrun/images/releases) publishes
-public Ubuntu 26.04 AMIs for amd64 and arm64 in 17 regions. Each
-release has a `manifest.json` with the AMI id of every region and
-architecture, and a CycloneDX SBOM per architecture. Only the newest
-AMI per architecture stays registered, so read the id from the latest
-release:
+Ubuntu 26.04 AMIs for amd64 and arm64 through AWS Marketplace, free, in
+every region enabled by default. Subscribe your account to the
+[amd64](https://aws.amazon.com/marketplace/pp/prodview-znhn62372z6jq) and
+[arm64](https://aws.amazon.com/marketplace/pp/prodview-nchg6i6uzlfr2) image once before you
+launch them.
+
+Each release has a `manifest.json` with the AMI id of every region and
+architecture, and a CycloneDX SBOM per architecture. Read the id from
+the latest release:
 
 ```sh
 tag=$(gh release list --repo hatchrun/images --limit 1 --json tagName -q '.[0].tagName')

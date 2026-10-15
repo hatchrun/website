@@ -11,7 +11,10 @@ account talks to GitHub directly.
 This page explains the parts, then walks through an install from
 scratch. A CloudFormation template that sets up a scale set in one
 step is in progress; until then the steps are manual. [Downloads](/docs/downloads/) lists the scaler binaries, the
-scaler image and the runner AMIs, and how to verify them.
+scaler image and the runner AMIs, and how to verify them. The runner
+AMIs come from AWS Marketplace: subscribe your account to the
+[amd64](https://aws.amazon.com/marketplace/pp/prodview-znhn62372z6jq) and
+[arm64](https://aws.amazon.com/marketplace/pp/prodview-nchg6i6uzlfr2) image once, for free.
 
 ## What you will run
 
@@ -179,10 +182,9 @@ also sets the shutdown behaviour to terminate, so the agent powering
 off ends the instance. The image's root volume is 10 GB and
 unencrypted; the template above makes it 30 GB and encrypted.
 
-Only the newest runner AMI stays registered. When a new image is
-published, add a launch template version with its id and make it the
-default, or build the image in your own account from
-[hatchrun/images](https://github.com/hatchrun/images).
+When a new image is published, add a launch template version with its
+id and make it the default, or build the image in your own account
+from [hatchrun/images](https://github.com/hatchrun/images).
 
 ### 4. IAM role for the scaler
 

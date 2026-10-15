@@ -25,5 +25,4 @@ description: What is done and what comes next.
 - Worker launches and removes instances in connected accounts.
 - Hosted beta: GitHub App install, dashboard and Launch Stack links.
 - CloudFormation template for self-hosting, with Launch Stack buttons.
-- Runner images in AWS Marketplace.
 - Windows runners.
