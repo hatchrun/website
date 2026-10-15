@@ -12,10 +12,12 @@ and free. To get an invite, email
 [support@hatchrun.io](mailto:support@hatchrun.io) with your GitHub
 organization and the AWS regions you run in.
 
-Setting up will take two steps, both coming in the beta:
+Setting up will take three steps, all coming in the beta:
 
 1. Install the hatchrun GitHub App on your organization.
-2. Create the hatchrun IAM role and launch template in your AWS account
+2. Subscribe your AWS account to the free hatchrun runner images in AWS
+   Marketplace, once for amd64 and once for arm64.
+3. Create the hatchrun IAM role and launch template in your AWS account
    with the connect CloudFormation stack, from a Launch Stack link in
    the dashboard.
 

@@ -39,7 +39,8 @@ jobs a different way, described in [Self-hosting](/docs/self-hosting/).
    row and launches nothing.
 4. The Worker gets credentials for your account (below), creates a
    just-in-time (JIT) runner config for the job and launches an
-   instance from the launch template your connect stack created.
+   instance from the launch template your connect stack created, with
+   the hatchrun runner image from AWS Marketplace for your region.
 5. The instance gets a single-use ticket in its user data, not the
    config itself. The config waits in the broker until the agent claims
    it.
@@ -52,6 +53,14 @@ The Worker records jobs from webhooks today. Launching instances from
 the Worker is being built for the [beta](/docs/beta/).
 
 ## Getting into your account
+
+First the account subscribes to the hatchrun runner images in AWS
+Marketplace, once for
+[amd64](https://aws.amazon.com/marketplace/pp/prodview-znhn62372z6jq) and once for
+[arm64](https://aws.amazon.com/marketplace/pp/prodview-nchg6i6uzlfr2). The images are free;
+EC2 refuses to launch them in an account that has not subscribed, and
+the job's row in the hatchrun.io dashboard links to the product to
+subscribe to.
 
 You connect an AWS account and region with a CloudFormation stack. It
 creates an IAM role, a launch template, a security group and, if you do

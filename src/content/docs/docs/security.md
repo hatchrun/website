@@ -22,7 +22,9 @@ The hosted control plane reaches your account through an IAM role that
 your connect stack creates, one per region. The role can:
 
 - launch instances from the stack's launch template, into the stack's
-  VPC and security group, from hatchrun's published images only;
+  VPC and security group, from AWS Marketplace images your account
+  subscribed to only, which are the hatchrun runner images unless you
+  subscribed to others;
 - pick only the instance types you allowed and root volumes up to your
   size limit;
 - launch only with IMDSv2 required, a metadata hop limit of 1 and
@@ -67,8 +69,8 @@ make outbound connections, to GitHub and whatever your jobs use.
 ## Images
 
 Runner images are built from pinned, checksummed inputs, scanned with
-Trivy before the AMI is made, and published with an SBOM and a build
-provenance attestation. See [Runner images](/docs/images/).
+Trivy before the AMI is made, scanned again by AWS Marketplace, and
+published with an SBOM and a build provenance attestation. See [Runner images](/docs/images/).
 
 ## Reporting a vulnerability
 

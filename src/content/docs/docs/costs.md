@@ -32,5 +32,6 @@ with a security group that allows no inbound traffic.
 
 ## Images
 
-Public hatchrun AMIs cost you nothing to use beyond the volumes of the
-instances you launch from them.
+The runner images are free in AWS Marketplace, and subscribing costs
+nothing. AWS still bills the instances, volumes, public IPv4 addresses
+and other resources your runners use, as above.
