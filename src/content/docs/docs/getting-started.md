@@ -29,7 +29,8 @@ permissions the App asks for and lets you pick the repositories it
 sees.
 
 The App sends hatchrun a webhook for every queued job in those
-repositories, and hatchrun launches a runner for it.
+repositories. hatchrun launches a runner for each job whose only label
+is a hatchrun one.
 
 ## 2. Enter your invite code
 
@@ -51,6 +52,9 @@ Skip this step and jobs fail with `OptInRequired`.
 The connect stack is a CloudFormation stack in your account. It creates
 the role hatchrun assumes, an IAM OIDC provider for
 `oidc.hatchrun.io`, a launch template and an S3 bucket for job caches.
+
+Deleting the stack keeps the cache bucket and its contents. Empty and
+delete the bucket yourself to stop paying for its storage.
 
 [Security](/docs/security/) lists what the role may do.
 

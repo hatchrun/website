@@ -74,13 +74,14 @@ Each report holds ten-second windows, and each window carries:
 - CPU busy share (lowest second, mean and highest second) and CPU
   steal;
 - the highest memory in use and the instance's total memory;
-- the peak memory of the runner's cgroup and its OOM kills;
+- the peak memory of the agent's cgroup, which holds the runner and
+  the job's processes, and its OOM kills;
 - disk used on the root file system;
 - bytes received and sent.
 
 Each report also names the instance type, the CPU architecture and the
-agent version. Nothing else leaves the instance. No logs, command
-lines, environment variables or file names.
+agent version. The reports carry nothing else. No logs, command lines,
+environment variables or file names.
 
 Job logs stay on GitHub, and the app links to the job there.
 
