@@ -61,10 +61,51 @@ The just-in-time config that registers a runner is single-use, never
 written to user data, never put on a command line and never visible to
 job steps. See [How it works](/docs/how-it-works/).
 
+## Runner telemetry
+
+Hosted runners report their CPU, memory, disk and network use to
+`telemetry.hatchrun.io` over HTTPS while a job runs. The app shows the
+numbers on the job's page. Runners started by a self-hosted scaler send
+nothing.
+
+The agent reports once a minute, and once more when the runner exits.
+Each report holds ten-second windows, and each window carries:
+
+- CPU busy share (lowest second, mean and highest second) and CPU
+  steal;
+- the highest memory in use and the instance's total memory;
+- the peak memory of the runner's cgroup and its OOM kills;
+- disk used on the root file system;
+- bytes received and sent.
+
+Each report also names the instance type, the CPU architecture and the
+agent version. Nothing else leaves the instance. No logs, command
+lines, environment variables or file names.
+
+Job logs stay on GitHub, and the app links to the job there.
+
+At boot the runner gets a signed token with its config and keeps it in
+memory. The token names the job and the GitHub App installation, and
+expires after nine hours.
+
+The telemetry service takes the job id and installation id from the
+token, never from the report, so a runner cannot report for another
+job.
+
+hatchrun signs the token with a key that signs nothing else. The OIDC
+key that gets credentials for your AWS role never signs anything a
+runner holds.
+
+hatchrun keeps the reports in Cloudflare Workers Analytics Engine,
+which deletes them after three months.
+
 ## Network
 
-The security group for runners allows no inbound traffic. Runners only
-make outbound connections, to GitHub and whatever your jobs use.
+The security group for runners allows no inbound traffic.
+
+Runners only make outbound connections. They connect to GitHub, to
+the broker that hands out runner configs and to whatever your jobs
+use. Hosted runners also connect to `telemetry.hatchrun.io`.
 
 ## Images
 

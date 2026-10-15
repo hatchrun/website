@@ -7,20 +7,11 @@ In the hosted version, hatchrun runs the control plane and keeps the
 runner images up to date. Your runners still run in your own AWS
 account.
 
-The hosted control plane is being built. The beta will be invite-only
-and free. To get an invite, email
+The beta is invite-only and free. To get an invite, email
 [support@hatchrun.io](mailto:support@hatchrun.io) with your GitHub
 organization and the AWS regions you run in.
 
-Setting up will take three steps, all coming in the beta:
-
-1. Install the hatchrun GitHub App on your organization.
-2. Subscribe your AWS account to the free hatchrun runner images in AWS
-   Marketplace, once for amd64 and once for arm64.
-3. Create the hatchrun IAM role and launch template in your AWS account
-   with the connect CloudFormation stack, from a Launch Stack link in
-   the dashboard.
-
+[Getting started](/docs/getting-started/) walks through the setup.
 [How it works](/docs/how-it-works/) describes what happens after that,
 and [Security](/docs/security/) what the role allows.
 
