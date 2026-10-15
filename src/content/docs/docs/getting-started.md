@@ -88,10 +88,11 @@ it.
 Once the stack shows `CREATE_COMPLETE`, open its Outputs tab and copy
 `RoleArn`. Paste it into the setup page and choose Verify and connect.
 
-hatchrun assumes the role and reads what the stack allows from its
-settings parameter in Systems Manager: the launch template, subnets
-and instance type limits. It then checks that the subnets exist. An error here names what is wrong. Fix the stack and verify
-again.
+hatchrun assumes the role and reads the stack's settings parameter in
+Systems Manager. The parameter names the launch template, subnets and
+instance type limits. hatchrun then checks that the subnets exist.
+
+An error here names what is wrong. Fix the stack and verify again.
 
 ## 6. Run a job
 
