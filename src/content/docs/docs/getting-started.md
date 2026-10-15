@@ -88,9 +88,9 @@ it.
 Once the stack shows `CREATE_COMPLETE`, open its Outputs tab and copy
 `RoleArn`. Paste it into the setup page and choose Verify and connect.
 
-hatchrun assumes the role, reads the launch template, subnets and
-instance type limits the stack allows, and checks that the subnets
-exist. An error here names what is wrong. Fix the stack and verify
+hatchrun assumes the role and reads what the stack allows from its
+settings parameter in Systems Manager: the launch template, subnets
+and instance type limits. It then checks that the subnets exist. An error here names what is wrong. Fix the stack and verify
 again.
 
 ## 6. Run a job
@@ -144,8 +144,9 @@ runs-on: [hatchrun, hatchrun-8cpu] # skipped
 ```
 
 GitHub gives a job any idle runner that has all of the job's labels.
-With combined labels, a job asking for `hatchrun` could take the runner
-launched for `[hatchrun, hatchrun-8cpu]`, and the bigger job would wait.
+If hatchrun served combined labels, a job asking for `hatchrun` could
+take the runner launched for `[hatchrun, hatchrun-8cpu]`, and the
+bigger job would wait for a runner nobody launches.
 
 The GitHub App's webhook delivery log lists each skipped job and the
 reason.
