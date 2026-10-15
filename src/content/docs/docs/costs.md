@@ -32,6 +32,6 @@ with a security group that allows no inbound traffic.
 
 ## Images
 
-The runner images are free in AWS Marketplace. Subscribing costs
-nothing; you pay AWS only for the instances you launch from them and
-their volumes.
+The runner images are free in AWS Marketplace, and subscribing costs
+nothing. AWS still bills the instances, volumes, public IPv4 addresses
+and other resources your runners use, as above.

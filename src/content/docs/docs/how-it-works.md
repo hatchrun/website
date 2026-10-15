@@ -59,7 +59,8 @@ Marketplace, once for
 [amd64](https://aws.amazon.com/marketplace/pp/prodview-znhn62372z6jq) and once for
 [arm64](https://aws.amazon.com/marketplace/pp/prodview-nchg6i6uzlfr2). The images are free;
 EC2 refuses to launch them in an account that has not subscribed, and
-the job says so.
+the job's row in the hatchrun.io dashboard links to the product to
+subscribe to.
 
 You connect an AWS account and region with a CloudFormation stack. It
 creates an IAM role, a launch template, a security group and, if you do
