@@ -3,10 +3,10 @@ title: Self-hosting
 description: Running the hatchrun scaler, broker and runners in your own accounts.
 ---
 
-Everything in hatchrun is open source under the Apache-2.0 licence, and
-you can run all of it yourself. A self-hosted install needs no
-hatchrun.io account and no hatchrun GitHub App: a scaler in your
-account talks to GitHub directly.
+Everything in hatchrun is open source under AGPL-3.0-only, and you can
+run all of it yourself. A self-hosted install needs no hatchrun.io
+account and no hatchrun GitHub App: a scaler in your account talks to
+GitHub directly.
 
 This page explains the parts, then walks through an install from
 scratch. A CloudFormation template that sets up a scale set in one

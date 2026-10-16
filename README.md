@@ -31,4 +31,4 @@ by fingerprint, with a comment saying why.
 
 ## Licence
 
-Apache License, Version 2.0. See [LICENSE](LICENSE).
+Proprietary. All rights reserved. See [LICENSE](LICENSE).
