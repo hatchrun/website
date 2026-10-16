@@ -4,8 +4,10 @@ description: Connect a GitHub organization and an AWS account to hatchrun.io and
 ---
 
 Set up hatchrun for one GitHub organization on AWS and run your first
-job. Every step happens in [app.hatchrun.io](https://app.hatchrun.io).
-GCP and Azure guides follow when those providers ship. To run the
+job. Setup starts in [app.hatchrun.io](https://app.hatchrun.io), and
+the app sends you to GitHub, Polar and the AWS console for the steps
+that happen there. GCP and Azure guides follow when those providers
+ship. To run the
 control plane yourself, see [Self-hosting](/docs/self-hosting/).
 
 ## Before you start
