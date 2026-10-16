@@ -3,48 +3,87 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-// The landing page. Plain HTML and CSS: no web fonts, no scripts, no
-// trackers. The numbers come from the smoke test runs in hatchrun/images.
+// The landing page. Plain HTML and CSS: no scripts, no trackers, and the
+// fonts are served from this site. The layout follows the 2026-10
+// redesign in hatchrun/brand. The boot numbers come from the smoke test
+// runs in hatchrun/images.
 
-const title = "hatchrun: GitHub Actions runners in your own AWS account";
+import "../styles/tokens.css";
+
+const title = "hatchrun: self-hosted GitHub Actions runners in your own cloud";
 const description =
-  "Open-source autoscaler that starts a fresh EC2 instance for every GitHub Actions job, in your AWS account. A job starts about 30 seconds after launch.";
-const beta = "mailto:support@hatchrun.io?subject=hatchrun%20beta";
+  "hatchrun starts a new machine in your own cloud account for every GitHub Actions job and deletes it when the job ends. Open source, Apache-2.0.";
+const app = "https://app.hatchrun.io";
 
-// Seconds since the instance was launched, t4g.medium in ap-south-1.
-const timeline = [
-  { t: "0.0", event: "instance launched", detail: "t4g.medium, arm64" },
-  { t: "6.2", event: "kernel started", detail: "Ubuntu 26.04 arm64" },
-  { t: "18.2", event: "hatchrun-agent started", detail: "runner config claimed" },
-  { t: "24.0", event: "runner connected", detail: "github.com" },
-  { t: "29.5", event: "job running", detail: "smoke" },
+// Seconds since launch, t4g.medium in ap-south-1. The axis runs to the
+// 71 s of the stock Ubuntu cloud image, so 29.5 s sits at 41.5%.
+const scale = 71.1;
+const boot = [
+  { t: 0, label: "launched" },
+  { t: 6.2, label: "kernel" },
+  { t: 18.2, label: "agent" },
+  { t: 24.0, label: "runner" },
+];
+const jobRunning = 29.5;
+const at = (t: number) => `${((t / scale) * 100).toFixed(1)}%`;
+
+const steps = [
+  {
+    title: "Install the GitHub App",
+    body: "on the organization and pick the repositories.",
+  },
+  {
+    title: "Connect your cloud.",
+    body: "On AWS that is one CloudFormation stack with an IAM role, a launch template and a security group.",
+  },
+  {
+    title: "Change runs-on.",
+    body: "One label per job, from hatchrun-2cpu to hatchrun-16cpu.",
+  },
 ];
 
-const features = [
+const specs = [
+  { term: "Boot", big: "~30 s", rest: "launch to the first step" },
+  { term: "Jobs per machine", big: "1", rest: "then it terminates. Nothing carries over." },
+  { term: "Inbound ports", big: "0", rest: "open on runners" },
+  { term: "Runner config", rest: "Just-in-time. GitHub accepts it for one job only." },
+  { term: "Images", rest: "Trivy scan, SBOM and build provenance. Ready in 17 AWS regions." },
+  { term: "Network", rest: "Your VPC and subnets. Jobs reach private databases without a tunnel." },
+  { term: "Compute billing", rest: "Your provider bills you. Savings Plans and Spot apply." },
+];
+
+const repos = [
   {
-    title: "Your account, your prices",
-    body: "Runners are EC2 instances in your AWS account. Your discounts, Savings Plans and Spot prices apply to CI like to everything else.",
+    name: "hatchrun/hatchrun",
+    tag: "Core",
+    title: "Scaler, broker, agent",
+    body: "The control plane and the agent that boots on each runner.",
+    cta: "Read the code",
+    href: "https://github.com/hatchrun/hatchrun",
   },
   {
-    title: "A clean machine per job",
-    body: "Every job gets a new instance that terminates when the job ends. Nothing carries over: no files, no processes, no credentials.",
+    name: "hatchrun/images",
+    tag: "Images",
+    title: "Runner images",
+    body: "The build behind the 29-second boot, with its scans and SBOMs.",
+    cta: "Check the images",
+    href: "https://github.com/hatchrun/images",
   },
   {
-    title: "Inside your network",
-    body: "Runners start in the subnets you choose, next to your databases and registries. Their security group allows no inbound traffic.",
+    name: "hatchrun/terraform-aws-hatchrun",
+    tag: "Self-host",
+    title: "Run it yourself",
+    body: "Terraform for the whole stack in your own AWS account.",
+    cta: "Self-hosting guide",
+    href: "/docs/self-hosting/",
   },
-  {
-    title: "Single-use runner configs",
-    body: "The config that registers a runner is claimed once with a random ticket. It never sits in user data and job steps never see it.",
-  },
-  {
-    title: "Scanned, attested images",
-    body: "Ubuntu 26.04 AMIs for amd64 and arm64, built from pinned inputs, scanned with Trivy and published with an SBOM and provenance.",
-  },
-  {
-    title: "Open source, end to end",
-    body: "Scaler, agent and images are Apache-2.0. Use the hosted control plane or run every part of it yourself.",
-  },
+];
+
+const receipt = [
+  "Image rebuilds and scans",
+  "Security fixes",
+  "Support",
+  "Hosted control plane",
 ];
 ---
 
@@ -66,149 +105,280 @@ const features = [
     <meta name="theme-color" content="#141517" />
   </head>
   <body>
+    <div class="status mono">
+      <div class="wrap status-inner">
+        <span class="live"><span class="dot" aria-hidden="true"></span><span class="on">AWS</span> live in 17 regions</span>
+        <span>GCP · next</span>
+        <span>Azure · next</span>
+        <span class="status-end">Apache-2.0 · built in the open</span>
+      </div>
+    </div>
+
     <header class="nav">
-      <div class="wrap nav-inner">
-        <a class="logo" href="/" aria-label="hatchrun home">
-          <img class="mark" src="/brand/hatchrun-mark-micro.svg" alt="" width="28" height="28" />hatchrun
+      <nav aria-label="Main" class="wrap nav-inner">
+        <a class="nav-logo" href="/" aria-label="hatchrun home">
+          <img src="/brand/hatchrun-lockup-horizontal-on-light.svg" alt="hatchrun" width="177" height="34" />
         </a>
-        <nav aria-label="Main">
+        <div class="nav-links mono">
           <a href="#how">How it works</a>
+          <a href="#open">Open source</a>
           <a href="#pricing">Pricing</a>
           <a href="/docs/overview/">Docs</a>
-          <a href="https://github.com/hatchrun">GitHub</a>
-        </nav>
-        <a class="btn btn-small" href={beta}>Join the beta</a>
-      </div>
+        </div>
+        <a class="nav-github mono" href="https://github.com/hatchrun">GitHub</a>
+        <a class="nav-cta display" href={app}>Get started</a>
+      </nav>
     </header>
 
     <main>
-      <section class="hero wrap">
-        <div class="hero-copy">
-          <p class="eyebrow">Open source · Apache-2.0</p>
-          <h1>GitHub Actions runners in your own AWS&nbsp;account.</h1>
-          <p class="lede">
-            hatchrun starts a fresh EC2 instance for every job and terminates it
-            when the job ends. Your instances, your VPC, your prices. A job
-            starts about 30 seconds after launch.
-          </p>
-          <div class="actions">
-            <a class="btn" href={beta}>Join the hosted beta</a>
-            <a class="btn btn-ghost" href="/docs/how-it-works/">How it works</a>
+      <section id="top" class="hero">
+        <div class="wrap hero-inner">
+          <p class="eyebrow mono">Self-hosted GitHub Actions runners</p>
+          <h1 class="display">
+            Your cloud.<br /><span class="h1-mark">Your <img src="/brand/hatchrun-mark.svg" alt="" aria-hidden="true" /> runners.</span>
+          </h1>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="lede">
+                hatchrun runs the fleet for you. Each job gets a new machine in
+                your own cloud account, and the machine is gone when the job ends.
+              </p>
+              <div class="actions">
+                <a class="btn btn-chick display" href={app}>Get started</a>
+                <a class="btn btn-bone display" href="/docs/getting-started/">Read the docs</a>
+              </div>
+            </div>
+            <pre class="diff mono" aria-label="Workflow change"><span class="c"># .github/workflows/test.yml</span>
+jobs:
+  test:
+<span class="del">-   runs-on: ubuntu-latest</span>
+<span class="add">+   runs-on: hatchrun-4cpu-arm64</span></pre>
           </div>
+
+          <figure class="meter">
+            <figcaption class="mono">
+              <span class="meter-title">Launch to first job step</span>
+              <span class="fog">t4g.medium · ap-south-1</span>
+            </figcaption>
+            <div class="meter-row">
+              <div class="meter-head mono">
+                <strong>hatchrun image</strong><strong class="heat">29.5 s</strong>
+              </div>
+              <div class="track" style={`--done: ${at(jobRunning)}`}>
+                <div class="fill"></div>
+                <img class="chick" src="/brand/hatchrun-mark.svg" alt="" aria-hidden="true" />
+                {boot.map((b) => <span class="tick" style={`left: ${at(b.t)}`}></span>)}
+              </div>
+              <ol class="ticks mono">
+                {
+                  boot.map((b, i) => (
+                    <li style={`left: ${at(b.t)}`} class={i === boot.length - 1 ? "nudge" : undefined}>
+                      {b.t.toFixed(1)}s <br />{b.label}
+                    </li>
+                  ))
+                }
+                <li class="done" style={`left: ${at(jobRunning)}`}>{jobRunning.toFixed(1)}s <br />job running</li>
+              </ol>
+            </div>
+            <div class="meter-row">
+              <div class="meter-head mono fog"><span>Ubuntu cloud image</span><span>71 s</span></div>
+              <div class="stock"></div>
+            </div>
+          </figure>
         </div>
-        <figure class="terminal" aria-label="Boot timeline of a runner instance">
-          <div class="terminal-bar">
-            <span></span><span></span><span></span>
-            <p>boot timeline · t4g.medium · ap-south-1</p>
+      </section>
+
+      <section id="how" class="how">
+        <div class="wrap band">
+          <div class="head">
+            <div class="head-title">
+              <p class="eyebrow mono heat-bright">How it works</p>
+              <h2 class="display h2">We schedule. Your account runs the job.</h2>
+            </div>
+            <p class="fog head-note">
+              The control plane decides when to start a machine. Your code, secrets
+              and build output stay on machines you own.
+            </p>
           </div>
-          <ol class="timeline">
+
+          <div class="arch">
+            <div class="node">
+              <span class="node-label mono">01 · GitHub</span>
+              <div class="node-title display">A job is queued</div>
+              <div class="kv mono">
+                <span class="fog">event</span> workflow_job<br />
+                <span class="fog">label</span> <span class="chick-text">hatchrun-4cpu-arm64</span><br />
+                <span class="fog">repo</span> your-org/api
+              </div>
+              <span class="node-foot mono">The GitHub App sends the webhook.</span>
+            </div>
+            <div class="node">
+              <span class="node-label mono">02 · hatchrun control plane</span>
+              <div class="node-title display">Picks a machine</div>
+              <dl class="rows mono">
+                <div><dt>profile</dt><dd>4 vCPU · 16 GiB · arm64</dd></div>
+                <div><dt>market</dt><dd>on-demand or spot</dd></div>
+                <div><dt>runner config</dt><dd>just-in-time</dd></div>
+              </dl>
+              <span class="node-foot mono">Hosted by us, or self-hosted by you.</span>
+            </div>
+            <div class="node node-yours">
+              <span class="node-label mono chick-text">03 · Your cloud account</span>
+              <div class="node-title display">Runs it, then deletes it</div>
+              <div class="pips">
+                <div class="pip pip-running">
+                  <img src="/brand/mascot/pip-running.svg" alt="" aria-hidden="true" width="48" height="48" />
+                  <span class="mono">▶ RUNNING</span>
+                </div>
+                <div class="pip pip-passed">
+                  <img src="/brand/mascot/pip-passed.svg" alt="" aria-hidden="true" width="48" height="48" />
+                  <span class="mono">✓ PASSED</span>
+                </div>
+                <div class="pip pip-queued">
+                  <img src="/brand/mascot/pip-queued.svg" alt="" aria-hidden="true" width="48" height="48" />
+                  <span class="mono">••• QUEUED</span>
+                </div>
+              </div>
+              <span class="node-foot mono">Your network, your role, your bill. No inbound ports.</span>
+            </div>
+          </div>
+
+          <ol class="setup">
             {
-              timeline.map((step) => (
+              steps.map((s, i) => (
                 <li>
-                  <span class="t">{step.t}s</span>
-                  <span class="event">{step.event}</span>
-                  <span class="detail">{step.detail}</span>
+                  <span class="mono setup-num">{i + 1}</span>
+                  <span><strong>{s.title}</strong> <span class="fog">{s.body}</span></span>
                 </li>
               ))
             }
           </ol>
-          <figcaption>Measured on the hatchrun runner image.</figcaption>
-        </figure>
-      </section>
-
-      <section class="stats wrap" aria-label="In numbers">
-        <div><strong>~30 s</strong><span>from launch to the first step</span></div>
-        <div><strong>1</strong><span>job per instance, then it terminates</span></div>
-        <div><strong>0</strong><span>inbound ports open on runners</span></div>
-        <div><strong>17</strong><span>AWS regions with ready images</span></div>
-      </section>
-
-      <section class="boot wrap" aria-labelledby="boot-title">
-        <div class="section-head">
-          <p class="eyebrow">Fast boot</p>
-          <h2 id="boot-title">Boot is paid on every job, so we made it short.</h2>
-          <p>
-            Launch to job start, same instance type, same smoke test. The runner
-            image skips cloud-init, reads the runner's files ahead of time and
-            starts Docker while the runner connects to GitHub.
-          </p>
         </div>
-        <div class="bars">
-          <div class="bar-row">
-            <span class="bar-label">Ubuntu cloud image</span>
-            <span class="bar"><span style="width: 100%"></span></span>
-            <span class="bar-value">71 s</span>
+      </section>
+
+      <section class="spec" aria-label="Spec sheet">
+        <div class="wrap band split">
+          <div class="spec-intro">
+            <p class="eyebrow mono heat">Spec sheet</p>
+            <h2 class="display h2">Self-hosted runners, minus the fleet work.</h2>
+            <p class="ink-2">
+              The numbers we hold ourselves to. If one slips, that is a bug, and the
+              issue tracker is public.
+            </p>
+            <img class="spec-pip" src="/brand/mascot/pip-idle.svg" alt="Pip, the hatchrun chick" width="160" height="160" />
           </div>
-          <div class="bar-row accent">
-            <span class="bar-label">hatchrun image</span>
-            <span class="bar"><span style="width: 41%"></span></span>
-            <span class="bar-value">29 s</span>
-          </div>
+          <dl class="sheet">
+            {
+              specs.map((s) => (
+                <div>
+                  <dt class="mono">{s.term}</dt>
+                  <dd>
+                    {s.big ? (
+                      <>
+                        <span class="big display">{s.big}</span> <span class="fog">{s.rest}</span>
+                      </>
+                    ) : (
+                      s.rest
+                    )}
+                  </dd>
+                </div>
+              ))
+            }
+            <div class="last">
+              <dt class="mono">Clouds</dt>
+              <dd class="clouds mono">
+                <span class="cloud-on">AWS</span>
+                <span class="cloud-next">GCP next</span>
+                <span class="cloud-next">Azure next</span>
+              </dd>
+            </div>
+          </dl>
         </div>
       </section>
 
-      <section id="how" class="how wrap" aria-labelledby="how-title">
-        <div class="section-head">
-          <p class="eyebrow">How it works</p>
-          <h2 id="how-title">Three steps, then change one line.</h2>
-        </div>
-        <ol class="steps">
-          <li>
-            <span class="num">01</span>
-            <h3>Install the GitHub App</h3>
-            <p>On your organization. It lets hatchrun register just-in-time runners for your jobs.</p>
-          </li>
-          <li>
-            <span class="num">02</span>
-            <h3>Launch the stack</h3>
-            <p>One CloudFormation stack creates the IAM role, launch template and security group in your account.</p>
-          </li>
-          <li>
-            <span class="num">03</span>
-            <h3>Point jobs at hatchrun</h3>
-            <p>Each queued job gets its own instance, which runs the job and terminates.</p>
-          </li>
-        </ol>
-        <pre class="code" aria-label="Workflow example"><code><span class="c">.github/workflows/ci.yml</span>
-jobs:
-  test:
-    <span class="hl">runs-on: hatchrun-4cpu-arm64</span>
-    steps:
-      - uses: actions/checkout@v7
-      - run: make test</code></pre>
-      </section>
-
-      <section class="features wrap" aria-labelledby="features-title">
-        <div class="section-head">
-          <p class="eyebrow">Why hatchrun</p>
-          <h2 id="features-title">Self-hosted runners without running the fleet yourself.</h2>
-        </div>
-        <ul class="grid">
-          {
-            features.map((f) => (
-              <li>
-                <h3>{f.title}</h3>
-                <p>{f.body}</p>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-
-      <section id="pricing" class="pricing wrap" aria-labelledby="pricing-title">
-        <div class="price-card">
-          <div>
-            <p class="eyebrow">Pricing</p>
-            <h2 id="pricing-title">Free during the beta.</h2>
-            <p>
-              You pay AWS for the instances your jobs use. After the beta, the
-              hosted control plane becomes a flat subscription per GitHub
-              organization. Self-hosting stays free.
+      <section id="open" class="open">
+        <div class="wrap band">
+          <div class="head">
+            <div class="head-title">
+              <p class="eyebrow mono passed">Open source · Apache-2.0</p>
+              <h2 class="display h2-big">Built in the open.</h2>
+            </div>
+            <p class="ink-2 head-note">
+              You can read every line that touches your cloud account. The roadmap
+              and the GCP and Azure work are public issues. If you would rather run
+              all of it yourself, you can.
             </p>
           </div>
-          <div class="price-actions">
-            <a class="btn" href={beta}>Join the hosted beta</a>
-            <a class="btn btn-ghost" href="/docs/costs/">What it costs to run</a>
+          <div class="repos">
+            {
+              repos.map((r) => (
+                <a class="repo" href={r.href}>
+                  <div class="repo-top mono">
+                    <span>{r.name}</span>
+                    <span class="repo-tag">{r.tag}</span>
+                  </div>
+                  <div class="repo-body">
+                    <div class="repo-title display">{r.title}</div>
+                    <div class="ink-2 repo-text">{r.body}</div>
+                  </div>
+                  <div class="repo-cta mono">{r.cta} →</div>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="pricing">
+        <div class="wrap band split">
+          <div class="pricing-copy">
+            <p class="eyebrow mono heat">Pricing</p>
+            <h2 class="display h2-big">The code is free. The service is cheap.</h2>
+            <p class="ink-2">
+              Hosted hatchrun is one flat price per GitHub organization. Your cloud
+              provider bills you for the machines at your own rates, and we never
+              mark up compute.
+            </p>
+            <div class="selfhost">
+              <div>
+                <div class="display selfhost-title">Self-hosted</div>
+                <div class="ink-2 small">Same code, run by you. You patch the images.</div>
+              </div>
+              <div class="selfhost-price">
+                <span class="display">$0</span>
+                <a class="btn-small display" href="/docs/self-hosting/">Guide</a>
+              </div>
+            </div>
+            <p class="mono fog example">
+              AWS example: c7g.large is $0.0725 an hour, so a ten-minute job costs
+              about 1.2¢ in compute.
+            </p>
+          </div>
+
+          <div class="receipt-wrap">
+            <div class="receipt mono">
+              <div class="receipt-head">
+                <img src="/brand/hatchrun-mark-micro.svg" alt="" aria-hidden="true" width="44" height="44" />
+                <div class="display receipt-name">hatchrun Team</div>
+                <div class="label">Per GitHub organization</div>
+              </div>
+              <hr />
+              <div class="label">Where your money goes</div>
+              <ul>
+                {receipt.map((line) => <li><span>{line}</span><span>✓</span></li>)}
+                <li class="coffee"><span>The maintainer's coffee</span><span>✓</span></li>
+                <li class="fog"><span>Compute markup</span><span>$0.00</span></li>
+              </ul>
+              <hr />
+              <div class="total">
+                <span class="display">Total</span>
+                <span><span class="display amount">$49</span> /mo</span>
+              </div>
+              <div class="yearly">or $490 a year</div>
+              <a class="btn btn-chick display receipt-cta" href={app}>Get started</a>
+              <div class="thanks">THANK YOU FOR FUNDING OPEN SOURCE</div>
+            </div>
+            <div class="tear" aria-hidden="true"></div>
           </div>
         </div>
       </section>
@@ -216,490 +386,1072 @@ jobs:
 
     <footer class="footer">
       <div class="wrap footer-inner">
-        <a class="logo" href="/"><img class="mark" src="/brand/hatchrun-mark-micro.svg" alt="" width="28" height="28" />hatchrun</a>
-        <nav aria-label="Footer">
-          <a href="/docs/overview/">Docs</a>
-          <a href="/docs/security/">Security</a>
-          <a href="/docs/roadmap/">Roadmap</a>
-          <a href="https://github.com/hatchrun">GitHub</a>
-          <a href="mailto:support@hatchrun.io">support@hatchrun.io</a>
-        </nav>
-        <p>Apache-2.0 · Not affiliated with GitHub or AWS.</p>
+        <div class="cta">
+          <h2 class="display h2-big">Change one line. <span class="chick-text">Hatch a runner.</span></h2>
+          <a class="btn btn-chick-flat display" href={app}>Get started</a>
+        </div>
+        <div class="footer-meta mono">
+          <img src="/brand/hatchrun-lockup-horizontal-on-dark.svg" alt="hatchrun" width="146" height="28" />
+          <nav aria-label="Footer">
+            <a href="/docs/overview/">Docs</a>
+            <a href="/docs/security/">Security</a>
+            <a href="/docs/roadmap/">Roadmap</a>
+            <a href="https://github.com/hatchrun">GitHub</a>
+            <a href="mailto:support@hatchrun.io">support@hatchrun.io</a>
+          </nav>
+          <p>Apache-2.0 · Not affiliated with GitHub, AWS, Google Cloud or Microsoft Azure.</p>
+        </div>
       </div>
     </footer>
   </body>
 </html>
 
 <style is:global>
-  /* Incubator palette, from hatchrun/brand colors/tokens.json. */
-  :root {
-    --bg: #141517; /* graphite */
-    --bg-raised: #1e2023; /* housing */
-    --line: #34373c; /* rivet */
-    --text: #ece6d6; /* bone */
-    --muted: #9a9fa6; /* fog */
-    --accent: #ffcf33; /* chick: button and chart fills */
-    --accent-ink: #141517;
-    --accent-edge: #ffcf33;
-    --accent-text: #ffcf33;
-    --code: #d3c9b2; /* bone shade */
-    --ok: #40ff80; /* status passed */
-    color-scheme: dark;
-  }
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #ece6d6; /* bone */
-      --bg-raised: #f6f2e9;
-      --line: #d3c9b2; /* bone shade */
-      --text: #141517; /* graphite */
-      --muted: #5e636a; /* fog, ink on light */
-      --accent: #ffcf33;
-      --accent-ink: #141517;
-      --accent-edge: #141517;
-      --accent-text: #7a5a00; /* chick, ink on light */
-      --code: #34373c; /* rivet */
-      --ok: #1b6e34; /* passed, ink on light */
-      color-scheme: light;
-    }
-  }
-  * {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
+
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
   }
+
   body {
     margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    background: var(--hr-bone);
+    color: var(--hr-ink);
+    font-family: var(--hr-font-display);
+    font-size: 17px;
+    line-height: 1.55;
+    overflow-x: hidden;
   }
+
   a {
-    color: inherit;
+    color: var(--hr-ink);
+    text-decoration: none;
   }
-  .wrap {
-    width: min(1120px, 100% - 32px);
-    margin-inline: auto;
+
+  a:hover {
+    color: var(--hr-ink-heat);
   }
-  .eyebrow {
-    margin: 0 0 12px;
-    color: var(--accent-text);
-    font: 600 12px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+
+  a:focus-visible {
+    outline: 3px solid var(--hr-heat);
+    outline-offset: 3px;
   }
+
+  img {
+    display: block;
+  }
+
   h1,
   h2,
-  h3 {
-    margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-  }
-  h1 {
-    font-size: clamp(38px, 6vw, 64px);
-    font-weight: 650;
-  }
-  h2 {
-    font-size: clamp(28px, 3.6vw, 40px);
-    font-weight: 620;
-  }
-  h3 {
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  p {
+  p,
+  dl,
+  dd,
+  figure,
+  ol,
+  ul {
     margin: 0;
   }
 
-  /* Nav */
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
+  ol,
+  ul {
+    padding: 0;
+    list-style: none;
   }
-  .nav-inner {
+
+  .wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .mono {
+    font-family: var(--hr-font-mono);
+  }
+
+  .display {
+    font-family: var(--hr-font-display);
+    font-weight: 800;
+    font-stretch: 125%;
+    text-transform: uppercase;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--hr-ink-fog);
+  }
+
+  .fog {
+    color: var(--hr-ink-fog);
+  }
+  .ink-2 {
+    color: var(--hr-ink-2);
+  }
+  .heat {
+    color: var(--hr-ink-heat);
+  }
+  .heat-bright {
+    color: var(--hr-heat);
+  }
+  .passed {
+    color: var(--hr-ink-passed);
+  }
+  .chick-text {
+    color: var(--hr-chick);
+  }
+
+  .h2 {
+    font-weight: 900;
+    font-size: clamp(34px, 4vw, 56px);
+    line-height: 0.95;
+  }
+
+  .h2-big {
+    font-weight: 900;
+    font-size: clamp(40px, 5.4vw, 76px);
+    line-height: 0.92;
+  }
+
+  .band {
+    padding-top: 104px;
+    padding-bottom: 104px;
     display: flex;
-    align-items: center;
-    gap: 24px;
-    height: 60px;
+    flex-direction: column;
+    gap: 48px;
   }
-  .nav nav {
+
+  .split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: 48px;
+    align-items: start;
+  }
+
+  .head {
     display: flex;
-    gap: 22px;
-    margin-left: auto;
-    font-size: 14px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
   }
-  .nav nav a,
-  .footer nav a {
-    color: var(--muted);
-    text-decoration: none;
+
+  .head-title {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 760px;
   }
-  .nav nav a:hover,
-  .footer nav a:hover {
-    color: var(--text);
-  }
-  .logo {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 650;
-    letter-spacing: -0.02em;
-    text-decoration: none;
-  }
-  .mark {
-    width: 28px;
-    height: 28px;
-    flex: none;
+
+  .head-note {
+    max-width: 440px;
   }
 
   /* Buttons */
   .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 44px;
-    padding: 0 20px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: var(--accent-ink);
-    font-weight: 600;
+    display: inline-block;
     font-size: 15px;
-    text-decoration: none;
-    white-space: nowrap;
-    border: 1px solid var(--accent-edge);
+    padding: 17px 26px;
+    border-radius: 4px;
+    border: 2px solid var(--hr-ink);
+    color: var(--hr-ink);
   }
-  .btn:hover {
-    filter: brightness(1.08);
+
+  .btn-chick {
+    background: var(--hr-chick);
+    box-shadow: 4px 4px 0 var(--hr-ink);
   }
-  .btn-ghost {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--line);
+
+  .btn-chick:hover {
+    color: var(--hr-ink);
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--hr-ink);
   }
-  .btn-ghost:hover {
-    border-color: var(--muted);
+
+  .btn-bone {
+    background: var(--hr-bone);
+    padding-left: 24px;
+    padding-right: 24px;
   }
-  .btn-small {
-    height: 36px;
-    padding: 0 16px;
+
+  .btn-bone:hover {
+    background: var(--hr-paper);
+  }
+
+  /* Status strip */
+  .status {
+    background: var(--hr-graphite);
+    color: var(--hr-fog);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .status-inner {
+    padding-top: 9px;
+    padding-bottom: 9px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 28px;
+    align-items: center;
+  }
+
+  .live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--hr-passed);
+  }
+
+  .on {
+    color: var(--hr-bone);
+  }
+
+  .status-end {
+    margin-left: auto;
+  }
+
+  /* Nav */
+  .nav {
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .nav-inner {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 32px;
+  }
+
+  .nav-logo img {
+    height: 34px;
+    width: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 28px;
+    flex: 1 1 auto;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+  }
+
+  .nav-github {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border: 2px solid var(--hr-ink);
+    padding: 10px 14px;
+    border-radius: 4px;
+  }
+
+  .nav-cta {
+    background: var(--hr-graphite);
+    color: var(--hr-chick);
     font-size: 14px;
+    padding: 13px 20px;
+    border-radius: 4px;
+  }
+
+  .nav-cta:hover {
+    color: var(--hr-bone);
   }
 
   /* Hero */
   .hero {
+    background-color: var(--hr-bone);
+    background-image:
+      linear-gradient(rgba(20, 21, 23, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 21, 23, 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .hero-inner {
+    padding-top: 72px;
+    padding-bottom: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* The drawn size (10.5vw, up to 156px) does not fit "Your runners."
+     on one line at wdth 125, so the size follows the line's real width:
+     it is about 12.1em wide. On a phone the words wrap. */
+  .hero h1 {
+    font-weight: 900;
+    font-size: clamp(44px, 7.1vw, 102px);
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+  }
+
+  .h1-mark img {
+    display: inline-block;
+    width: 0.82em;
+    height: 0.82em;
+    margin: 0 0.06em;
+    vertical-align: -0.06em;
+  }
+
+  .hero-grid {
     display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: 56px;
-    align-items: center;
-    padding: 96px 0 72px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: 32px 64px;
+    align-items: end;
   }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
   .lede {
-    margin-top: 22px;
-    max-width: 34em;
-    color: var(--muted);
-    font-size: 18px;
+    font-size: 21px;
+    line-height: 1.45;
+    max-width: 560px;
   }
+
   .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 32px;
   }
-  .terminal {
+
+  .diff {
     margin: 0;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--bg-raised);
-    overflow: hidden;
-    box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.6);
+    background: var(--hr-graphite);
+    color: var(--hr-fog);
+    border-radius: 6px;
+    padding: 20px 22px;
+    font-size: 15px;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    box-shadow: 6px 6px 0 var(--hr-bone-shade);
   }
-  .terminal-bar {
+
+  @media (max-width: 480px) {
+    .diff {
+      font-size: 13px;
+      padding: 16px 18px;
+    }
+  }
+
+  .diff .c {
+    color: #7e838a;
+  }
+  .diff .del {
+    color: #f06aa8;
+  }
+  .diff .add {
+    color: var(--hr-chick);
+  }
+
+  /* Hatch meter */
+  .meter {
+    margin-top: 16px;
+    background: var(--hr-paper);
+    border: 2px solid var(--hr-ink);
+    border-radius: 6px;
+    padding: 24px 24px 20px;
     display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    gap: 18px;
   }
-  .terminal-bar span {
-    width: 10px;
+
+  .meter figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .meter-title {
+    font-weight: 700;
+  }
+
+  .meter-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .meter-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .track {
+    position: relative;
+    height: 44px;
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .fill {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: var(--done);
     height: 10px;
-    border-radius: 50%;
-    background: var(--line);
+    background: repeating-linear-gradient(90deg, var(--hr-heat) 0 14px, var(--hr-heat-shade) 14px 18px);
   }
-  .terminal-bar p {
-    margin-left: 10px;
-    color: var(--muted);
-    font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  .chick {
+    position: absolute;
+    left: calc(var(--done) - 22px);
+    bottom: 6px;
+    width: 44px;
+    height: 44px;
   }
-  .timeline {
-    list-style: none;
-    margin: 0;
-    padding: 20px 20px 8px;
-    font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  .tick {
+    position: absolute;
+    bottom: -2px;
+    width: 2px;
+    height: 18px;
+    background: var(--hr-ink);
   }
-  .timeline li {
+
+  .ticks {
+    position: relative;
+    height: 34px;
+    font-size: 11px;
+    color: var(--hr-ink-fog);
+    line-height: 1.3;
+  }
+
+  .ticks li {
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  .ticks .nudge {
+    transform: translateX(-30%);
+  }
+
+  .ticks .done {
+    color: var(--hr-ink-heat);
+    font-weight: 700;
+  }
+
+  .stock {
+    height: 10px;
+    background: repeating-linear-gradient(90deg, var(--hr-fog) 0 14px, var(--hr-speck) 14px 18px);
+  }
+
+  /* On a phone the tick labels would overlap, so they drop under the
+     track as a list. */
+  @media (max-width: 720px) {
+    .ticks {
+      height: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+
+    .ticks li {
+      position: static;
+      transform: none !important;
+    }
+
+    .ticks li br {
+      display: none;
+    }
+
+  }
+
+  /* Architecture */
+  .how {
+    background: var(--hr-graphite);
+    color: var(--hr-bone);
+  }
+
+  .how .fog {
+    color: var(--hr-fog);
+  }
+
+  .how .head-note {
+    max-width: 420px;
+  }
+
+  .arch {
     display: grid;
-    grid-template-columns: 4.5em 1fr;
-    column-gap: 14px;
-    padding: 9px 0;
-    border-bottom: 1px dashed var(--line);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 20px;
+    align-items: stretch;
   }
-  .timeline li:last-child {
+
+  .node {
+    border: 1px solid var(--hr-rivet);
+    border-radius: 6px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .node-yours {
+    border: 2px dashed var(--hr-chick);
+    background: #1a1a16;
+  }
+
+  .node-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--hr-fog);
+  }
+
+  .node-yours .node-label {
+    color: var(--hr-chick);
+  }
+
+  .node-title {
+    font-size: 20px;
+  }
+
+  .kv {
+    background: var(--hr-housing);
+    border: 1px solid var(--hr-rivet);
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .rows div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px dashed var(--hr-rivet);
+    padding-bottom: 6px;
+  }
+
+  .rows div:last-child {
     border-bottom: 0;
+    padding-bottom: 0;
   }
-  .timeline .t {
-    grid-row: span 2;
-    color: var(--accent-text);
+
+  .rows dt {
+    color: var(--hr-fog);
+  }
+
+  .rows dd {
     text-align: right;
   }
-  .timeline .event {
-    color: var(--code);
-  }
-  .timeline li:last-child .event {
-    color: var(--ok);
-  }
-  .timeline .detail {
-    color: var(--muted);
+
+  .node-foot {
+    margin-top: auto;
     font-size: 12px;
+    color: var(--hr-fog);
+  }
+
+  .pips {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .pip {
+    background: var(--hr-housing);
+    border: 1px solid var(--hr-rivet);
+    border-radius: 4px;
+    padding: 10px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .pip span {
+    font-size: 10px;
+    color: var(--hr-fog);
+  }
+
+  .pip-running {
+    border-color: #6a3010;
+  }
+  .pip-running span {
+    color: var(--hr-heat);
+  }
+  .pip-passed {
+    border-color: #1f5c33;
+  }
+  .pip-passed span {
+    color: var(--hr-passed);
+  }
+
+  .setup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 0 24px;
+    border-top: 1px solid var(--hr-rivet);
+  }
+
+  .setup li {
+    padding-top: 24px;
+    display: flex;
+    gap: 16px;
+  }
+
+  .setup-num {
+    color: var(--hr-chick);
+    font-weight: 700;
+  }
+
+  /* Spec sheet */
+  .spec {
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .spec-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .spec-intro p.ink-2 {
+    max-width: 440px;
+  }
+
+  .spec-pip {
+    width: 160px;
+    height: 160px;
+    margin-top: 12px;
+  }
+
+  .sheet {
+    border-top: 2px solid var(--hr-ink);
+  }
+
+  .sheet > div {
+    display: grid;
+    grid-template-columns: minmax(130px, 1fr) 2fr;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--hr-speck);
+    align-items: baseline;
+  }
+
+  .sheet > div.last {
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .sheet dt {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--hr-ink-fog);
+  }
+
+  .sheet .big {
+    font-weight: 900;
+    font-size: 30px;
+    text-transform: none;
+  }
+
+  .clouds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .cloud-on {
+    background: var(--hr-graphite);
+    color: var(--hr-bone);
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  .cloud-next {
+    border: 1px dashed var(--hr-ink-fog);
+    color: var(--hr-ink-fog);
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 480px) {
+    .sheet > div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+
+  /* Open source */
+  .open {
+    background-color: var(--hr-bone-dim);
+    background-image: radial-gradient(rgba(20, 21, 23, 0.12) 1px, transparent 1px);
+    background-size: 18px 18px;
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .open .band {
+    gap: 44px;
+  }
+
+  .open .head-note {
+    max-width: 460px;
+  }
+
+  .repos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 16px;
+  }
+
+  .repo {
+    background: var(--hr-paper);
+    border: 2px solid var(--hr-ink);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .repo:hover {
+    color: var(--hr-ink);
+    box-shadow: 4px 4px 0 var(--hr-ink);
+  }
+
+  .repo:hover .repo-cta {
+    background: var(--hr-chick);
+  }
+
+  .repo-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--hr-speck);
+    font-size: 12px;
+    color: var(--hr-ink-fog);
     overflow-wrap: anywhere;
   }
-  .terminal figcaption {
-    padding: 0 20px 16px;
-    color: var(--muted);
-    font-size: 12px;
+
+  .repo-tag {
+    border: 1px solid var(--hr-speck);
+    padding: 0 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    align-self: flex-start;
   }
 
-  /* Stats */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-block: 1px solid var(--line);
-  }
-  .stats div {
-    padding: 28px 20px;
-    border-right: 1px solid var(--line);
-  }
-  .stats div:last-child {
-    border-right: 0;
-  }
-  .stats strong {
-    display: block;
-    font-size: 32px;
-    font-weight: 650;
-    letter-spacing: -0.02em;
-  }
-  .stats span {
-    color: var(--muted);
-    font-size: 14px;
+  .repo-body {
+    padding: 18px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  /* Sections */
-  section.boot,
-  section.how,
-  section.features,
-  section.pricing {
-    padding: 96px 0 0;
-  }
-  .section-head {
-    max-width: 44em;
-    margin-bottom: 40px;
-  }
-  .section-head p:not(.eyebrow) {
-    margin-top: 16px;
-    color: var(--muted);
-    font-size: 17px;
+  .repo-title {
+    font-size: 18px;
   }
 
-  /* Boot bars */
-  .bars {
-    display: grid;
-    gap: 14px;
-    padding: 28px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--bg-raised);
-  }
-  .bar-row {
-    display: grid;
-    grid-template-columns: 11em 1fr 3.5em;
-    gap: 16px;
-    align-items: center;
-    font-size: 14px;
-  }
-  .bar-label {
-    color: var(--muted);
-  }
-  .bar {
-    height: 14px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--line) 60%, transparent);
-    overflow: hidden;
-  }
-  .bar span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: var(--muted);
-  }
-  .bar-row.accent .bar span {
-    background: var(--accent-text);
-  }
-  .bar-value {
-    font: 600 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    text-align: right;
-  }
-
-  /* Steps */
-  .steps {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin: 0 0 32px;
-    padding: 0;
-  }
-  .steps li {
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-  }
-  .num {
-    display: block;
-    margin-bottom: 10px;
-    color: var(--accent-text);
-    font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-  .steps p,
-  .grid p {
-    margin-top: 8px;
-    color: var(--muted);
+  .repo-text {
     font-size: 15px;
   }
-  .code {
-    margin: 0;
-    padding: 22px 24px;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--bg-raised);
-    color: var(--code);
-    font: 14px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    overflow-x: auto;
-  }
-  .code .c {
-    color: var(--muted);
-  }
-  .code .hl {
-    color: var(--accent-text);
-  }
 
-  /* Features */
-  .grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin: 0;
-    padding: 0;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--line);
-    overflow: hidden;
-  }
-  .grid li {
-    padding: 28px;
-    background: var(--bg);
+  .repo-cta {
+    margin-top: auto;
+    padding: 10px 16px;
+    background: var(--hr-bone);
+    border-top: 1px solid var(--hr-speck);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
   }
 
   /* Pricing */
-  .price-card {
+  .pricing {
+    border-bottom: 2px solid var(--hr-ink);
+  }
+
+  .pricing .split {
+    gap: 56px;
+  }
+
+  .pricing .h2-big {
+    font-size: clamp(40px, 5vw, 72px);
+  }
+
+  .pricing-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .pricing-copy > p.ink-2 {
+    max-width: 480px;
+  }
+
+  .selfhost {
+    border: 2px solid var(--hr-ink);
+    border-radius: 6px;
+    padding: 22px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
-    padding: 40px;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background:
-      radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
-      var(--bg-raised);
+    gap: 16px;
+    margin-top: 8px;
   }
-  .price-card > div:first-child {
-    max-width: 36em;
+
+  .selfhost-title {
+    font-size: 18px;
   }
-  .price-card p:not(.eyebrow) {
-    margin-top: 14px;
-    color: var(--muted);
+
+  .small {
+    font-size: 15px;
   }
-  .price-actions {
+
+  .selfhost-price {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .selfhost-price > span {
+    font-weight: 900;
+    font-size: 36px;
+  }
+
+  .btn-small {
+    border: 2px solid var(--hr-ink);
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 4px;
+  }
+
+  .example {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .receipt-wrap {
+    justify-self: center;
+    width: 100%;
+    max-width: 420px;
+    transform: rotate(1.2deg);
+    filter: drop-shadow(8px 10px 0 rgba(20, 21, 23, 0.18));
+  }
+
+  .receipt {
+    background: var(--hr-paper);
+    padding: 32px 30px 24px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .receipt-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .receipt-name {
+    font-weight: 900;
+    font-size: 22px;
+  }
+
+  .receipt .label {
+    font-size: 12px;
+    color: var(--hr-ink-fog);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .receipt hr {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    border-top: 2px dashed var(--hr-speck);
+  }
+
+  .receipt-head + hr {
+    margin-top: 4px;
+  }
+
+  .receipt ul {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .receipt li {
+    display: flex;
+    justify-content: space-between;
     gap: 12px;
+  }
+
+  .receipt .coffee {
+    color: var(--hr-ink-chick);
+  }
+
+  .total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .total .display {
+    font-weight: 900;
+    font-size: 18px;
+  }
+
+  .total .amount {
+    font-size: 44px;
+    text-transform: none;
+  }
+
+  .yearly {
+    text-align: right;
+    font-size: 12px;
+    color: var(--hr-ink-fog);
+  }
+
+  .receipt-cta {
+    box-shadow: none;
+    padding: 15px;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .receipt-cta:hover {
+    transform: none;
+    box-shadow: none;
+    background: var(--hr-heat);
+  }
+
+  .thanks {
+    text-align: center;
+    font-size: 11px;
+    color: var(--hr-ink-fog);
+    letter-spacing: 0.1em;
+  }
+
+  .tear {
+    height: 14px;
+    background: radial-gradient(circle at 10px 0, transparent 9px, var(--hr-paper) 10px);
+    background-size: 20px 14px;
+    background-repeat: repeat-x;
   }
 
   /* Footer */
   .footer {
-    margin-top: 96px;
-    border-top: 1px solid var(--line);
+    background: var(--hr-graphite);
+    color: var(--hr-bone);
   }
+
   .footer-inner {
+    padding-top: 88px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .cta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 16px 28px;
-    padding: 32px 0 48px;
-    font-size: 14px;
-  }
-  .footer nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-  }
-  .footer p {
-    margin-left: auto;
-    color: var(--muted);
+    justify-content: space-between;
+    gap: 28px;
   }
 
-  /* Small screens */
-  @media (max-width: 900px) {
-    .hero {
-      grid-template-columns: 1fr;
-      gap: 40px;
-      padding-top: 56px;
-    }
-    .stats {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .stats div:nth-child(2) {
-      border-right: 0;
-    }
-    .stats div:nth-child(-n + 2) {
-      border-bottom: 1px solid var(--line);
-    }
-    .steps,
-    .grid {
-      grid-template-columns: 1fr;
-    }
+  .cta h2 {
+    font-size: clamp(36px, 5vw, 72px);
+    max-width: 820px;
   }
-  @media (max-width: 640px) {
-    .nav nav {
-      display: none;
-    }
-    .nav .btn-small {
-      margin-left: auto;
-    }
-    .bar-row {
-      grid-template-columns: 1fr 3.5em;
-    }
-    .bar-label {
-      grid-column: 1 / -1;
-    }
-    .footer p {
-      margin-left: 0;
+
+  .btn-chick-flat {
+    background: var(--hr-chick);
+    color: var(--hr-ink);
+    font-size: 16px;
+    padding: 19px 30px;
+    border-radius: 4px;
+  }
+
+  .btn-chick-flat:hover {
+    background: var(--hr-heat);
+    color: var(--hr-ink);
+  }
+
+  .footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: center;
+    border-top: 1px solid var(--hr-rivet);
+    padding-top: 28px;
+    font-size: 13px;
+    color: var(--hr-fog);
+  }
+
+  .footer-meta img {
+    height: 28px;
+    width: auto;
+  }
+
+  .footer-meta nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+  }
+
+  .footer-meta a {
+    color: var(--hr-bone);
+  }
+
+  .footer-meta a:hover {
+    color: var(--hr-chick);
+  }
+
+  .footer-meta p {
+    flex-basis: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
     }
   }
 </style>
