@@ -33,7 +33,7 @@ the newest version.
 A runner boots once per job, so boot time is paid on every job. The
 images boot without cloud-init, read the runner's and Docker's files
 ahead of their start, and start Docker while the runner connects to
-GitHub. In our tests on a t4g.medium a job starts about 30 seconds after
+GitHub. On a t4g.medium in ap-south-1 a job starts 29.5 seconds after
 the instance is launched.
 
 Scripts in user data do not run on these images: user data is read by

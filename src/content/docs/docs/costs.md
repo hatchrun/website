@@ -9,7 +9,8 @@ Runners are EC2 instances in your account, so AWS bills you for them
 directly:
 
 - **Instance time**, per second, from launch until the instance
-  terminates. That is the job plus about 30 seconds of boot.
+  terminates. That is the job plus the boot, 29.5 seconds on a
+  t4g.medium in ap-south-1.
 - **The root volume**, gp3, for the same time.
 - **A public IPv4 address**, if runners get one, per hour while they run.
 

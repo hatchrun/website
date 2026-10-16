@@ -63,7 +63,7 @@ job steps. See [How it works](/docs/how-it-works/).
 
 ## Runner telemetry
 
-Hosted runners report their CPU, memory, disk and network use to
+Runners launched by the hosted service report their CPU, memory, disk and network use to
 `telemetry.hatchrun.io` over HTTPS while a job runs. The app shows the
 numbers on the job's page. Runners started by a self-hosted scaler send
 nothing.
@@ -106,7 +106,8 @@ The security group for runners allows no inbound traffic.
 
 Runners only make outbound connections. They connect to GitHub, to
 the broker that hands out runner configs and to whatever your jobs
-use. Hosted runners also connect to `telemetry.hatchrun.io`.
+use. Runners launched by the hosted service also connect to
+`telemetry.hatchrun.io`.
 
 ## Images
 

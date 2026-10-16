@@ -43,11 +43,12 @@ const steps = [
 ];
 
 const specs = [
-  { term: "Boot", big: "~30 s", rest: "launch to the first step" },
+  { term: "Boot", big: "29.5s", rest: "launch to the first step", note: "t4g.medium in ap-south-1" },
   { term: "Jobs per machine", big: "1", rest: "then it terminates. Nothing carries over." },
   { term: "Inbound ports", big: "0", rest: "open on runners" },
   { term: "Runner config", rest: "Just-in-time. GitHub accepts it for one job only." },
-  { term: "Images", rest: "Trivy scan, SBOM and build provenance. Ready in 17 AWS regions." },
+  { term: "Regions", big: "17", rest: "AWS regions supported" },
+  { term: "Images", rest: "Trivy scan, SBOM and build provenance, published to every supported region." },
   { term: "Network", rest: "Your VPC and subnets. Jobs reach private databases without a tunnel." },
   { term: "Compute billing", rest: "Your provider bills you. Savings Plans and Spot apply." },
 ];
@@ -65,7 +66,7 @@ const repos = [
     name: "hatchrun/images",
     tag: "Images",
     title: "Runner images",
-    body: "The build behind the 29-second boot, with its scans and SBOMs.",
+    body: "The build behind the 29.5-second boot, with its scans and SBOMs.",
     cta: "Check the images",
     href: "https://github.com/hatchrun/images",
   },
@@ -107,7 +108,7 @@ const receipt = [
   <body>
     <div class="status mono">
       <div class="wrap status-inner">
-        <span class="live"><span class="dot" aria-hidden="true"></span><span class="on">AWS</span> live in 17 regions</span>
+        <span class="live"><span class="dot" aria-hidden="true"></span>Runs in your <span class="on">AWS</span> account</span>
         <span>GCP · next</span>
         <span>Azure · next</span>
         <span class="status-end">AGPL-3.0 · built in the open</span>
@@ -276,6 +277,7 @@ jobs:
                     {s.big ? (
                       <>
                         <span class="big display">{s.big}</span> <span class="fog">{s.rest}</span>
+                        {s.note && <span class="note mono">{s.note}</span>}
                       </>
                     ) : (
                       s.rest
@@ -1057,8 +1059,8 @@ jobs:
 
   .sheet > div {
     display: grid;
-    grid-template-columns: minmax(130px, 1fr) 2fr;
-    gap: 16px;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
     padding: 18px 0;
     border-bottom: 1px solid var(--hr-speck);
     align-items: baseline;
@@ -1073,6 +1075,14 @@ jobs:
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--hr-ink-fog);
+  }
+
+  .sheet .note {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--hr-ink-fog);
+    white-space: nowrap;
   }
 
   .sheet .big {

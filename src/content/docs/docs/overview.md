@@ -44,7 +44,8 @@ and how to verify them.
 
 ## Status
 
-The hosted service runs on AWS in 17 regions. GCP and Azure are next.
+hatchrun launches runners in your own AWS account, in any of 17
+supported AWS regions. GCP and Azure are next.
 The runner images are published, and the scaler, agent, images and the
 Terraform module are open source under AGPL-3.0-only. The
 [roadmap](/docs/roadmap/) lists what comes next.
