@@ -1,0 +1,27 @@
+---
+// SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+//
+// SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary
+
+// The page title with a breadcrumb of its sidebar group above it.
+import Default from "@astrojs/starlight/components/PageTitle.astro";
+
+const { sidebar } = Astro.locals.starlightRoute;
+const group = sidebar.find(
+	(entry) => entry.type === "group" && entry.entries.some((e) => e.type === "link" && e.isCurrent),
+);
+---
+
+{group && <p class="hr-crumb">{group.label} / {Astro.locals.starlightRoute.entry.data.title}</p>}
+<Default />
+
+<style>
+	.hr-crumb {
+		margin: 0;
+		font-family: var(--hr-font-mono);
+		font-size: 12px;
+		color: var(--hr-ink-fog);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+</style>

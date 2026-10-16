@@ -1,0 +1,14 @@
+---
+// SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+//
+// SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary
+
+// The docs have one look: the light Bone theme from the 2026-10
+// redesign. Pin data-theme so Starlight never switches to its dark
+// palette, and keep the global that Starlight's scripts call.
+---
+
+<script is:inline>
+	document.documentElement.dataset.theme = "light";
+	window.StarlightThemeProvider = { updatePickers() {} };
+</script>

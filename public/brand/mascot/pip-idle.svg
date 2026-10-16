@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com> -->
+<!-- SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title">
+  <title id="title">Pip, idle</title>
+  <desc>Pip, the hatchrun mascot, idle pose. Copyright 2026 Gamunu Balagalla. All rights reserved. hatchrun and Pip are trademarks of Gamunu Balagalla.</desc>
+  <metadata>
+    <rdf:RDF>
+      <rdf:Description dc:title="Pip, idle" dc:creator="Gamunu Balagalla" dc:rights="Copyright 2026 Gamunu Balagalla. All rights reserved." />
+    </rdf:RDF>
+  </metadata>
+  <defs>
+    <clipPath id="pi-body-clip">
+      <path d="M128 64C170 64 196 100 200 140C206 190 176 228 128 228C80 228 50 190 56 140C60 100 86 64 128 64Z" />
+    </clipPath>
+    <clipPath id="pi-helmet-clip">
+      <path d="M58 116C58 64 88 32 128 32C168 32 198 64 198 116L188 108L176 120L164 106L152 120L140 106L128 120L116 106L104 120L92 106L80 120L68 108L58 116Z" />
+    </clipPath>
+  </defs>
+  <g id="pip">
+    <g id="feet">
+      <path d="M103 228 91 242Q88 248 95 249L104 243L105 251Q108 256 111 251L112 243L121 249Q128 248 125 242L113 228H103Z" fill="#FF6A13" stroke="#141517" stroke-width="8" stroke-linejoin="round" />
+      <path d="M143 228 131 242Q128 248 135 249L144 243L145 251Q148 256 151 251L152 243L161 249Q168 248 165 242L153 228H143Z" fill="#FF6A13" stroke="#141517" stroke-width="8" stroke-linejoin="round" />
+    </g>
+    <g id="body">
+      <path id="body-shade" d="M128 64C170 64 196 100 200 140C206 190 176 228 128 228C80 228 50 190 56 140C60 100 86 64 128 64Z" fill="#F2B01E" />
+      <g clip-path="url(#pi-body-clip)">
+        <path id="body-base" fill="#FFCF33" d="M38 134C38 183.71 72.92 224 116 224C159.08 224 194 183.71 194 134C194 84.29 159.08 44 116 44C72.92 44 38 84.29 38 134Z" />
+        <path id="belly" fill="#FFE38A" d="M82 202C82 217.46 102.59 230 128 230C153.41 230 174 217.46 174 202C174 186.54 153.41 174 128 174C102.59 174 82 186.54 82 202Z" />
+      </g>
+      <path id="body-outline" d="M128 64C170 64 196 100 200 140C206 190 176 228 128 228C80 228 50 190 56 140C60 100 86 64 128 64Z" fill="none" stroke="#141517" stroke-width="8" />
+    </g>
+    <g id="wing-left">
+      <g>
+        <path d="M76 140C56 142 44 160 48 186C54 186 58 182 60 178C64 184 70 186 76 184C82 168 84 152 76 140Z" fill="#F2B01E" stroke="#141517" stroke-width="8" stroke-linejoin="round" />
+        <path d="M66 156Q61 166 63 176" fill="none" stroke="#141517" stroke-width="5" stroke-linecap="round" />
+      </g>
+    </g>
+    <g id="wing-right">
+      <g>
+        <path d="M180 140C200 142 212 160 208 186C202 186 198 182 196 178C192 184 186 186 180 184C174 168 172 152 180 140Z" fill="#F2B01E" stroke="#141517" stroke-width="8" stroke-linejoin="round" />
+        <path d="M190 156Q195 166 193 176" fill="none" stroke="#141517" stroke-width="5" stroke-linecap="round" />
+      </g>
+    </g>
+    <g id="eyes">
+      <path fill="#141517" d="M89 146C89 153.18 94.82 159 102 159C109.18 159 115 153.18 115 146C115 138.82 109.18 133 102 133C94.82 133 89 138.82 89 146Z" />
+      <path fill="#141517" d="M141 146C141 153.18 146.82 159 154 159C161.18 159 167 153.18 167 146C167 138.82 161.18 133 154 133C146.82 133 141 138.82 141 146Z" />
+      <path fill="#FFFFFF" d="M93.5 141C93.5 143.49 95.51 145.5 98 145.5C100.49 145.5 102.5 143.49 102.5 141C102.5 138.51 100.49 136.5 98 136.5C95.51 136.5 93.5 138.51 93.5 141Z" />
+      <path fill="#FFFFFF" d="M145.5 141C145.5 143.49 147.51 145.5 150 145.5C152.49 145.5 154.5 143.49 154.5 141C154.5 138.51 152.49 136.5 150 136.5C147.51 136.5 145.5 138.51 145.5 141Z" />
+      <path fill="#FFFFFF" d="M104 151C104 152.1 104.9 153 106 153C107.1 153 108 152.1 108 151C108 149.9 107.1 149 106 149C104.9 149 104 149.9 104 151Z" />
+      <path fill="#FFFFFF" d="M156 151C156 152.1 156.9 153 158 153C159.1 153 160 152.1 160 151C160 149.9 159.1 149 158 149C156.9 149 156 149.9 156 151Z" />
+    </g>
+    <g id="blush" fill="#FF9466">
+      <path d="M72 166C72 169.31 76.48 172 82 172C87.52 172 92 169.31 92 166C92 162.69 87.52 160 82 160C76.48 160 72 162.69 72 166Z" />
+      <path d="M164 166C164 169.31 168.48 172 174 172C179.52 172 184 169.31 184 166C184 162.69 179.52 160 174 160C168.48 160 164 162.69 164 166Z" />
+    </g>
+    <g id="beak" stroke="#141517" stroke-linejoin="round">
+      <path d="M113 160Q128 155 143 160L128 176L113 160Z" fill="#FF6A13" stroke-width="5" />
+      <path d="M121 170 128 176 135 170" fill="none" stroke-width="3" />
+    </g>
+    <g id="hardhat-shell">
+      <path id="hardhat-shade" d="M58 116C58 64 88 32 128 32C168 32 198 64 198 116L188 108L176 120L164 106L152 120L140 106L128 120L116 106L104 120L92 106L80 120L68 108L58 116Z" fill="#D3C9B2" />
+      <g clip-path="url(#pi-helmet-clip)">
+        <path id="hardhat-base" fill="#ECE6D6" d="M36 66C36 98.03 71.82 124 116 124C160.18 124 196 98.03 196 66C196 33.97 160.18 8 116 8C71.82 8 36 33.97 36 66Z" />
+        <g id="hardhat-speckles" fill="#C2B597">
+          <path d="M162.4 58C162.4 59.99 164.01 61.6 166 61.6C167.99 61.6 169.6 59.99 169.6 58C169.6 56.01 167.99 54.4 166 54.4C164.01 54.4 162.4 56.01 162.4 58Z" />
+          <path d="M179 84C179 85.66 180.34 87 182 87C183.66 87 185 85.66 185 84C185 82.34 183.66 81 182 81C180.34 81 179 82.34 179 84Z" />
+          <path d="M77.4 88C77.4 89.44 78.56 90.6 80 90.6C81.44 90.6 82.6 89.44 82.6 88C82.6 86.56 81.44 85.4 80 85.4C78.56 85.4 77.4 86.56 77.4 88Z" />
+          <path d="M95.6 50C95.6 51.33 96.67 52.4 98 52.4C99.33 52.4 100.4 51.33 100.4 50C100.4 48.67 99.33 47.6 98 47.6C96.67 47.6 95.6 48.67 95.6 50Z" />
+        </g>
+        <path id="hardhat-strap" d="M54 96Q128 106 202 96" fill="none" stroke="#141517" stroke-width="5.0" />
+      </g>
+      <path id="hardhat-highlight" d="M78 80Q88 54 112 44" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" />
+      <path id="hardhat-outline" d="M58 116C58 64 88 32 128 32C168 32 198 64 198 116L188 108L176 120L164 106L152 120L140 106L128 120L116 106L104 120L92 106L80 120L68 108L58 116Z" fill="none" stroke="#141517" stroke-width="8.0" stroke-linejoin="round" />
+      <g id="headlamp">
+        <path fill="#141517" d="M122 77H134C140.08 77 145 81.92 145 88V92C145 98.08 140.08 103 134 103H122C115.92 103 111 98.08 111 92L111 88C111 81.92 115.92 77 122 77Z" />
+        <path fill="#FF6A13" d="M119 90C119 94.97 123.03 99 128 99C132.97 99 137 94.97 137 90C137 85.03 132.97 81 128 81C123.03 81 119 85.03 119 90Z" />
+        <path fill="#FFFFFF" d="M122 87C122 88.66 123.34 90 125 90C126.66 90 128 88.66 128 87C128 85.34 126.66 84 125 84C123.34 84 122 85.34 122 87Z" />
+      </g>
+    </g>
+  </g>
+</svg>

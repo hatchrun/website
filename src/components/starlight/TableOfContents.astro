@@ -1,0 +1,41 @@
+---
+// SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+//
+// SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary
+
+// "On this page" plus the support card with Pip under it.
+import Default from "@astrojs/starlight/components/TableOfContents.astro";
+---
+
+<Default />
+<div class="hr-help">
+	<img src="/brand/mascot/pip-idle.svg" alt="Pip" width="72" height="72" />
+	<p>Stuck? Write to <a href="mailto:support@hatchrun.io">support@hatchrun.io</a></p>
+</div>
+
+<style>
+	.hr-help {
+		margin-top: 1.5rem;
+		background: var(--hr-paper);
+		border: 2px solid var(--hr-ink);
+		border-radius: 6px;
+		padding: 16px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		text-align: center;
+	}
+
+	.hr-help p {
+		margin: 0;
+		font-size: 13px;
+		line-height: 1.5;
+		color: var(--hr-ink-2);
+	}
+
+	.hr-help a {
+		color: var(--hr-ink);
+		overflow-wrap: anywhere;
+	}
+</style>

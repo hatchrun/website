@@ -49,9 +49,6 @@ jobs a different way, described in [Self-hosting](/docs/self-hosting/).
 7. When the runner exits, the agent exits and the instance powers off.
    The launch template makes power-off terminate the instance.
 
-The Worker records jobs from webhooks today. Launching instances from
-the Worker is being built for the [beta](/docs/beta/).
-
 ## Getting into your account
 
 First the account subscribes to the hatchrun runner images in AWS

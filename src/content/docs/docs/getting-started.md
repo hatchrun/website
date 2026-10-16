@@ -3,10 +3,12 @@ title: Getting started
 description: Connect a GitHub organization and an AWS account to hatchrun.io and run the first job.
 ---
 
-This guide sets up the hosted service. It takes five steps in
-[app.hatchrun.io](https://app.hatchrun.io), then one line in a
-workflow. To run the control plane yourself, see
-[Self-hosting](/docs/self-hosting/).
+Set up hatchrun for one GitHub organization on AWS and run your first
+job. Setup starts in [app.hatchrun.io](https://app.hatchrun.io), and
+the app sends you to GitHub, Polar and the AWS console for the steps
+that happen there. GCP and Azure guides follow when those providers
+ship. To run the
+control plane yourself, see [Self-hosting](/docs/self-hosting/).
 
 ## Before you start
 
@@ -14,106 +16,110 @@ You need:
 
 - owner rights on the GitHub organization;
 - an AWS account where you can create CloudFormation stacks and IAM
-  roles;
-- an invite code for the [beta](/docs/beta/), unless hatchrun already
-  listed your organization.
+  roles.
 
 Runners launch in that AWS account and AWS bills it for them. hatchrun
 holds no access keys to it. See [Security](/docs/security/).
 
-## 1. Install the GitHub App
+:::steps
 
-Sign in to [app.hatchrun.io](https://app.hatchrun.io) with GitHub and
-install the hatchrun GitHub App on your organization. GitHub shows the
-permissions the App asks for and lets you pick the repositories it
-sees.
+1. ## Install the GitHub App
 
-The App sends hatchrun a webhook for every queued job in those
-repositories. hatchrun launches a runner for each job whose only label
-is a hatchrun one.
+   Sign in to [app.hatchrun.io](https://app.hatchrun.io) with GitHub and
+   install the hatchrun GitHub App on your organization. GitHub shows the
+   permissions the App asks for and lets you pick the repositories it
+   sees.
 
-## 2. Enter your invite code
+   The App sends hatchrun a webhook for every queued job in those
+   repositories. hatchrun launches a runner for each job whose only label
+   is a hatchrun one.
 
-On the plan step, enter your beta invite code. The beta is free. Only
-organizations in it can launch runners.
+1. ## Choose a plan
 
-## 3. Subscribe to the runner images
+   Subscribe to hatchrun Team for the organization. Checkout runs through
+   Polar. See [Costs](/docs/costs/) for what the subscription pays for.
 
-Runners boot from the hatchrun images in AWS Marketplace. The images
-are free; AWS charges only for the instances. Signed in to the AWS
-account you connect, open both links on the setup page and subscribe
-once.
+1. ## Subscribe to the runner images
 
-EC2 refuses to launch an image the account has not subscribed to.
-Skip this step and jobs fail with `OptInRequired`.
+   Runners boot from the hatchrun images in AWS Marketplace. The images
+   are free; AWS charges only for the instances. Signed in to the AWS
+   account you connect, open both links on the setup page and subscribe
+   once.
 
-## 4. Launch the connect stack
+   :::danger[Skip this and jobs fail]
+   EC2 refuses to launch an image the account has not subscribed to, with
+   `OptInRequired`.
+   :::
 
-The connect stack is a CloudFormation stack in your account. It creates
-the role hatchrun assumes, an IAM OIDC provider for
-`oidc.hatchrun.io`, a launch template and an S3 bucket for job caches.
+1. ## Launch the connect stack
 
-Deleting the stack keeps the cache bucket and its contents. Empty and
-delete the bucket yourself to stop paying for its storage.
+   The connect stack is a CloudFormation stack in your account. It creates
+   the role hatchrun assumes, an IAM OIDC provider for
+   `oidc.hatchrun.io`, a launch template and an S3 bucket for job caches.
 
-[Security](/docs/security/) lists what the role may do.
+   Deleting the stack keeps the cache bucket and its contents. Empty and
+   delete the bucket yourself to stop paying for its storage.
 
-Pick the region for your runners and choose Launch Stack. The
-CloudFormation console opens the `hatchrun` stack with your tenant ID
-filled in. The role accepts only hatchrun requests for that tenant.
+   [Security](/docs/security/) lists what the role may do.
 
-Check these parameters before you create the stack:
+   Pick the region for your runners and choose Launch Stack. The
+   CloudFormation console opens the `hatchrun` stack with your tenant ID
+   filled in. The role accepts only hatchrun requests for that tenant.
 
-| Parameter | Default | What it does |
-| --- | --- | --- |
-| `InstanceTypes` | any size up to `8xlarge` | Instance types AWS lets hatchrun launch. Wildcards allowed. |
-| `ExcludedInstanceTypes` | GPU, accelerator and bare metal | Types AWS refuses even when `InstanceTypes` allows them. |
-| `VolumeSizeLimit` | 200 | Largest runner volume in GiB. |
-| `RootVolumeSize` | 30 | Root volume in GiB for jobs that do not ask for one. |
-| `VpcId`, `SubnetIds` | empty | Your own VPC and subnets. Empty creates a VPC with two public subnets. |
-| `OidcProviderArn` | empty | Leave empty for the first stack in an account. |
+   Check these parameters before you create the stack:
 
-Your own subnets need a route to the internet, through public IPs or a
-NAT gateway. Runners make only outbound HTTPS connections.
+   | Parameter | Default | What it does |
+   | --- | --- | --- |
+   | `InstanceTypes` | any size up to `8xlarge` | Instance types AWS lets hatchrun launch. Wildcards allowed. |
+   | `ExcludedInstanceTypes` | GPU, accelerator and bare metal | Types AWS refuses even when `InstanceTypes` allows them. |
+   | `VolumeSizeLimit` | 200 | Largest runner volume in GiB. |
+   | `RootVolumeSize` | 30 | Root volume in GiB for jobs that do not ask for one. |
+   | `VpcId`, `SubnetIds` | empty | Your own VPC and subnets. Empty creates a VPC with two public subnets. |
+   | `OidcProviderArn` | empty | Leave empty for the first stack in an account. |
 
-IAM keeps one OIDC provider per URL in an account. For a second stack
-in another region of the same account, paste the first stack's
-`OidcProviderArn` output into the `OidcProviderArn` parameter.
+   Your own subnets need a route to the internet, through public IPs or a
+   NAT gateway. Runners make only outbound HTTPS connections.
 
-Tick the box that lets the stack create IAM resources, then create
-it.
+   IAM keeps one OIDC provider per URL in an account. For a second stack
+   in another region of the same account, paste the first stack's
+   `OidcProviderArn` output into the `OidcProviderArn` parameter.
 
-## 5. Paste the role ARN
+   Tick the box that lets the stack create IAM resources, then create
+   it.
 
-Once the stack shows `CREATE_COMPLETE`, open its Outputs tab and copy
-`RoleArn`. Paste it into the setup page and choose Verify and connect.
+1. ## Paste the role ARN
 
-hatchrun assumes the role and reads the stack's settings parameter in
-Systems Manager. The parameter names the launch template, subnets and
-instance type limits. hatchrun then checks that the subnets exist.
+   Once the stack shows `CREATE_COMPLETE`, open its Outputs tab and copy
+   `RoleArn`. Paste it into the setup page and choose Verify and connect.
 
-An error here names what is wrong. Fix the stack and verify again.
+   hatchrun assumes the role and reads the stack's settings parameter in
+   Systems Manager. The parameter names the launch template, subnets and
+   instance type limits. hatchrun then checks that the subnets exist.
 
-## 6. Run a job
+   An error here names what is wrong. Fix the stack and verify again.
 
-Set a job's `runs-on` to `hatchrun`:
+1. ## Run a job
 
-```yaml
-jobs:
-  test:
-    runs-on: hatchrun
-    steps:
-      - uses: actions/checkout@v7
-      - run: make test
-```
+   Set a job's `runs-on` to `hatchrun`:
 
-`hatchrun` gets a runner with 2 vCPUs and 8 GiB on x86-64. Push the
-change. The job shows on the Jobs page of the app, and a new instance
-starts in your account, runs the job and terminates.
+   ```yaml title=".github/workflows/test.yml"
+   jobs:
+     test:
+       runs-on: hatchrun
+       steps:
+         - uses: actions/checkout@v7
+         - run: make test
+   ```
 
-The job's page in the app shows its CPU and memory use. Start with
-`hatchrun` and move a job to a bigger profile when those numbers say it
-needs one.
+   `hatchrun` gets a runner with 2 vCPUs and 8 GiB on x86-64. Push the
+   change. The job shows on the Jobs page of the app, and a new instance
+   starts in your account, runs the job and terminates.
+
+   The job's page in the app shows its CPU and memory use. Start with
+   `hatchrun` and move a job to a bigger profile when those numbers say it
+   needs one.
+
+:::
 
 ## Choosing a label
 
@@ -136,8 +142,11 @@ Overrides after a `/` change one job. They are `cpu=N`, `ram=N`,
 
 ## One label only
 
+:::caution[One label per job]
 The hatchrun label must be the only label in `runs-on`. hatchrun skips
-a job with more labels and it stays queued in GitHub:
+a job with more labels and it stays queued in GitHub. Override inside
+the label instead: `hatchrun-4cpu/disk=200/spot=true`.
+:::
 
 ```yaml
 runs-on: [self-hosted, hatchrun]   # skipped

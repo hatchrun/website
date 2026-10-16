@@ -4,27 +4,41 @@
 
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { satteri } from "@astrojs/markdown-satteri";
+import stepsPlugin from "./src/plugins/steps.mjs";
 
 export default defineConfig({
   site: "https://hatchrun.io",
   // Static files only: the site needs no server and no cookies.
   output: "static",
   telemetry: false,
+  markdown: {
+    processor: satteri({ mdastPlugins: [stepsPlugin()] }),
+  },
   redirects: {
     "/docs": "/docs/overview/",
+    // The hosted service is out of beta; the old beta page goes to setup.
+    "/docs/beta": "/docs/getting-started/",
   },
   integrations: [
     starlight({
       title: "hatchrun",
-      logo: { src: "./src/assets/brand/hatchrun-mark-micro.svg", alt: "" },
       favicon: "/favicon.svg",
       customCss: ["./src/styles/starlight.css"],
+      components: {
+        SiteTitle: "./src/components/starlight/SiteTitle.astro",
+        SocialIcons: "./src/components/starlight/SocialIcons.astro",
+        PageTitle: "./src/components/starlight/PageTitle.astro",
+        TableOfContents: "./src/components/starlight/TableOfContents.astro",
+        ThemeProvider: "./src/components/starlight/ThemeProvider.astro",
+        ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
+      },
       head: [
         { tag: "link", attrs: { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" } },
         { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
       ],
       description:
-        "Open-source autoscaler for GitHub Actions runners on your own AWS account.",
+        "Self-hosted GitHub Actions runners in your own cloud account. Open source, AGPL-3.0.",
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/hatchrun" },
       ],
@@ -33,7 +47,6 @@ export default defineConfig({
           label: "Start here",
           items: [
             { label: "Overview", slug: "docs/overview" },
-            { label: "Hosted beta", slug: "docs/beta" },
             { label: "Getting started", slug: "docs/getting-started" },
           ],
         },

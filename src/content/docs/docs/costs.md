@@ -24,9 +24,9 @@ with a security group that allows no inbound traffic.
 
 ## Control plane
 
-- **Hosted**: free during the [beta](/docs/beta/). After the beta it
-  becomes a flat subscription per GitHub organization; prices will be
-  announced before the beta ends.
+- **Hosted**: a flat subscription per GitHub organization. It pays for
+  image rebuilds and scans, security fixes, support and the hosted
+  control plane. hatchrun never marks up compute.
 - **Self-hosted**: the scaler is one small container or instance in your
   account, a few dollars a month. See [Self-hosting](/docs/self-hosting/).
 

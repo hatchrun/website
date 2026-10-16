@@ -1,0 +1,38 @@
+---
+// SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+//
+// SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary
+
+// Header links: GitHub as text and a button into the app.
+---
+
+<a class="hr-header-link" href="https://github.com/hatchrun">GitHub</a>
+<a class="hr-header-app" href="https://app.hatchrun.io">Open app</a>
+
+<style>
+	a {
+		font-family: var(--hr-font-mono);
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--hr-ink);
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.hr-header-link:hover {
+		color: var(--hr-ink-heat);
+	}
+
+	.hr-header-app {
+		background: var(--hr-chick);
+		font-weight: 700;
+		padding: 10px 14px;
+		border-radius: 4px;
+	}
+
+	.hr-header-app:hover {
+		background: var(--hr-heat);
+		color: var(--hr-ink);
+	}
+</style>
