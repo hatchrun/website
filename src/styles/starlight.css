@@ -4,35 +4,430 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* Incubator palette for the docs, from hatchrun/brand colors/tokens.json. */
+/*
+ * The docs theme: the light Bone look of the 2026-10 redesign in
+ * hatchrun/brand. The docs have no dark mode (ThemeProvider.astro pins
+ * data-theme="light"), so only the light palette is set. Code blocks
+ * stay dark; Expressive Code takes its colours from astro.config.mjs.
+ */
 
-/* Dark theme (default). */
-:root {
-  --sl-color-accent-low: #3d3210;
-  --sl-color-accent: #ffcf33; /* chick */
-  --sl-color-accent-high: #ffe38a; /* chick light */
-  --sl-color-white: #f6f2e9;
-  --sl-color-gray-1: #ece6d6; /* bone */
-  --sl-color-gray-2: #d3c9b2; /* bone shade */
-  --sl-color-gray-3: #9a9fa6; /* fog */
-  --sl-color-gray-4: #5e636a;
-  --sl-color-gray-5: #34373c; /* rivet */
-  --sl-color-gray-6: #1e2023; /* housing */
-  --sl-color-black: #141517; /* graphite */
+@import "./tokens.css";
+
+:root,
+:root[data-theme="light"] {
+  --sl-font: var(--hr-font-display);
+  --sl-font-mono: var(--hr-font-mono);
+
+  --sl-color-accent-low: #fbefc2;
+  --sl-color-accent: var(--hr-chick);
+  --sl-color-accent-high: var(--hr-ink-chick);
+
+  --sl-color-white: var(--hr-ink);
+  --sl-color-gray-1: var(--hr-housing);
+  --sl-color-gray-2: var(--hr-ink-2);
+  --sl-color-gray-3: var(--hr-ink-fog);
+  --sl-color-gray-4: #8a8f96;
+  --sl-color-gray-5: var(--hr-speck);
+  --sl-color-gray-6: var(--hr-bone-dim);
+  --sl-color-gray-7: var(--hr-bone);
+  --sl-color-black: var(--hr-bone);
+
+  --sl-color-text: var(--hr-ink-2);
+  --sl-color-text-accent: var(--hr-ink-chick);
+  --sl-color-text-invert: var(--hr-ink);
+  --sl-color-bg: var(--hr-bone);
+  --sl-color-bg-nav: var(--hr-paper);
+  --sl-color-bg-sidebar: var(--hr-bone);
+  --sl-color-bg-inline-code: var(--hr-bone-dim);
+  --sl-color-bg-accent: var(--hr-chick);
+  --sl-color-hairline-light: var(--hr-speck);
+  --sl-color-hairline: var(--hr-speck);
+  --sl-color-hairline-shade: var(--hr-speck);
+
+  /* Callouts, as in the redesign: chick for caution, failed pink for
+     danger, passed green for tips, graphite on paper for notes. */
+  --sl-color-orange-low: #fbefc2;
+  --sl-color-orange: #d9b84a;
+  --sl-color-orange-high: var(--hr-ink-chick);
+  --sl-color-red-low: #f8dcea;
+  --sl-color-red: #e39bc0;
+  --sl-color-red-high: var(--hr-ink-failed);
+  --sl-color-green-low: #dcefdc;
+  --sl-color-green: #8cc79c;
+  --sl-color-green-high: var(--hr-ink-passed);
+  --sl-color-blue-low: var(--hr-paper);
+  --sl-color-blue: var(--hr-speck);
+  --sl-color-blue-high: var(--hr-ink);
+  --sl-color-purple-low: #dcefdc;
+  --sl-color-purple: #8cc79c;
+  --sl-color-purple-high: var(--hr-ink-passed);
+
+  --sl-text-h1: clamp(2.125rem, 4vw, 3.25rem);
+  --sl-text-h2: 1.625rem;
+  --sl-text-h3: 1.25rem;
+  --sl-text-h4: 1.0625rem;
+  --sl-line-height: 1.65;
+  --sl-line-height-headings: 1.05;
+  --sl-sidebar-width: 17.5rem;
+  --sl-content-width: 48.75rem;
 }
 
-/* Light theme. */
-:root[data-theme="light"] {
-  --sl-color-accent-low: #f7e3a1;
-  --sl-color-accent: #7a5a00; /* chick, ink on light */
-  --sl-color-accent-high: #3d2d00;
-  --sl-color-white: #141517; /* graphite */
-  --sl-color-gray-1: #1e2023;
-  --sl-color-gray-2: #34373c;
-  --sl-color-gray-3: #5e636a; /* fog, ink on light */
-  --sl-color-gray-4: #8a8f96;
-  --sl-color-gray-5: #d3c9b2; /* bone shade */
-  --sl-color-gray-6: #e4ddcc;
-  --sl-color-gray-7: #ece6d6; /* bone */
-  --sl-color-black: #f6f2e9;
+body {
+  background: var(--hr-bone);
+}
+
+::selection {
+  background: var(--hr-chick);
+  color: var(--hr-ink);
+}
+
+/* Top bar */
+header.header {
+  border-bottom: 2px solid var(--hr-ink);
+}
+
+/* Search: a field on paper with a speck border. */
+site-search > button[data-open-modal] {
+  background: var(--hr-paper);
+  border: 1px solid var(--hr-speck);
+  border-radius: 4px;
+  color: var(--hr-ink-fog);
+  height: 44px;
+}
+
+site-search > button[data-open-modal]:hover {
+  border-color: var(--hr-ink);
+  color: var(--hr-ink);
+}
+
+site-search kbd {
+  font-family: var(--hr-font-mono);
+  background: transparent;
+  border: 1px solid var(--hr-speck);
+  border-radius: 3px;
+}
+
+/* Sidebar */
+.sidebar-pane {
+  border-inline-end: 1px solid var(--hr-speck);
+}
+
+.sidebar-content summary .large {
+  font-family: var(--hr-font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--hr-ink-fog);
+}
+
+.sidebar-content summary .caret {
+  color: var(--hr-ink-fog);
+}
+
+.sidebar-content a {
+  font-size: 15px;
+  color: var(--hr-ink-2);
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+.sidebar-content a:hover {
+  color: var(--hr-ink-heat);
+}
+
+.sidebar-content a[aria-current="page"],
+.sidebar-content a[aria-current="page"]:hover,
+.sidebar-content a[aria-current="page"]:focus {
+  color: var(--hr-ink);
+  background: var(--hr-chick);
+  font-weight: 700;
+}
+
+.sidebar-content ul ul li {
+  border-inline-start: 0;
+  margin-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+/* On this page */
+starlight-toc h2,
+mobile-starlight-toc .toggle {
+  font-family: var(--hr-font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--hr-ink-fog);
+}
+
+starlight-toc nav > ul {
+  border-inline-start: 2px solid var(--hr-speck);
+}
+
+starlight-toc a {
+  font-size: 14px;
+  color: var(--hr-ink-fog);
+  border-radius: 0;
+  margin-inline-start: -2px;
+  border-inline-start: 2px solid transparent;
+  padding-inline-start: calc(12px + 1rem * var(--depth, 0));
+}
+
+starlight-toc a:hover {
+  color: var(--hr-ink);
+}
+
+starlight-toc a[aria-current="true"] {
+  color: var(--hr-ink-chick);
+  border-inline-start-color: var(--hr-chick);
+}
+
+/* Page title and headings */
+.content-panel h1#_top,
+.sl-markdown-content :is(h1, h2, h3, h4) {
+  font-family: var(--hr-font-display);
+  font-stretch: 125%;
+  text-transform: uppercase;
+  color: var(--hr-ink);
+}
+
+.content-panel h1#_top {
+  margin-top: 0.75rem;
+  font-weight: 900;
+  line-height: 0.98;
+}
+
+.sl-markdown-content h2 {
+  font-weight: 900;
+}
+
+/* Each section opens on a speck rule. Starlight wraps headings in a
+   div with the anchor link, so the rule goes on the wrapper. */
+.sl-markdown-content .sl-heading-wrapper.level-h2 {
+  border-top: 1px solid var(--hr-speck);
+  padding-top: 2.25rem;
+  margin-top: 2.5rem;
+}
+
+.content-panel + .content-panel {
+  border-top: 0;
+}
+
+.sl-markdown-content :is(h3, h4) {
+  font-weight: 800;
+}
+
+.sl-markdown-content :is(h2, h3, h4) + * {
+  margin-top: 0.5rem;
+}
+
+.content-panel:has(h1#_top) + .content-panel .sl-markdown-content > p:first-child {
+  font-size: 19px;
+}
+
+.sl-markdown-content a {
+  color: var(--hr-ink);
+  text-decoration-color: var(--hr-chick);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.sl-markdown-content a:hover {
+  color: var(--hr-ink-heat);
+}
+
+.sl-markdown-content :not(pre) > code {
+  font-size: 0.875em;
+  background: var(--hr-bone-dim);
+  border: 0;
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: var(--hr-ink);
+}
+
+.sl-markdown-content strong {
+  color: var(--hr-ink);
+}
+
+/* Tables: a ruled sheet with a Graphite frame. */
+.sl-markdown-content table {
+  display: block;
+  overflow-x: auto;
+  border: 2px solid var(--hr-ink);
+  border-radius: 6px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+.sl-markdown-content :is(th, td) {
+  border: 0;
+  border-top: 1px solid var(--hr-speck);
+  padding: 10px 14px;
+}
+
+.sl-markdown-content th {
+  border-top: 0;
+  background: var(--hr-paper);
+  font-family: var(--hr-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hr-ink-fog);
+  text-align: start;
+}
+
+.sl-markdown-content tr:nth-child(2n) {
+  background: transparent;
+}
+
+.sl-markdown-content td:first-child code {
+  background: transparent;
+  padding: 0;
+  color: var(--hr-ink-chick);
+}
+
+/* Steps (`:::steps`, src/plugins/steps.mjs): numbered circles on paper joined
+   by a speck rule, the last one filled in chick. */
+.hr-steps > ol {
+  --bullet-size: 40px;
+  list-style: none;
+  counter-reset: hr-step;
+  padding-inline-start: 0;
+}
+
+.hr-steps > ol > li {
+  counter-increment: hr-step;
+  position: relative;
+  padding-inline-start: calc(var(--bullet-size) + 18px);
+  padding-bottom: 1.75rem;
+  min-height: calc(var(--bullet-size) + 0.5rem);
+}
+
+.hr-steps > ol > li + li {
+  margin-top: 0;
+}
+
+.hr-steps > ol > li::before {
+  content: counter(hr-step);
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  width: var(--bullet-size);
+  height: var(--bullet-size);
+  line-height: var(--bullet-size);
+  text-align: center;
+  border-radius: 50%;
+  font-family: var(--hr-font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--hr-ink);
+  background: var(--hr-paper);
+  box-shadow: inset 0 0 0 2px var(--hr-speck);
+}
+
+.hr-steps > ol > li:last-child::before {
+  background: var(--hr-chick);
+  box-shadow: none;
+}
+
+.hr-steps > ol > li::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--bullet-size) + 0.5rem);
+  bottom: 0.5rem;
+  inset-inline-start: calc((var(--bullet-size) - 2px) / 2);
+  width: 2px;
+  background: var(--hr-speck);
+}
+
+.hr-steps > ol > li:last-child::after {
+  display: none;
+}
+
+/* The heading's first line sits on the centre of its number. */
+.sl-markdown-content .hr-steps > ol > li > .sl-heading-wrapper:first-child {
+  border-top: 0;
+  padding-top: 9px;
+  margin-top: 0;
+}
+
+.sl-markdown-content .hr-steps > ol > li > :first-child :is(h2, h3) {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* Callouts */
+.starlight-aside {
+  border: 1px solid var(--sl-color-asides-border);
+  border-radius: 6px;
+  padding: 16px;
+  font-size: 15px;
+  color: var(--hr-ink);
+}
+
+.starlight-aside__title {
+  font-family: var(--hr-font-display);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.starlight-aside__icon {
+  font-size: 1.5em;
+}
+
+.starlight-aside :not(pre) > code {
+  background: var(--hr-paper);
+}
+
+/* Code blocks: dark Graphite with an offset bone shadow. */
+.sl-markdown-content .expressive-code {
+  box-shadow: 6px 6px 0 var(--hr-bone-shade);
+  border-radius: 6px;
+}
+
+/* Previous / next */
+.pagination-links a {
+  border: 2px solid var(--hr-ink);
+  border-radius: 6px;
+  box-shadow: none;
+  padding: 16px 20px;
+  color: var(--hr-ink);
+}
+
+.pagination-links a:hover {
+  border-color: var(--hr-ink);
+  background: var(--hr-paper);
+  color: var(--hr-ink);
+}
+
+.pagination-links a > span {
+  font-family: var(--hr-font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hr-ink-fog);
+}
+
+.pagination-links .link-title {
+  font-family: var(--hr-font-display);
+  font-size: 16px;
+  font-weight: 800;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--hr-ink);
+}
+
+.pagination-links svg {
+  color: var(--hr-ink-fog);
+}
+
+/* Footer meta (last updated, edit link) */
+.meta {
+  font-family: var(--hr-font-mono);
+  font-size: 12px;
 }

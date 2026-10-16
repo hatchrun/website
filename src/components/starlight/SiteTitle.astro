@@ -1,0 +1,60 @@
+---
+// SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
+//
+// SPDX-License-Identifier: Apache-2.0
+
+// On-light lockup and a Graphite "Docs" chip, as in the redesign.
+import lockup from "../../assets/brand/hatchrun-lockup-horizontal-on-light.svg";
+
+const { siteTitleHref } = Astro.locals.starlightRoute;
+---
+
+<div class="hr-title">
+	<a href="/" class="hr-lockup" aria-label="hatchrun home">
+		<img src={lockup.src} alt="hatchrun" width={lockup.width} height={lockup.height} />
+	</a>
+	<a href={siteTitleHref} class="hr-docs-chip">Docs</a>
+</div>
+
+<style>
+	.hr-title {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		min-width: 0;
+	}
+
+	.hr-lockup {
+		display: flex;
+		min-width: 0;
+	}
+
+	.hr-lockup img {
+		height: 30px;
+		width: auto;
+		max-width: 100%;
+	}
+
+	.hr-docs-chip {
+		font-family: var(--hr-font-mono);
+		font-size: 12px;
+		line-height: 1.5;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--hr-chick);
+		background: var(--hr-graphite);
+		padding: 3px 8px;
+		border-radius: 3px;
+		text-decoration: none;
+	}
+
+	.hr-docs-chip:hover {
+		color: var(--hr-bone);
+	}
+
+	@media (max-width: 30rem) {
+		.hr-lockup img {
+			height: 24px;
+		}
+	}
+</style>

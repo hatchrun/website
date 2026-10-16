@@ -4,21 +4,33 @@
 
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import { satteri } from "@astrojs/markdown-satteri";
+import stepsPlugin from "./src/plugins/steps.mjs";
 
 export default defineConfig({
   site: "https://hatchrun.io",
   // Static files only: the site needs no server and no cookies.
   output: "static",
   telemetry: false,
+  markdown: {
+    processor: satteri({ mdastPlugins: [stepsPlugin()] }),
+  },
   redirects: {
     "/docs": "/docs/overview/",
   },
   integrations: [
     starlight({
       title: "hatchrun",
-      logo: { src: "./src/assets/brand/hatchrun-mark-micro.svg", alt: "" },
       favicon: "/favicon.svg",
       customCss: ["./src/styles/starlight.css"],
+      components: {
+        SiteTitle: "./src/components/starlight/SiteTitle.astro",
+        SocialIcons: "./src/components/starlight/SocialIcons.astro",
+        PageTitle: "./src/components/starlight/PageTitle.astro",
+        TableOfContents: "./src/components/starlight/TableOfContents.astro",
+        ThemeProvider: "./src/components/starlight/ThemeProvider.astro",
+        ThemeSelect: "./src/components/starlight/ThemeSelect.astro",
+      },
       head: [
         { tag: "link", attrs: { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" } },
         { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
