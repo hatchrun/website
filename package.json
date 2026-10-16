@@ -2,7 +2,7 @@
   "name": "hatchrun-website",
   "private": true,
   "type": "module",
-  "license": "Apache-2.0",
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=22.12.0"
   },

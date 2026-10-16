@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
 //
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary
 
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
@@ -38,7 +38,7 @@ export default defineConfig({
         { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
       ],
       description:
-        "Self-hosted GitHub Actions runners in your own cloud account. Open source, Apache-2.0.",
+        "Self-hosted GitHub Actions runners in your own cloud account. Open source, AGPL-3.0.",
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/hatchrun" },
       ],

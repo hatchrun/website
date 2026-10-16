@@ -46,5 +46,5 @@ and how to verify them.
 
 The hosted service runs on AWS in 17 regions. GCP and Azure are next.
 The runner images are published, and the scaler, agent and images are
-open source under Apache-2.0. The [roadmap](/docs/roadmap/) lists what
+open source under AGPL-3.0-only. The [roadmap](/docs/roadmap/) lists what
 comes next.

@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>
 #
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: LicenseRef-hatchrun-Proprietary
 
 # Licensing for pages, package metadata, GitHub configuration and NOTICE.
 # Code files carry their own SPDX header; `reuse lint` in CI checks every
@@ -18,18 +18,5 @@ path = [
   "NOTICE",
 ]
 SPDX-FileCopyrightText = "Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>"
-SPDX-License-Identifier = "Apache-2.0"
-
-# The hatchrun logo and icons are proprietary brand assets, not covered
-# by the Apache License. Source: hatchrun/brand.
-[[annotations]]
-path = [
-  "public/favicon.svg",
-  "public/favicon-32.png",
-  "public/apple-touch-icon.png",
-  "public/brand/**",
-  "src/assets/brand/**",
-]
-precedence = "override"
-SPDX-FileCopyrightText = "Copyright 2026 Gamunu Balagalla <gamunu.balagalla@gmail.com>"
 SPDX-License-Identifier = "LicenseRef-hatchrun-Proprietary"
+
