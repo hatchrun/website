@@ -19,10 +19,11 @@ description: What is done and what comes next.
   OIDC, the launch template and the runner network.
 - hatchrun.io Worker that records jobs from GitHub App webhooks and
   reads the [`runs-on` label](/docs/runs-on/).
+- Worker launches and removes instances in connected accounts.
+- Hosted service: GitHub App install, dashboard and Launch Stack links.
 
 ## Next
 
-- Worker launches and removes instances in connected accounts.
-- Hosted beta: GitHub App install, dashboard and Launch Stack links.
+- GCP and Azure runners.
 - CloudFormation template for self-hosting, with Launch Stack buttons.
 - Windows runners.

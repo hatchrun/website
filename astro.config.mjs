@@ -17,6 +17,8 @@ export default defineConfig({
   },
   redirects: {
     "/docs": "/docs/overview/",
+    // The hosted service is out of beta; the old beta page goes to setup.
+    "/docs/beta": "/docs/getting-started/",
   },
   integrations: [
     starlight({
@@ -36,7 +38,7 @@ export default defineConfig({
         { tag: "link", attrs: { rel: "apple-touch-icon", href: "/apple-touch-icon.png" } },
       ],
       description:
-        "Open-source autoscaler for GitHub Actions runners on your own AWS account.",
+        "Self-hosted GitHub Actions runners in your own cloud account. Open source, Apache-2.0.",
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/hatchrun" },
       ],
@@ -45,7 +47,6 @@ export default defineConfig({
           label: "Start here",
           items: [
             { label: "Overview", slug: "docs/overview" },
-            { label: "Hosted beta", slug: "docs/beta" },
             { label: "Getting started", slug: "docs/getting-started" },
           ],
         },
