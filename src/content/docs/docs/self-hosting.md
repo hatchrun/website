@@ -483,8 +483,8 @@ jobs:
 
 Run it from the Actions tab. Within a few seconds the scaler logs that
 it launched an instance, and the instance shows up in EC2 tagged
-`hatchrun:scale-set-id` and `hatchrun:runner-name`. The job starts about
-30 seconds later. When it finishes the instance powers off and
+`hatchrun:scale-set-id` and `hatchrun:runner-name`. The job starts
+29.5 seconds later on a t4g.medium. When it finishes the instance powers off and
 terminates. Set `RUST_LOG=debug` on the scaler for more detail.
 
 A job that stays queued usually means the scaler cannot launch: look

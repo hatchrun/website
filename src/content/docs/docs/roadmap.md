@@ -14,7 +14,8 @@ description: What is done and what comes next.
   provenance.
 - Ubuntu 26.04 runner images for amd64 and arm64, scanned and attested,
   in every AWS region enabled by default.
-- Boot in about 30 seconds from launch to job start.
+- Boot in 29.5 seconds from launch to job start (t4g.medium in
+  ap-south-1).
 - Connect CloudFormation stack: the role hatchrun.io assumes through
   OIDC, the launch template and the runner network.
 - hatchrun.io Worker that records jobs from GitHub App webhooks and
