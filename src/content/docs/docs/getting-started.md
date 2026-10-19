@@ -10,9 +10,9 @@ happen there. GCP and Azure guides follow when those providers
 ship. To run the
 control plane yourself, see [Self-hosting](/docs/self-hosting/).
 
-The first 3,000 job minutes each month are free, with no card. Add one
-under Settings in the app, through Polar, before the organization goes
-past them. See [Costs](/docs/costs/).
+The first 3,000 job minutes each calendar month (UTC) are free, with
+no card. Add one under Settings in the app, through Polar, before the
+organization goes past them. See [Costs](/docs/costs/).
 
 ## Before you start
 
