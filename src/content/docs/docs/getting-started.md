@@ -5,10 +5,14 @@ description: Connect a GitHub organization and an AWS account to hatchrun.io and
 
 Set up hatchrun for one GitHub organization on AWS and run your first
 job. Setup starts in [app.hatchrun.io](https://app.hatchrun.io), and
-the app sends you to GitHub, Polar and the AWS console for the steps
-that happen there. GCP and Azure guides follow when those providers
+the app sends you to GitHub and the AWS console for the steps that
+happen there. GCP and Azure guides follow when those providers
 ship. To run the
 control plane yourself, see [Self-hosting](/docs/self-hosting/).
+
+The first 3,000 job minutes each calendar month (UTC) are free, with
+no card. Add one under Settings in the app, through Polar, before the
+organization goes past them. See [Costs](/docs/costs/).
 
 ## Before you start
 
@@ -33,11 +37,6 @@ holds no access keys to it. See [Security](/docs/security/).
    The App sends hatchrun a webhook for every queued job in those
    repositories. hatchrun launches a runner for each job whose only label
    is a hatchrun one.
-
-1. ## Choose a plan
-
-   Subscribe to hatchrun Team for the organization. Checkout runs through
-   Polar. See [Costs](/docs/costs/) for what the subscription pays for.
 
 1. ## Subscribe to the runner images
 
