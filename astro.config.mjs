@@ -68,6 +68,72 @@ export default defineConfig({
           ],
         },
         {
+          label: "hatchrun CI (preview)",
+          items: [
+            {
+              label: "Get started",
+              items: [
+                { label: "Introduction", slug: "docs/ci/get-started/introduction" },
+                { label: "Concepts", slug: "docs/ci/get-started/concepts" },
+                { label: "Quickstart", slug: "docs/ci/get-started/quickstart" },
+              ],
+            },
+            {
+              label: "Set up",
+              items: [
+                { label: "Install the GitHub App", slug: "docs/ci/setup/github-app", badge: { text: "Coming", variant: "caution" } },
+                { label: "How events reach hatchrun", slug: "docs/ci/setup/events", badge: { text: "Coming", variant: "caution" } },
+                { label: "Check runs and statuses", slug: "docs/ci/setup/check-runs", badge: { text: "Coming", variant: "caution" } },
+                { label: "Secrets and variables", slug: "docs/ci/setup/secrets", badge: { text: "Coming", variant: "caution" } },
+                { label: "Organization settings", slug: "docs/ci/setup/settings" },
+              ],
+            },
+            {
+              label: "Guides",
+              items: [
+                { label: "Migrate from GitHub Actions", slug: "docs/ci/guides/migrate" },
+                { label: "Write your first config", slug: "docs/ci/guides/first-config" },
+                { label: "Reuse config", slug: "docs/ci/guides/reuse-config" },
+                { label: "Requires and approvals", slug: "docs/ci/guides/requires-approvals" },
+                { label: "Build a matrix", slug: "docs/ci/guides/matrix" },
+                { label: "Filter by branch, tag and path", slug: "docs/ci/guides/filters" },
+                { label: "Schedule a nightly workflow", slug: "docs/ci/guides/schedule" },
+                { label: "Cache dependencies", slug: "docs/ci/guides/cache" },
+                { label: "Share files with workspaces", slug: "docs/ci/guides/workspaces" },
+                { label: "Collect test results", slug: "docs/ci/guides/test-results" },
+                { label: "Split tests across parallel jobs", slug: "docs/ci/guides/test-splitting", badge: { text: "Coming", variant: "caution" } },
+                { label: "Use GitHub actions in steps", slug: "docs/ci/guides/github-actions" },
+                { label: "Choose a runner size", slug: "docs/ci/guides/runner-size" },
+              ],
+            },
+            {
+              label: "Reference",
+              items: [
+                { label: "Configuration reference", slug: "docs/ci/reference/configuration" },
+                { label: "Expressions and functions", slug: "docs/ci/reference/expressions" },
+                { label: "Contexts", slug: "docs/ci/reference/contexts" },
+                { label: "Triggers and filter patterns", slug: "docs/ci/reference/triggers" },
+                { label: "Runner templates and pricing", slug: "docs/ci/reference/runners" },
+                { label: "CLI reference", slug: "docs/ci/reference/cli" },
+                { label: "Limits", slug: "docs/ci/reference/limits" },
+                { label: "Error and warning messages", slug: "docs/ci/reference/messages" },
+              ],
+            },
+            {
+              label: "Troubleshooting",
+              items: [
+                { label: "My workflow did not run", slug: "docs/ci/troubleshooting/workflow-did-not-run" },
+                { label: "A job did not start", slug: "docs/ci/troubleshooting/job-did-not-start" },
+                { label: "A step was skipped", slug: "docs/ci/troubleshooting/step-skipped" },
+                { label: "Fix validate errors", slug: "docs/ci/troubleshooting/validate-errors" },
+                { label: "convert warnings and errors", slug: "docs/ci/troubleshooting/convert-problems" },
+                { label: "Webhook delivery problems", slug: "docs/ci/troubleshooting/webhooks", badge: { text: "Coming", variant: "caution" } },
+                { label: "FAQ", slug: "docs/ci/troubleshooting/faq" },
+              ],
+            },
+          ],
+        },
+        {
           label: "Project",
           items: [{ label: "Roadmap", slug: "docs/roadmap" }],
         },
