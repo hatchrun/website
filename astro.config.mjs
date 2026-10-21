@@ -68,6 +68,21 @@ export default defineConfig({
           ],
         },
         {
+          label: "hatchrun CI (preview)",
+          items: [
+            { label: "Overview", slug: "docs/ci/overview" },
+            { label: "Quickstart", slug: "docs/ci/quickstart" },
+            { label: "Configuration reference", slug: "docs/ci/configuration" },
+            { label: "Triggers", slug: "docs/ci/triggers" },
+            { label: "Expressions and contexts", slug: "docs/ci/expressions" },
+            { label: "Runners", slug: "docs/ci/runners" },
+            { label: "Test splitting", slug: "docs/ci/test-splitting" },
+            { label: "Migrating from GitHub Actions", slug: "docs/ci/migrating" },
+            { label: "CLI reference", slug: "docs/ci/cli" },
+            { label: "Limits", slug: "docs/ci/limits" },
+          ],
+        },
+        {
           label: "Project",
           items: [{ label: "Roadmap", slug: "docs/roadmap" }],
         },
