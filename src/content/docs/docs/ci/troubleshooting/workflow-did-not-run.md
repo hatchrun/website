@@ -52,7 +52,9 @@ errors](/docs/ci/troubleshooting/validate-errors/).
 
 ## 4. The file is under 1 MiB
 
-A config over 1,048,576 bytes is refused:
+A config over 1,048,576 bytes is refused. `hatchrun validate` says
+`` hatchrun: .hatchrun/config.yml is 1048579 bytes; the limit is 1048576 ``.
+Check the size:
 
 ```sh
 wc -c .hatchrun/config.yml

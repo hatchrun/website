@@ -91,13 +91,15 @@ Every message is listed in
 | Code | Meaning |
 | --- | --- |
 | 0 | The file is valid |
-| 1 | Problems were found, or the file could not be read |
+| 1 | Problems were found, or the file could not be read or is over 1 MiB |
 | 2 | The command line was wrong |
 
-A file that cannot be read prints to standard error:
+A file that cannot be read, or is over 1 MiB, prints to standard
+error and nothing else is checked:
 
 ```text
 hatchrun: read nope.yml: No such file or directory (os error 2)
+hatchrun: .hatchrun/config.yml is 1048579 bytes; the limit is 1048576
 ```
 
 ## hatchrun convert
@@ -143,7 +145,7 @@ entry is named after the GitHub job id.
 | Code | Meaning |
 | --- | --- |
 | 0 | Everything converted; there may be warnings |
-| 1 | Something was left out and the config holds the rest; or nothing converted, or a file could not be read, and no config was written |
+| 1 | Something was left out and the config holds the rest; or nothing converted, or a file could not be read or is over 1 MiB, and no config was written |
 | 2 | The command line was wrong |
 
 Run `hatchrun validate` on the written config before you commit it.

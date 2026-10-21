@@ -73,5 +73,5 @@ These change nothing a job does:
 ## When nothing is written
 
 `convert` writes no config when nothing converted at all, when a file
-cannot be read, or when there is no `.github/workflows/` and you named
+cannot be read or is over 1 MiB, or when there is no `.github/workflows/` and you named
 no files. The messages say which.
