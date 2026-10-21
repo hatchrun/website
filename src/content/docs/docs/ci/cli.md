@@ -5,8 +5,9 @@ banner:
   content: "Preview: hatchrun CI is not available yet. This page documents the configuration format."
 ---
 
-`hatchrun` is a single binary for Linux on amd64 and arm64. It reads
-files and writes files, and talks to no server. See the
+`hatchrun` is a single binary. Prebuilt binaries are for Linux on
+x86-64 and arm64 for now; on other systems, build it from source. It
+reads files and writes files, and talks to no server. See the
 [Quickstart](/docs/ci/quickstart/#install-the-cli) to install it.
 
 ```text

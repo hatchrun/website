@@ -75,9 +75,3 @@ reports it and lists the labels it accepts:
 `-arm` forms become `ubuntu-26.04-arm`. See
 [Migrating from GitHub Actions](/docs/ci/migrating/#runs-on).
 
-## Billing
-
-The plan for launch: a card is required before the first job, and each
-organization gets 500 free minutes a month, at most 5 jobs running at
-once and a $50 monthly spend cap that you can raise. A job that would
-pass a cap waits in the queue, and its check run says why.

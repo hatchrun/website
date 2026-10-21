@@ -6,9 +6,9 @@ banner:
 ---
 
 This page turns the GitHub Actions workflows of a repository into a
-`.hatchrun/config.yml` and checks it. You need a Linux machine (amd64
-or arm64) and the [GitHub CLI](https://cli.github.com/) to download
-the release.
+`.hatchrun/config.yml` and checks it. Prebuilt binaries are for Linux
+on x86-64 and arm64 for now. On another system, such as macOS, build
+the CLI from source.
 
 :::steps
 
@@ -29,7 +29,17 @@ the release.
    hatchrun --version
    ```
 
-   On arm64, use `linux-arm64` in the file names.
+   On arm64, use `linux-arm64` in the file names. These commands use
+   the [GitHub CLI](https://cli.github.com/).
+
+   To build from source instead, on macOS or Linux, install
+   [Rust](https://rustup.rs/) and run:
+
+   ```sh
+   cargo install --locked --git https://github.com/hatchrun/hatchrun hatchrun-cli
+   ```
+
+   This installs the `hatchrun` binary in `~/.cargo/bin`.
 
 2. ## Convert your workflows
 

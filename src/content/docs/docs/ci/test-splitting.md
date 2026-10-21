@@ -66,7 +66,5 @@ equal numbers of tests. A copy beyond the number of tests gets none.
 
 ## Where timings come from
 
-Timings come from the JUnit XML that the
-[`test-results` step](/docs/ci/configuration/#test-results) uploads.
-Upload results from every copy so the next run has timings for every
-test.
+How timings are recorded will be settled with the runner work, and
+this page will say how once it ships.
