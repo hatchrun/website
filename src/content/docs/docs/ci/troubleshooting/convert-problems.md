@@ -5,7 +5,8 @@ banner:
   content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
-`hatchrun convert` prints warnings first, then errors, on standard
+`hatchrun convert` prints files over 1 MiB first, then warnings, then
+errors, on standard
 error. This page sorts them by what you need to do. Every message is
 in [Error and warning messages](/docs/ci/reference/messages/#convert-warnings).
 
@@ -69,9 +70,11 @@ These change nothing a job does:
 | A bad expression | Fix it in the GitHub file |
 | Two files become one workflow | Rename one file |
 | A file that is not valid YAML | Fix the YAML; the file is skipped |
+| A file over 1 MiB | Shrink it; the file is skipped and the rest convert |
 
 ## When nothing is written
 
-`convert` writes no config when nothing converted at all, when a file
-cannot be read or is over 1 MiB, or when there is no `.github/workflows/` and you named
+`convert` writes no config when nothing converted at all, which
+includes every file being over 1 MiB, when a file cannot be read, or
+when there is no `.github/workflows/` and you named
 no files. The messages say which.

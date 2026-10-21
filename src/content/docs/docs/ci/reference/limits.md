@@ -39,8 +39,15 @@ error and exits with 1:
 hatchrun: .hatchrun/config.yml is 1048579 bytes; the limit is 1048576
 ```
 
-`hatchrun convert` refuses a GitHub file over 1 MiB the same way. It
-stops before converting anything and writes no config. It also
+`hatchrun convert` reports a GitHub file over 1 MiB without the
+`hatchrun:` prefix, leaves it out, converts the other files and exits
+with 1:
+
+```text
+.github/workflows/ci.yml is 1048579 bytes; the limit is 1048576
+```
+
+When every file is over the limit, `convert` writes nothing. It also
 reports a converted config that would be over 1 MiB.
 
 YAML that nests too deeply, or expands to too many values through

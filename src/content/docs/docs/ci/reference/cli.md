@@ -118,7 +118,8 @@ Converts GitHub Actions workflow files into one hatchrun config.
 ### Output
 
 - The config goes to standard output, or to `PATH` with `-o`.
-- Warnings, then errors, go to standard error, one per line.
+- Problems go to standard error, one per line: files over 1 MiB
+  first, then warnings, then errors.
 - A problem with a position in a file reads
   `PATH:LINE:COLUMN: MESSAGE`. Others start with the file name.
 
@@ -145,7 +146,7 @@ entry is named after the GitHub job id.
 | Code | Meaning |
 | --- | --- |
 | 0 | Everything converted; there may be warnings |
-| 1 | Something was left out and the config holds the rest; or nothing converted, or a file could not be read or is over 1 MiB, and no config was written |
+| 1 | Something was left out, such as a job or a file over 1 MiB, and the config holds the rest; or nothing converted, or a file could not be read, and no config was written |
 | 2 | The command line was wrong |
 
 Run `hatchrun validate` on the written config before you commit it.

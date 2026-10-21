@@ -180,7 +180,7 @@ job is dropped too, with a warning.
 | `` `ci.yml`: `on` lists `{"a":1}`, which is not an event name `` | A list entry in `on:` that is not a name. | Fix the GitHub file. |
 | `` x.yml:1:5: unclosed bracket '[' `` | The GitHub file is not valid YAML. The file is skipped. | Fix the YAML. |
 | `` workflow `many` plans more than 256 jobs; the limit is 256 `` | The converted workflow would fail `validate`. | Split the workflow or cut matrices. |
-| `` hatchrun: .github/workflows/ci.yml is 1048579 bytes; the limit is 1048576 `` | A GitHub file over 1 MiB. Nothing is converted and no config is written. | Shrink the file, or leave it out of the file list. |
+| `` .github/workflows/ci.yml is 1048579 bytes; the limit is 1048576 `` | A GitHub file over 1 MiB. It is left out and the other files convert. When every file is too big, no config is written. | Shrink the file, or keep that workflow on GitHub Actions. |
 | `` hatchrun: a/ci.yml and b/ci.yml have the same file name; convert them separately `` | Two files in different directories with the same name. Nothing is converted. | Convert them in separate runs. |
 | `` hatchrun: read .github/workflows: No such file or directory (os error 2) `` | No files given and no `.github/workflows/` directory. | Run from the repository root, or name the files. |
 
