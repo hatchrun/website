@@ -66,7 +66,7 @@ workflows:
 
 | Key | Type | Default | Description |
 | --- | --- | --- | --- |
-| `types` | list of strings | `[opened, synchronize, reopened]` | Activity types that start the workflow |
+| `types` | string or list of strings | `[opened, synchronize, reopened]` | Activity types that start the workflow |
 | `branches` | filter | | Base branches that start the workflow |
 | `branches-ignore` | filter | | Base branches that do not |
 | `paths` | filter | | Changed paths that start the workflow |

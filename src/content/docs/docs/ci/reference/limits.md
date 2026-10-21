@@ -39,9 +39,9 @@ it writes.
 .hatchrun/config.yml: the config is 1048579 bytes; the limit is 1048576
 ```
 
-YAML that nests too deeply fails with `recursion limit exceeded`.
-YAML that expands to too many values, for example through anchors and
-aliases, fails with a message that starts with `budget breached`.
+YAML that nests too deeply, or expands to too many values through
+anchors and aliases, fails with `the file is too large or nests too
+deeply to read`.
 
 To get under it, move long scripts into files in the repository and
 call them from `run:`.

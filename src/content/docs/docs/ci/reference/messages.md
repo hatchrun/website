@@ -39,8 +39,7 @@ fix it and run again to see the next.
 | `` .hatchrun/config.yml:5:9: `shell` is valid only on run steps `` | `shell`, `working-directory` or `timeout-minutes` on a `uses` step. | Remove the key. |
 | `` .hatchrun/config.yml:5:9: a step needs run, uses, cache, workspace, test-results or a command name `` | A step map with only keys such as `name` or `if`. | Add `run` or `uses`. |
 | `` .hatchrun/config.yml:7:9: a workflow job entry is a map with one key, the job name; found `x` after `t` `` | A workflow entry's options are at the wrong indent, next to the job name. | Indent them under the job name. |
-| `` .hatchrun/config.yml:7:269: recursion limit exceeded `` | YAML nested too deeply. | Flatten the value. |
-| `` .hatchrun/config.yml:22:28: budget breached: Nodes { nodes: 250001 } `` | YAML that expands to too many values, usually through anchors and aliases. | Remove the aliases that multiply. |
+| `` .hatchrun/config.yml:7:269: the file is too large or nests too deeply to read `` | YAML nested too deeply, or expanded to too many values through anchors and aliases. | Flatten the value, or remove the aliases that multiply. |
 | `` .hatchrun/config.yml: the config is 1800098 bytes; the limit is 1048576 `` | The file is over 1 MiB. | Move long scripts into files in the repository. |
 
 ## validate: jobs and commands
@@ -173,5 +172,6 @@ job is dropped too, with a warning.
 | `` `ci.yml`: `on` lists `{"a":1}`, which is not an event name `` | A list entry in `on:` that is not a name. | Fix the GitHub file. |
 | `` x.yml:1:5: unclosed bracket '[' `` | The GitHub file is not valid YAML. The file is skipped. | Fix the YAML. |
 | `` workflow `many` plans more than 256 jobs; the limit is 256 `` | The converted workflow would fail `validate`. | Split the workflow or cut matrices. |
+| `` hatchrun: a/ci.yml and b/ci.yml have the same file name; convert them separately `` | Two files in different directories with the same name. Nothing is converted. | Convert them in separate runs. |
 | `` hatchrun: read .github/workflows: No such file or directory (os error 2) `` | No files given and no `.github/workflows/` directory. | Run from the repository root, or name the files. |
 
