@@ -74,8 +74,23 @@ summary and the end of a failed step.
 
 ## What does a job cost?
 
-The template's price per minute times the job's minutes. A 10-minute
-job on `ubuntu-latest` is 10 × $0.002, which is $0.02.
+The template's price per minute, charged per second, with a 60 second
+minimum per job. A 10-minute job on `ubuntu-latest` is $0.02. A
+45-second job is billed as 60 seconds, $0.002. There are no free
+minutes, and the organization needs a card on file before jobs start.
+It is the same subscription as hatchrun.io runners. See
+[Billing](/docs/ci/setup/billing/).
+
+## Can I limit a secret to some repositories?
+
+Yes. An organization secret or variable reaches all repositories or a
+list you pick. See
+[Secrets and variables](/docs/ci/setup/secrets/#which-repositories-an-organization-value-reaches).
+
+## How do I protect a production deploy?
+
+Create an [environment](/docs/ci/setup/environments/) with branch
+patterns and approval, and set `environment` on the deploy job.
 
 ## How is hatchrun CI different from CircleCI?
 

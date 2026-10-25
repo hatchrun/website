@@ -103,6 +103,7 @@ machine. It runs only when a [workflow](#workflows) lists it.
 | [`runs-on`](#runs-on) | one of `executor`, `runs-on` | string | | A runner template label |
 | [`parameters`](#parameters) | no | map | none | Inputs the job's steps and fields read |
 | [`parallelism`](#parallelism) | no | integer | `1` | Copies of the job to run, 1 to 64 |
+| [`environment`](#environment) | no | string or map | none | The deploy environment the job uses |
 | [`env`](#env) | no | map of strings | none | Environment variables for every step |
 | [`if`](#if) | no | expression | none | The job runs only when this is true |
 | [`timeout-minutes`](#timeout-minutes) | no | integer | `360` | Minutes before the job is cancelled |
@@ -190,6 +191,27 @@ jobs:
     steps:
       - run: make docs
 ```
+
+### environment
+
+The [environment](/docs/ci/setup/environments/) the job deploys to,
+either a name or a map with `name`. The job gets the environment's
+secrets and variables, and runs only on the branches it allows. If the
+environment requires approval, the job waits for an organization admin.
+
+```yaml title=".hatchrun/config.yml"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - run: ./deploy.sh
+```
+
+A name is 1 to 255 letters, digits, `-`, `_` or `.`. The name can read
+`${{ parameters.NAME }}` and no other expression. A map can hold only
+`name`. The environment must exist in the repository when the job
+starts.
 
 ### timeout-minutes
 

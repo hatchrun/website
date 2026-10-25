@@ -171,6 +171,11 @@ yet. The config format for approvals works today.
   entry that requires it is dropped too.
 - A loop in `requires` is an error.
 
+To hold one job for an organization admin, tied to a deploy target
+with its own branch rules and secrets, use an
+[environment](/docs/ci/setup/environments/#approval) with approval
+instead.
+
 An approval takes `requires`, `branches` and `tags` only. It cannot
 have a `name`, a `matrix` or parameter values.
 

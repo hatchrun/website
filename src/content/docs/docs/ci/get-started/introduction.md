@@ -26,7 +26,7 @@ still being built.
 | `hatchrun convert`, which turns GitHub workflows into a config | Available today |
 | The GitHub App permissions and events for CI | Coming later |
 | Running jobs, check runs, logs | Coming later |
-| Secrets and variables | Coming later |
+| Secrets and variables, environments and billing | Coming later |
 | Storage for `cache`, `workspace` and `test-results` | Coming later |
 | The approval page for approval jobs | Coming later |
 | Test splitting on the runner | Coming later |
@@ -46,11 +46,13 @@ runner images.
 | Workflow file | `.github/workflows/*.yml` | `.hatchrun/config.yml` |
 | Where jobs run | EC2 in your AWS account | Machines hatchrun owns |
 | Machine sizes | [Runner profiles](/docs/runs-on/) you can edit | A fixed set of [runner templates](/docs/ci/reference/runners/) |
-| What you pay | AWS for instances, hatchrun per job minute | hatchrun per job minute, machine included |
+| What you pay | AWS for instances, hatchrun per second of job time | hatchrun per second of job time, machine included |
 
 Pick hatchrun.io runners when jobs must run inside your own VPC, use
 your AWS discounts or reach private resources. Pick hatchrun CI when
 you want CI without an AWS account and a low price per minute.
+Both bill on one [subscription](/docs/ci/setup/billing/), each at its own
+rate, with no free minutes.
 
 You can use both in one repository. hatchrun CI ignores
 `.github/workflows/`, so a workflow you have not moved keeps running on

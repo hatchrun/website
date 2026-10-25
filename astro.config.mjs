@@ -85,6 +85,8 @@ export default defineConfig({
                 { label: "How events reach hatchrun", slug: "docs/ci/setup/events", badge: { text: "Coming", variant: "caution" } },
                 { label: "Check runs and statuses", slug: "docs/ci/setup/check-runs", badge: { text: "Coming", variant: "caution" } },
                 { label: "Secrets and variables", slug: "docs/ci/setup/secrets", badge: { text: "Coming", variant: "caution" } },
+                { label: "Environments", slug: "docs/ci/setup/environments", badge: { text: "Coming", variant: "caution" } },
+                { label: "Billing", slug: "docs/ci/setup/billing", badge: { text: "Coming", variant: "caution" } },
                 { label: "Organization settings", slug: "docs/ci/setup/settings" },
               ],
             },

@@ -28,6 +28,18 @@ message.
 | [Patterns in one filter](#filters) | 256 |
 | [Glob patterns in the config](#filters) | 4,096 |
 | [Changed files path filters check](#filters) | the first 300 |
+| [Environment name length](#environments) | 255 characters |
+| [Branch patterns in one environment](#environments) | 50, of at most 255 bytes |
+
+## Environments
+
+An [environment](/docs/ci/setup/environments/) name is 1 to 255
+letters, digits, `-`, `_` or `.`, and not only dots. An environment
+holds at most 50 branch patterns, each at most 255 bytes with no
+control characters.
+
+The hatchrun app refuses a value outside these limits. `hatchrun
+validate` checks the name a job uses.
 
 ## The file
 

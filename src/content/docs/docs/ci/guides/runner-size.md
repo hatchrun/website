@@ -41,6 +41,9 @@ so a bigger machine costs more per minute and may cost less per job.
          - run: cargo build --release
    ```
 
+   Jobs are billed per second, with a 60 second minimum, so a job that
+   ends in 20 seconds costs the same as one that runs for 60.
+
    If the job takes half as long, it costs the same and you wait half
    as long. If it takes as long as before, the job is not using the
    cores; move it back.

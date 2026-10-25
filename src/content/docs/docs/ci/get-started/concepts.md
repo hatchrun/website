@@ -77,7 +77,7 @@ failed step stops the job.
 
 A runner template is a machine size, such as `ubuntu-26.04-4core`. A
 job names one with `runs-on`. hatchrun publishes a
-[fixed set](/docs/ci/reference/runners/), each with a per-minute price.
+[fixed set](/docs/ci/reference/runners/), each with a price per minute, billed per second.
 
 ### Executor
 

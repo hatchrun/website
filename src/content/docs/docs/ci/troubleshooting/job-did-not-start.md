@@ -30,7 +30,16 @@ The run never planned it.
   finish. A required matrix or parallel entry means every one of its
   jobs.
 - **It waits for an approval.** An entry it requires has
-  `type: approval` and nobody has approved it yet.
+  `type: approval` and nobody has approved it yet. A job whose
+  [environment](/docs/ci/setup/environments/#approval) requires
+  approval waits too, and its check run names the run page where an
+  organization admin can approve or reject it.
+- **It waits for a card.** The check run says "Waiting for a card".
+  Add one on the organization's CI page. See
+  [Billing](/docs/ci/setup/billing/#a-card-is-required).
+- **It reached the spend cap or the limit of 5 running jobs.** The
+  check run says which. Raise the cap on the CI page, or wait for a
+  running job to end.
 
 ## The job was skipped
 
@@ -41,6 +50,18 @@ The run never planned it.
   See [A step was skipped](/docs/ci/troubleshooting/step-skipped/) for
   how conditions work.
 
+## The job failed before it started
+
+- **The environment does not exist.** The job names an environment the
+  repository has not created. Create it, or fix the name.
+- **The branch is not allowed.** The environment lists branches and
+  this run is on another one. Pull request and tag runs never match a
+  non-empty list.
+- **An admin rejected it.** The check run says `Rejected by LOGIN`.
+  Push again, or retry the job, and ask for approval again.
+
+See [Environments](/docs/ci/setup/environments/).
+
 ## The job was cancelled
 
 - **It ran past `timeout-minutes`.** The default is 360 minutes. Raise
@@ -49,5 +70,6 @@ The run never planned it.
 
 ## Next steps
 
+- [Billing](/docs/ci/setup/billing/)
 - [A step was skipped](/docs/ci/troubleshooting/step-skipped/)
 - [Run jobs in order with requires and approvals](/docs/ci/guides/requires-approvals/)

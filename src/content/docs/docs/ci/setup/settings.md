@@ -17,6 +17,7 @@ live outside the file.
 | Job order and approvals | `workflows.NAME.jobs` |
 | Machine size | `runs-on` or `executors` |
 | Timeouts | `timeout-minutes` on jobs and run steps |
+| Deploy target | `environment` on a job |
 | Environment variables | `env` on jobs and steps |
 
 See the [configuration reference](/docs/ci/reference/configuration/).
@@ -29,8 +30,10 @@ The hatchrun app's CI settings are not built yet.
 
 | Setting | Scope | What it does |
 | --- | --- | --- |
-| Secrets | Organization, repository | Values read as `${{ secrets.NAME }}`. See [Secrets and variables](/docs/ci/setup/secrets/) |
-| Variables | Organization, repository | Values read as `${{ vars.NAME }}` |
+| Secrets | Organization, repository, environment | Values read as `${{ secrets.NAME }}`. An organization secret reaches all repositories or a selected list. See [Secrets and variables](/docs/ci/setup/secrets/) |
+| Variables | Organization, repository, environment | Values read as `${{ vars.NAME }}` |
+| Environments | Repository | Branch patterns, admin approval and their own secrets. See [Environments](/docs/ci/setup/environments/) |
+| Billing | Organization | Add a card, manage billing and set the monthly spend cap. See [Billing](/docs/ci/setup/billing/) |
 
 ## On GitHub
 

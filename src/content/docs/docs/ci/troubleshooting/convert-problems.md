@@ -38,9 +38,11 @@ These change nothing a job does:
 
 - **`concurrency`.** hatchrun will not cancel older runs of a branch.
   Fine for most repositories.
-- **`environment`.** Its protection rules and secrets are gone. Move
-  the secrets to [hatchrun secrets](/docs/ci/setup/secrets/) and add an
-  [approval](/docs/ci/guides/requires-approvals/) for the review.
+- **`environment`.** The job keeps the name, but the environment does
+  not come with it. Create it in the hatchrun app with its branch
+  patterns, approval and secrets. A job that names a missing
+  environment fails. See
+  [Environments](/docs/ci/setup/environments/).
 - **A retired Ubuntu label became `ubuntu-latest`.** The job now runs
   on Ubuntu 26.04. Run it once and check the tools.
 - **macOS or Windows matrix legs were dropped.** Keep a GitHub workflow

@@ -199,7 +199,7 @@ reference lists them all.
 | --- | --- | --- |
 | `` `concurrency` is not supported and was dropped `` | Cancelling older runs | Nothing, or keep the workflow on GitHub if you depend on it |
 | `` `permissions` is not supported and was dropped `` | A narrower job token | Nothing |
-| `` `environment` is not supported and was dropped `` | Environment protection rules and environment secrets | Move the secrets to [hatchrun secrets](/docs/ci/setup/secrets/); use an [approval](/docs/ci/guides/requires-approvals/) for the review |
+| `` `environment.url` is not supported and was dropped `` | The deployment URL GitHub shows | Nothing |
 | `` `services` is not supported and was dropped `` | Service containers | Start them in a `run:` step. See [services](#services) |
 | `` `strategy.matrix.include` is not supported `` | Extra or changed matrix legs | See [matrix include](#matrix-include-and-exclude) |
 | `` became `ubuntu-latest`, which runs Ubuntu 26.04 `` | Ubuntu 24.04 or 22.04 | Test on 26.04 |
@@ -235,6 +235,29 @@ jobs:
 A job runs on one template in hatchrun. Split it into one job per
 template in the config and list both in the workflow. Any other expression in `runs-on`, such as
 `${{ inputs.runner }}`, is an error. Set a label by hand.
+
+### Environments and secrets
+
+`convert` keeps a job's `environment`, as a name or as a map with
+`name`. The environment itself does not convert, because it lives in
+GitHub's settings. Recreate each one in the hatchrun app:
+
+| In GitHub | In hatchrun |
+| --- | --- |
+| Deployment branches and tags | The environment's branch patterns. Tag rules have no match, and neither do pull request runs |
+| Required reviewers | Require approval. Any organization admin can approve, whatever reviewers GitHub named |
+| Wait timer | Not supported |
+| Environment secrets and variables | The environment's secrets and variables |
+| Repository secrets and variables | The repository's secrets and variables |
+| Organization secrets, "Repository access" | The organization secret's repository access: all repositories or selected ones |
+
+A job that names an environment fails until you create it, and the
+check run says so. A name that is an expression, such as
+`${{ matrix.target }}`, is an error and the job is left out. Write the
+name out, or split the job. See [Environments](/docs/ci/setup/environments/)
+and [Secrets and variables](/docs/ci/setup/secrets/).
+
+GitHub shows an environment's URL on the run. hatchrun drops it.
 
 ### services
 

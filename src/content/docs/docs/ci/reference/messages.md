@@ -133,7 +133,8 @@ without it, and `convert` exits with 0 if there are no errors.
 | `` `ci.yml`: input `env` is an environment input and became a string parameter `` | An `environment` input. | Nothing to do. |
 | `` `ci.yml`: input `b`: `default: maybe` does not fit the input type and was dropped `` | An input default of the wrong type. | Add a valid default by hand. |
 | `` `ci.yml` job `build`: `services` is not supported and was dropped; Docker services and containers come in a later release `` | Job `services` or `container`. | Start them with `docker run`. See [Migrate: services](/docs/ci/guides/migrate/#services). |
-| `` `ci.yml` job `build`: `environment` is not supported and was dropped `` | Job `concurrency`, `permissions`, `environment` or `continue-on-error`. | For `environment`, move its secrets to hatchrun and add an approval. |
+| `` `ci.yml` job `build`: `concurrency` is not supported and was dropped `` | Job `concurrency`, `permissions` or `continue-on-error`; the message names the key. | Nothing to do. |
+| `` `ci.yml` job `build`: `environment.url` is not supported and was dropped `` | A job `environment` map with `url`. | Nothing to do. |
 | `` `ci.yml` job `build`: unknown key `foo` was dropped `` | A job or step key GitHub does not define. | Nothing to do. |
 | `` `ci.yml` job `build`: `strategy.max-parallel` is not supported and was dropped `` | A `strategy` key other than `matrix`. | Nothing to do. |
 | `` `ci.yml` job `build`: `strategy.matrix.include` is not supported and was dropped; only plain value lists convert `` | Matrix `include` or `exclude`. | Rebuild with extra entries. See [Migrate: matrix](/docs/ci/guides/migrate/#matrix-include-and-exclude). |
@@ -170,6 +171,9 @@ job is dropped too, with a warning.
 | `` `ci.yml` job `f` is not a map `` | A job that is not a map. | Fix the GitHub file. |
 | `` `ci.yml` job `d` reads the `strategy` context, which hatchrun does not provide; the job was dropped `` | A read of `strategy` or `jobs`. | Use `matrix` values, or job outputs through `needs`. |
 | `` `ci.yml` job `d` has a bad expression: unknown context 'foo' (at byte 9); the job was dropped `` | An expression that does not parse or reads an unknown context. | Fix the expression. |
+| `` `ci.yml` job `d`: `environment` must be a name or a map with `name` `` | An `environment` that is neither a string nor a map with a string `name`. The job is left out. | Write `environment: NAME`. |
+| `` `ci.yml` job `d`: `environment` uses an expression; hatchrun reads environment names as written `` | `environment: ${{ ... }}`. The job is left out. | Write the name out, or split the job. |
+| `` `ci.yml` job `d`: `environment` `prod env`: Use letters, digits, -, _ and . in environment names `` | A name with a space or another character hatchrun does not allow, or one longer than 255 characters. The job is left out. | Rename the environment. |
 | `` `ci.yml` job `d` reads `parameters`, which a converted job does not declare; the job was dropped `` | A read of `parameters` in a GitHub file. | Remove it. |
 | `` `ci.yml` and `ci.yaml` both become workflow `ci`; rename one of them `` | Two files with the same name before the extension. The second is skipped. | Rename one. |
 | `` `.yml` has no name before its extension; rename it `` | A file named only `.yml`. | Rename it. |
