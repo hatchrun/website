@@ -82,22 +82,26 @@ const repos = [
 
 // The metered price, as the Polar product charges it.
 const rates = [
-  { item: "First 3,000 job minutes", price: "FREE", note: "No card needed." },
   {
-    item: "After that, per minute",
+    item: "hatchrun.io runners, per minute",
     price: "$0.001",
-    note: "Billed per job minute, rounded up per job.",
+    note: "Billed per second, 60 second minimum per job. A card is required.",
+  },
+  {
+    item: "hatchrun CI, per minute",
+    price: "$0.002",
+    note: "For 2 vCPU. 4, 8 and 16 vCPU cost 2x, 4x and 8x. Same subscription.",
   },
   {
     item: "Compute markup",
     price: "$0.00",
-    note: "Your cloud provider bills instances directly.",
+    note: "Your cloud provider bills runner instances directly.",
   },
 ];
 const examples = [
-  { minutes: "3,000", cost: "$0.00" },
-  { minutes: "100,000", cost: "$97.00" },
-  { minutes: "500,000", cost: "$497.00" },
+  { minutes: "1,000", cost: "$1.00" },
+  { minutes: "100,000", cost: "$100.00" },
+  { minutes: "500,000", cost: "$500.00" },
 ];
 
 const receipt = [
@@ -357,9 +361,12 @@ jobs:
             <p class="eyebrow mono heat">Pricing</p>
             <h2 class="display h2-big">The code is free. The service is cheap.</h2>
             <p class="ink-2">
-              Hosted hatchrun is billed per job minute after 3,000 free minutes a
-              month per GitHub organization. Your cloud provider bills you for the
-              machines at your own rates, and we never mark up compute.
+              Hosted hatchrun is billed per second, with a 60 second minimum per job,
+              per GitHub organization. Runners and hatchrun CI share one
+              subscription, each at its own rate. There are no free minutes, so an
+              organization adds a card before its first job. Your cloud provider
+              bills you for runner instances at your own rates, and we never mark
+              up compute.
             </p>
             <div class="selfhost">
               <div>
@@ -401,7 +408,7 @@ jobs:
                 <li class="coffee"><span>The maintainer's coffee</span><span>✓</span></li>
               </ul>
               <hr />
-              <div class="label">Example month, job minutes after rounding</div>
+              <div class="label">Example month, runner minutes</div>
               <ul>
                 {examples.map((example) => (
                   <li class="fog"><span>{example.minutes} minutes</span><span>{example.cost}</span></li>
@@ -409,9 +416,9 @@ jobs:
               </ul>
               <div class="total">
                 <span class="display">25,000 min</span>
-                <span><span class="display amount">$22.00</span></span>
+                <span><span class="display amount">$25.00</span></span>
               </div>
-              <div class="yearly">22,000 billed minutes x $0.001</div>
+              <div class="yearly">25,000 runner minutes x $0.001</div>
               <div class="note">
                 Large volume, invoicing or an SLA?{" "}
                 <a href="mailto:support@hatchrun.io">Talk to us</a>.
