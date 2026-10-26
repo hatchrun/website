@@ -92,9 +92,11 @@ GitHub does not retry a failed delivery on its own. hatchrun runs a
 reconciler on a timer that looks for events it missed and work that
 stalled, the same pattern hatchrun.io runners use today.
 
-GitHub can deliver one event twice. hatchrun records each event before
-it acts, so a second delivery of the same event finds the record and
-starts nothing.
+GitHub can deliver one event twice. hatchrun records the delivery ID
+GitHub sends in the `X-GitHub-Delivery` header before it acts. A second
+delivery with the same ID, such as a redelivery, finds the record and
+starts nothing. Two events with different IDs both run, even when their
+payloads look alike.
 
 ## Next steps
 

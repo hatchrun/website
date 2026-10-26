@@ -10,7 +10,7 @@ happen there. GCP and Azure guides follow when those providers
 ship. To run the
 control plane yourself, see [Self-hosting](/docs/self-hosting/).
 
-Jobs are billed per second, with a 60 second minimum, and there are no
+Jobs are billed per second, with a 60-second minimum, and there are no
 free minutes. Add a card under Settings in the app, through Polar,
 before the first job. See [Costs](/docs/costs/).
 

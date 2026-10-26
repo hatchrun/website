@@ -30,8 +30,10 @@ jobs:
 
 ## When expressions run
 
-`${{ parameters.NAME }}` is replaced when hatchrun plans the run. Every
-other expression is evaluated on the machine, when its step runs.
+`${{ parameters.NAME }}` is replaced when hatchrun plans the run. A
+job's `if` is evaluated by hatchrun when the jobs it requires have
+finished, before any machine starts. Every other expression is
+evaluated on the machine, when its step runs.
 
 `hatchrun validate` checks that each expression parses, calls known
 functions with the right number of arguments, and reads known
@@ -75,7 +77,8 @@ else is truthy, including empty lists and maps.
 
 - Strings compare without regard to case. `'Main' == 'main'` is true.
 - Other values of the same type compare directly. Lists and maps are
-  never equal, even to themselves.
+  never equal, even to themselves. GitHub treats the same list or map
+  as equal to itself, and hatchrun does not.
 - Values of different types become numbers first. `null` is 0, `false`
   is 0, `true` is 1, a string is parsed and the empty string is 0, a
   list or map is `NaN`. `NaN` equals nothing.

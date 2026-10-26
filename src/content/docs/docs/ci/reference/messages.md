@@ -22,7 +22,8 @@ fix it and run again to see the next.
 | `` .hatchrun/config.yml:4:5: unknown field `image`, expected one of executor, runs-on, parameters, parallelism, env, if, timeout-minutes, outputs, steps, services, container `` | A key the format does not have. The message lists the keys allowed there. | Fix the spelling, or remove the key. |
 | `` .hatchrun/config.yml:1:1: unknown field `job`, expected one of executors, commands, jobs, workflows `` | An unknown top-level key. | Use one of the four top-level keys. |
 | `` .hatchrun/config.yml:3:10: unknown field `release`, expected one of push, pull_request, schedule, workflow_dispatch `` | An event hatchrun CI does not start on. | Use one of the four events. |
-| `` .hatchrun/config.yml:3:5: missing field `on` `` | A workflow without `on:`, or without `jobs:`. | Add the missing key. |
+| `` .hatchrun/config.yml:3:5: missing field `on` `` | A workflow without `on:`. | Add the missing key. |
+| `` .hatchrun/config.yml:3:5: missing field `jobs` `` | A workflow without `jobs:`. | Add the missing key. |
 | `` .hatchrun/config.yml:3:9: expected mapping start `` | A map was expected and something else was found. Most often `on: push` or `on: [push]`. | Write a map, such as `on: { push: {} }`. |
 | `` .hatchrun/config.yml:4:22: invalid u32 `` | A whole number was expected, such as for `timeout-minutes` or `parallelism`. | Write a whole number without quotes. |
 | `` .hatchrun/config.yml:3:3: duplicate key `t` `` | The same key twice in one map. | Remove or rename one. |

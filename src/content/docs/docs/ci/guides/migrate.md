@@ -58,9 +58,9 @@ reports, fix the few things it cannot map, and validate the result.
 
 4. ## Fix every error
 
-   An error means a job was left out of the config. Fix the cause in
-   the GitHub workflow and convert again, or add the job to the config
-   by hand. See [Fix common problems](#fix-common-problems).
+   An error means a job, an event, an input or a file was left out of
+   the config. Fix the cause in the GitHub workflow and convert again,
+   or add what is missing to the config by hand. See [Fix common problems](#fix-common-problems).
 
 5. ## Validate the result
 

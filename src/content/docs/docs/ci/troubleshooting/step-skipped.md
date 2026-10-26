@@ -61,7 +61,9 @@ jobs:
   check run.
 - **The expression reads a value that is not there.** A missing
   property is `null`, which is falsy. Print it with
-  `run: echo '${{ toJSON(github.event) }}'` to check.
+  `env: EVENT_JSON: ${{ toJSON(github.event) }}` with
+  `run: printf '%s\n' "$EVENT_JSON"` to check. Passing the value through
+  `env` keeps a quote in the payload from breaking the shell command.
 - **A variable holds the text `false`.** `${{ vars.DEPLOY }}` is the
   string `'false'`, which is truthy. Compare it instead:
   `vars.DEPLOY == 'true'`.

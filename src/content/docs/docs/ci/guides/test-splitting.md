@@ -75,7 +75,8 @@ inputs, so no test runs twice and none is left out.
 4. Each copy runs its tests in the order they were given.
 
 With no timings at all, every test weighs the same and the copies get
-equal numbers of tests. A copy numbered past the number of tests gets
+as even a split as the count allows, so five tests on four copies give
+2, 1, 1 and 1. A copy numbered past the number of tests gets
 none. How timings are recorded will be settled with the runner work.
 
 ## Parallelism with a matrix

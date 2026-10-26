@@ -16,7 +16,7 @@ for runners has nothing to set up. Each product bills at its own rate.
 
 ## What it costs
 
-CI jobs are billed per second, with a 60 second minimum per job
+CI jobs are billed per second, with a 60-second minimum per job
 attempt. Usage is counted from the attempt's start to its result.
 
 | Template size | Per minute | Per second |
@@ -35,7 +35,7 @@ For example, a job that runs 45 seconds on `ubuntu-latest` is billed for
 `ubuntu-26.04-4core` is billed for 620 seconds, about $0.0413.
 
 hatchrun.io runner jobs on the same subscription cost $0.001 a minute
-($0.0000167 a second), also with a 60 second minimum per job.
+($0.0000167 a second), also with a 60-second minimum per job.
 
 There are no free minutes, no free units and no grace period.
 

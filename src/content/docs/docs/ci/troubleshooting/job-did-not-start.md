@@ -43,7 +43,7 @@ The run never planned it.
 
 ## The job was skipped
 
-- **A job it requires failed.** Without a status function in its
+- **A required job failed.** Without a status function in its
   `if:`, a job runs only when every job before it succeeded. Add
   `if: always()` to run anyway.
 - **Its `if:` was false.** Check the expression against the event.
@@ -58,7 +58,7 @@ The run never planned it.
   this run is on another one. Pull request and tag runs never match a
   non-empty list.
 - **An admin rejected it.** The check run says `Rejected by LOGIN`.
-  Push again, or retry the job, and ask for approval again.
+  Push a new commit or retry the job, then ask for approval.
 
 See [Environments](/docs/ci/setup/environments/).
 

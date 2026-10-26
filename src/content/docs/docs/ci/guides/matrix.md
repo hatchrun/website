@@ -56,10 +56,13 @@ the values on its workflow entry.
        runs-on: ubuntu-latest
        steps:
          - uses: actions/checkout@v5
-         - run: docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pw postgres:${{ matrix.postgres }}
+         - run: |
+             docker run -d --name db -p 5432:5432 -e POSTGRES_PASSWORD=pw postgres:${{ matrix.postgres }}
+             until docker exec db pg_isready -U postgres; do sleep 1; done
          - uses: actions/setup-node@v4
            with:
              node-version: ${{ matrix.node }}
+         - run: npm ci
          - run: npm test
 
    workflows:

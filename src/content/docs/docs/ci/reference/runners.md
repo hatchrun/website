@@ -24,7 +24,7 @@ cannot define your own.
 
 - Price is $0.001 per vCPU per minute, the same on amd64 and arm64,
   and includes the machine.
-- Jobs are billed per second, with a 60 second minimum per job. There
+- Jobs are billed per second, with a 60-second minimum per job attempt. There
   are no free minutes. See [Billing](/docs/ci/setup/billing/).
 - Memory is 4 GiB per vCPU.
 - `ubuntu-latest` and `ubuntu-26.04` are two names for one template.

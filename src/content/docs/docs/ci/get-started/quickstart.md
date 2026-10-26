@@ -12,6 +12,9 @@ marked "Coming later".
 ## Prerequisites
 
 - A GitHub repository you can push to.
+- A card on file for your organization. hatchrun CI jobs wait until
+  there is one, and an organization that already pays for hatchrun.io
+  runners has one. See [Billing](/docs/ci/setup/billing/#a-card-is-required).
 - A Linux machine on x86-64 or arm64 for the prebuilt CLI. On macOS
   or anything else, you need [Rust](https://rustup.rs/) to build it.
 - The [GitHub CLI](https://cli.github.com/) to download the release.
@@ -123,7 +126,9 @@ marked "Coming later".
    Running jobs needs the hosted service.
    :::
 
-   Push the commit. Open the commit or a pull request on GitHub. A
+   Push the commit to `main`, or open a pull request. The example
+   config starts only on pushes to `main` and on pull requests, so a
+   push to another branch without a pull request starts nothing. A
    check run named after the job, here `test`, appears as queued, then
    in progress, then passes.
 

@@ -35,6 +35,7 @@ and a web app.
        runs-on: ubuntu-latest
        steps:
          - uses: actions/checkout@v5
+         - run: npm --prefix web ci
          - run: npm --prefix web test
 
    workflows:

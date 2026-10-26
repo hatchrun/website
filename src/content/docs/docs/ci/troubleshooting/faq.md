@@ -74,8 +74,8 @@ summary and the end of a failed step.
 
 ## What does a job cost?
 
-The template's price per minute, charged per second, with a 60 second
-minimum per job. A 10-minute job on `ubuntu-latest` is $0.02. A
+The template's price per minute, charged per second, with a 60-second
+minimum per job attempt. A 10-minute job on `ubuntu-latest` is $0.02. A
 45-second job is billed as 60 seconds, $0.002. There are no free
 minutes, and the organization needs a card on file before jobs start.
 It is the same subscription as hatchrun.io runners. See

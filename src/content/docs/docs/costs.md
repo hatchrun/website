@@ -43,7 +43,7 @@ with a security group that allows no inbound traffic.
 
 hatchrun CI jobs run on machines hatchrun owns, so there is no AWS
 bill. They are billed on the same subscription as the runners above,
-per second with a 60 second minimum per job, at their own rate: $0.002
+per second with a 60-second minimum per job, at their own rate: $0.002
 a minute for a 2 vCPU template, and 2x, 4x and 8x that for the 4, 8 and
 16 vCPU templates. See [Billing](/docs/ci/setup/billing/).
 

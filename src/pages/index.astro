@@ -85,7 +85,7 @@ const rates = [
   {
     item: "hatchrun.io runners, per minute",
     price: "$0.001",
-    note: "Billed per second, 60 second minimum per job. A card is required.",
+    note: "Billed per second, 60-second minimum per job. A card is required.",
   },
   {
     item: "hatchrun CI, per minute",
@@ -361,7 +361,7 @@ jobs:
             <p class="eyebrow mono heat">Pricing</p>
             <h2 class="display h2-big">The code is free. The service is cheap.</h2>
             <p class="ink-2">
-              Hosted hatchrun is billed per second, with a 60 second minimum per job,
+              Hosted hatchrun is billed per second, with a 60-second minimum per job,
               per GitHub organization. Runners and hatchrun CI share one
               subscription, each at its own rate. There are no free minutes, so an
               organization adds a card before its first job. Your cloud provider
@@ -408,17 +408,17 @@ jobs:
                 <li class="coffee"><span>The maintainer's coffee</span><span>✓</span></li>
               </ul>
               <hr />
-              <div class="label">Example month, runner minutes</div>
+              <div class="label">Example month, billable runner minutes, each job at least 60 seconds</div>
               <ul>
                 {examples.map((example) => (
-                  <li class="fog"><span>{example.minutes} minutes</span><span>{example.cost}</span></li>
+                  <li class="fog"><span>{example.minutes} billable minutes</span><span>{example.cost}</span></li>
                 ))}
               </ul>
               <div class="total">
                 <span class="display">25,000 min</span>
                 <span><span class="display amount">$25.00</span></span>
               </div>
-              <div class="yearly">25,000 runner minutes x $0.001</div>
+              <div class="yearly">25,000 billable minutes x $0.001</div>
               <div class="note">
                 Large volume, invoicing or an SLA?{" "}
                 <a href="mailto:support@hatchrun.io">Talk to us</a>.
