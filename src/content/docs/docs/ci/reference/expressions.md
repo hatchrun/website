@@ -32,8 +32,10 @@ jobs:
 
 `${{ parameters.NAME }}` is replaced when hatchrun plans the run. A
 job's `if` is evaluated by hatchrun when the jobs it requires have
-finished, before any machine starts. Every other expression is
-evaluated on the machine, when its step runs.
+finished, before any machine starts. On the machine, a job's `env` is
+evaluated once when the job starts, before its first step, so it cannot
+read step outputs. Every other expression is evaluated when its step
+runs.
 
 `hatchrun validate` checks that each expression parses, calls known
 functions with the right number of arguments, and reads known
