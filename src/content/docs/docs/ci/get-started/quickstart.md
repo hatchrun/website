@@ -109,7 +109,20 @@ to hatchrun.
 
 5. ## Install the GitHub App
 
-   ## Next steps
+   Sign in to [app.hatchrun.io](https://app.hatchrun.io) with GitHub
+   and install the App on your organization. Add a card there too, or
+   jobs wait. See [Install the GitHub App](/docs/ci/setup/github-app/).
+
+6. ## Push and watch the check run
+
+   Push the commit to `main`, or open a pull request. A check run named
+   `test` appears as queued, then in progress, then passes. If nothing
+   appears, see
+   [My workflow did not run](/docs/ci/troubleshooting/workflow-did-not-run/).
+
+:::
+
+## Next steps
 
 - [Write your first config by hand](/docs/ci/guides/first-config/)
   builds a fuller config step by step.

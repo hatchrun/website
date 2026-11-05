@@ -21,6 +21,10 @@ const steps = [
     body: "on the organization and pick the repositories.",
   },
   {
+    title: "Add a card.",
+    body: "Jobs wait until the organization has a card on file.",
+  },
+  {
     title: "Add .hatchrun/config.yml.",
     body: "Write it, or run hatchrun convert on your GitHub workflows.",
   },
@@ -159,7 +163,16 @@ const receipt = [
 <span class="add">+     runs-on: ubuntu-latest</span>
 <span class="add">+     steps:</span>
 <span class="add">+       - uses: actions/checkout@v5</span>
-<span class="add">+       - run: make test</span></pre>
+<span class="add">+       - run: make test</span>
+<span class="add">+ </span>
+<span class="add">+ workflows:</span>
+<span class="add">+   ci:</span>
+<span class="add">+     on:</span>
+<span class="add">+       push:</span>
+<span class="add">+         branches: [main]</span>
+<span class="add">+       pull_request: {}</span>
+<span class="add">+     jobs:</span>
+<span class="add">+       - test</span></pre>
           </div>
         </div>
       </section>

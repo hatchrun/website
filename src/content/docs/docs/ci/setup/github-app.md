@@ -5,11 +5,11 @@ description: Install the hatchrun GitHub App for CI, choose repositories, and wh
 
 hatchrun CI learns about pushes and pull requests through the hatchrun
 GitHub App. The App also lets hatchrun read your config and report
-check runs. Install it once per organization or user account.
+check runs. Install it once per organization. Personal accounts are not supported.
 
 ## Prerequisites
 
-- Owner rights on the GitHub organization, or your own user account.
+- Owner rights on the GitHub organization.
 - A repository with `.hatchrun/config.yml`. See the
   [Quickstart](/docs/ci/get-started/quickstart/).
 

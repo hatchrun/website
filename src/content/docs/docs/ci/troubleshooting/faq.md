@@ -6,7 +6,8 @@ description: Short answers to common questions about hatchrun CI.
 ## Do I need a cloud account?
 
 No. hatchrun CI runs jobs on machines hatchrun owns. You need a GitHub
-organization or user account, the hatchrun GitHub App and a card.
+organization, the hatchrun GitHub App and a card. Personal accounts are
+not supported.
 
 ## Can I keep some workflows on GitHub Actions?
 

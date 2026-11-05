@@ -15,7 +15,8 @@ file. See [Billing](/docs/ci/setup/billing/).
 
 You need:
 
-- owner rights on the GitHub organization, or your own user account;
+- owner rights on a GitHub organization (hatchrun does not run for
+  personal accounts);
 - a repository you can push to;
 - a card, added in the app.
 
@@ -63,6 +64,13 @@ You need:
    CLI.
 
 1. ## Push and watch the check run
+
+   Commit `.hatchrun/config.yml` so the pushed commit includes it:
+
+   ```sh
+   git add .hatchrun/config.yml
+   git commit -m "ci: add hatchrun config"
+   ```
 
    Push the commit to `main`, or open a pull request. A check run named
    after the job, here `test`, appears as queued, then in progress, then
