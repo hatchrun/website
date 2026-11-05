@@ -1,8 +1,6 @@
 ---
 title: Choose a runner size
 description: Pick a runner template for each job, switch to Arm, and weigh time against cost.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 Every job names a runner template with `runs-on`. The template sets the

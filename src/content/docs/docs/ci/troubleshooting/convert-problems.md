@@ -1,8 +1,6 @@
 ---
 title: convert warnings and errors
 description: What hatchrun convert's warnings and errors mean, how to tell them apart, and what to do about each kind.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 `hatchrun convert` prints files over 1 MiB first, then warnings, then

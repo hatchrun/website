@@ -10,22 +10,10 @@
 
 import "../styles/tokens.css";
 
-const title = "hatchrun: self-hosted GitHub Actions runners in your own cloud";
+const title = "hatchrun: CI that runs on hatchrun machines";
 const description =
-  "hatchrun starts a new machine in your own cloud account for every GitHub Actions job and deletes it when the job ends. Open source, AGPL-3.0.";
+  "hatchrun runs the jobs in .hatchrun/config.yml on its own machines, with live logs, secrets and environments. GitHub stays your code host. Billed per second.";
 const app = "https://app.hatchrun.io";
-
-// Seconds since launch, t4g.medium in ap-south-1. The axis runs to the
-// 71 s of the stock Ubuntu cloud image, so 29.5 s sits at 41.5%.
-const scale = 71.1;
-const boot = [
-  { t: 0, label: "launched" },
-  { t: 6.2, label: "kernel" },
-  { t: 18.2, label: "agent" },
-  { t: 24.0, label: "runner" },
-];
-const jobRunning = 29.5;
-const at = (t: number) => `${((t / scale) * 100).toFixed(1)}%`;
 
 const steps = [
   {
@@ -33,82 +21,74 @@ const steps = [
     body: "on the organization and pick the repositories.",
   },
   {
-    title: "Connect your cloud.",
-    body: "On AWS that is one CloudFormation stack with an IAM role, a launch template and a security group.",
+    title: "Add .hatchrun/config.yml.",
+    body: "Write it, or run hatchrun convert on your GitHub workflows.",
   },
   {
-    title: "Change runs-on.",
-    body: "One label per job, from hatchrun-2cpu to hatchrun-16cpu.",
+    title: "Push.",
+    body: "Each job shows up as a check run with live logs.",
   },
 ];
 
 const specs = [
-  { term: "Boot", big: "29.5s", rest: "launch to the first step", note: "t4g.medium in ap-south-1" },
-  { term: "Jobs per machine", big: "1", rest: "then it terminates. Nothing carries over." },
-  { term: "Inbound ports", big: "0", rest: "open on runners" },
-  { term: "Runner config", rest: "Just-in-time. GitHub accepts it for one job only." },
-  { term: "Regions", big: "17", rest: "AWS regions supported" },
-  { term: "Images", rest: "Trivy scan, SBOM and build provenance, published to every supported region." },
-  { term: "Network", rest: "Your VPC and subnets. Jobs reach private databases without a tunnel." },
-  { term: "Compute billing", rest: "Your provider bills you. Savings Plans and Spot apply." },
+  { term: "Jobs per machine", big: "1", rest: "then the machine is removed. Nothing carries over." },
+  { term: "Sizes", big: "2 to 16", rest: "vCPUs, on amd64 and arm64, 4 GiB of memory per vCPU" },
+  { term: "Billing", rest: "Per second, 60-second minimum per job. No free minutes." },
+  { term: "Spend cap", rest: "$50 a month to start. Owners set it from $50 to $10,000." },
+  { term: "Concurrency", rest: "5 jobs at once per organization to start. The rest wait." },
+  { term: "Logs", rest: "Live in the hatchrun app, linked from each check run." },
+  { term: "Config", rest: "Secrets, variables and environments with branch rules and approval." },
+  { term: "Actions", rest: "uses: steps run GitHub actions. hatchrun convert moves your workflows." },
 ];
 
 const repos = [
   {
     name: "hatchrun/hatchrun",
     tag: "Core",
-    title: "Scaler, broker, agent",
-    body: "The control plane and the agent that boots on each runner.",
+    title: "Control plane, agent, CLI",
+    body: "The Workers that plan and run jobs, the agent on each machine and the hatchrun CLI.",
     cta: "Read the code",
     href: "https://github.com/hatchrun/hatchrun",
   },
   {
-    name: "hatchrun/images",
-    tag: "Images",
-    title: "Runner images",
-    body: "The build behind the 29.5-second boot, with its scans and SBOMs.",
-    cta: "Check the images",
-    href: "https://github.com/hatchrun/images",
-  },
-  {
-    name: "hatchrun/terraform-aws-hatchrun",
-    tag: "Self-host",
-    title: "Run it yourself",
-    body: "Terraform for the whole stack in your own AWS account.",
-    cta: "Self-hosting guide",
-    href: "/docs/self-hosting/",
+    name: "hatchrun/website",
+    tag: "Docs",
+    title: "These docs",
+    body: "Configuration reference, guides and troubleshooting for hatchrun CI.",
+    cta: "Read the docs",
+    href: "/docs/overview/",
   },
 ];
 
 // The metered price, as the Polar product charges it.
 const rates = [
   {
-    item: "hatchrun.io runners, per minute",
-    price: "$0.001",
+    item: "2 vCPU, per minute",
+    price: "$0.002",
     note: "Billed per second, 60-second minimum per job. A card is required.",
   },
   {
-    item: "hatchrun CI, per minute",
-    price: "$0.002",
-    note: "For 2 vCPU. 4, 8 and 16 vCPU cost 2x, 4x and 8x. Same subscription.",
+    item: "4, 8 and 16 vCPU",
+    price: "2x, 4x, 8x",
+    note: "$0.004, $0.008 and $0.016 a minute. amd64 and arm64 cost the same.",
   },
   {
-    item: "Compute markup",
+    item: "Machine, logs, storage",
     price: "$0.00",
-    note: "Your cloud provider bills runner instances directly.",
+    note: "The machine is in the price. No separate bill.",
   },
 ];
 const examples = [
-  { minutes: "1,000", cost: "$1.00" },
-  { minutes: "100,000", cost: "$100.00" },
-  { minutes: "500,000", cost: "$500.00" },
+  { minutes: "1,000", cost: "$2.00" },
+  { minutes: "10,000", cost: "$20.00" },
+  { minutes: "50,000", cost: "$100.00" },
 ];
 
 const receipt = [
-  "Image rebuilds and scans",
-  "Security fixes",
+  "The machine for every job",
+  "Live logs",
+  "Secrets and environments",
   "Support",
-  "Hosted control plane",
 ];
 ---
 
@@ -132,9 +112,8 @@ const receipt = [
   <body>
     <div class="status mono">
       <div class="wrap status-inner">
-        <span class="live"><span class="dot" aria-hidden="true"></span>Runs in your <span class="on">AWS</span> account</span>
-        <span>GCP · next</span>
-        <span>Azure · next</span>
+        <span class="live"><span class="dot" aria-hidden="true"></span>Hosted CI</span>
+        <span>GitHub check runs</span>
         <span class="status-end">AGPL-3.0 · built in the open</span>
       </div>
     </div>
@@ -158,58 +137,30 @@ const receipt = [
     <main>
       <section id="top" class="hero">
         <div class="wrap hero-inner">
-          <p class="eyebrow mono">Self-hosted GitHub Actions runners</p>
+          <p class="eyebrow mono">CI for GitHub repositories</p>
           <h1 class="display">
-            Your cloud.<br /><span class="h1-mark">Your <img src="/brand/hatchrun-mark.svg" alt="" aria-hidden="true" /> runners.</span>
+            Your pipeline.<br /><span class="h1-mark">Our <img src="/brand/hatchrun-mark.svg" alt="" aria-hidden="true" /> machines.</span>
           </h1>
           <div class="hero-grid">
             <div class="hero-copy">
               <p class="lede">
-                hatchrun runs the fleet for you. Each job gets a new machine in
-                your own cloud account, and the machine is gone when the job ends.
+                hatchrun runs the jobs in your repository's config on its own
+                machines. Each job gets a new machine, and the machine is gone
+                when the job ends. GitHub stays your code host.
               </p>
               <div class="actions">
                 <a class="btn btn-chick display" href={app}>Get started</a>
                 <a class="btn btn-bone display" href="/docs/getting-started/">Read the docs</a>
               </div>
             </div>
-            <pre class="diff mono" aria-label="Workflow change"><span class="c"># .github/workflows/test.yml</span>
-jobs:
-  test:
-<span class="del">-   runs-on: ubuntu-latest</span>
-<span class="add">+   runs-on: hatchrun-4cpu-arm64</span></pre>
+            <pre class="diff mono" aria-label="Config file"><span class="c"># .hatchrun/config.yml</span>
+<span class="add">+ jobs:</span>
+<span class="add">+   test:</span>
+<span class="add">+     runs-on: ubuntu-latest</span>
+<span class="add">+     steps:</span>
+<span class="add">+       - uses: actions/checkout@v5</span>
+<span class="add">+       - run: make test</span></pre>
           </div>
-
-          <figure class="meter">
-            <figcaption class="mono">
-              <span class="meter-title">Launch to first job step</span>
-              <span class="fog">t4g.medium · ap-south-1</span>
-            </figcaption>
-            <div class="meter-row">
-              <div class="meter-head mono">
-                <strong>hatchrun image</strong><strong class="heat">29.5 s</strong>
-              </div>
-              <div class="track" style={`--done: ${at(jobRunning)}`}>
-                <div class="fill"></div>
-                <img class="chick" src="/brand/hatchrun-mark.svg" alt="" aria-hidden="true" />
-                {boot.map((b) => <span class="tick" style={`left: ${at(b.t)}`}></span>)}
-              </div>
-              <ol class="ticks mono">
-                {
-                  boot.map((b, i) => (
-                    <li style={`left: ${at(b.t)}`} class={i === boot.length - 1 ? "nudge" : undefined}>
-                      {b.t.toFixed(1)}s <br />{b.label}
-                    </li>
-                  ))
-                }
-                <li class="done" style={`left: ${at(jobRunning)}`}>{jobRunning.toFixed(1)}s <br />job running</li>
-              </ol>
-            </div>
-            <div class="meter-row">
-              <div class="meter-head mono fog"><span>Ubuntu cloud image</span><span>71 s</span></div>
-              <div class="stock"></div>
-            </div>
-          </figure>
         </div>
       </section>
 
@@ -218,38 +169,38 @@ jobs:
           <div class="head">
             <div class="head-title">
               <p class="eyebrow mono heat-bright">How it works</p>
-              <h2 class="display h2">We schedule. Your account runs the job.</h2>
+              <h2 class="display h2">We plan the run. A new machine runs each job.</h2>
             </div>
             <p class="fog head-note">
-              The control plane decides when to start a machine. Your code, secrets
-              and build output stay on machines you own.
+              hatchrun reads your config on each push and pull request, decides
+              which jobs run and in what order, and reports each one to GitHub.
             </p>
           </div>
 
           <div class="arch">
             <div class="node">
               <span class="node-label mono">01 · GitHub</span>
-              <div class="node-title display">A job is queued</div>
+              <div class="node-title display">A commit is pushed</div>
               <div class="kv mono">
-                <span class="fog">event</span> workflow_job<br />
-                <span class="fog">label</span> <span class="chick-text">hatchrun-4cpu-arm64</span><br />
+                <span class="fog">event</span> push<br />
+                <span class="fog">runs-on</span> <span class="chick-text">ubuntu-26.04-4core-arm</span><br />
                 <span class="fog">repo</span> your-org/api
               </div>
-              <span class="node-foot mono">The GitHub App sends the webhook.</span>
+              <span class="node-foot mono">The GitHub App sends the event.</span>
             </div>
             <div class="node">
               <span class="node-label mono">02 · hatchrun control plane</span>
-              <div class="node-title display">Picks a machine</div>
+              <div class="node-title display">Plans the run</div>
               <dl class="rows mono">
-                <div><dt>profile</dt><dd>4 vCPU · 16 GiB · arm64</dd></div>
-                <div><dt>market</dt><dd>on-demand or spot</dd></div>
-                <div><dt>runner config</dt><dd>just-in-time</dd></div>
+                <div><dt>template</dt><dd>4 vCPU · 16 GiB · arm64</dd></div>
+                <div><dt>jobs</dt><dd>ordered by requires</dd></div>
+                <div><dt>secrets</dt><dd>from the app</dd></div>
               </dl>
-              <span class="node-foot mono">Hosted by us, or self-hosted by you.</span>
+              <span class="node-foot mono">Checks card, spend cap and concurrency first.</span>
             </div>
             <div class="node node-yours">
-              <span class="node-label mono chick-text">03 · Your cloud account</span>
-              <div class="node-title display">Runs it, then deletes it</div>
+              <span class="node-label mono chick-text">03 · hatchrun machine</span>
+              <div class="node-title display">Runs the job, then is removed</div>
               <div class="pips">
                 <div class="pip pip-running">
                   <img src="/brand/mascot/pip-running.svg" alt="" aria-hidden="true" width="48" height="48" />
@@ -264,7 +215,7 @@ jobs:
                   <span class="mono">••• QUEUED</span>
                 </div>
               </div>
-              <span class="node-foot mono">Your network, your role, your bill. No inbound ports.</span>
+              <span class="node-foot mono">One job per machine. Live logs in the app.</span>
             </div>
           </div>
 
@@ -285,10 +236,10 @@ jobs:
         <div class="wrap band split">
           <div class="spec-intro">
             <p class="eyebrow mono heat">Spec sheet</p>
-            <h2 class="display h2">Self-hosted runners, minus the fleet work.</h2>
+            <h2 class="display h2">CI without a fleet to run.</h2>
             <p class="ink-2">
-              The numbers we hold ourselves to. If one slips, that is a bug, and the
-              issue tracker is public.
+              What a job gets and what it costs. The limits are the ones the
+              service enforces today.
             </p>
             <img class="spec-pip" src="/brand/mascot/pip-idle.svg" alt="Pip, the hatchrun chick" width="160" height="160" />
           </div>
@@ -310,15 +261,7 @@ jobs:
                 </div>
               ))
             }
-            <div class="last">
-              <dt class="mono">Clouds</dt>
-              <dd class="clouds mono">
-                <span class="cloud-on">AWS</span>
-                <span class="cloud-next">GCP next</span>
-                <span class="cloud-next">Azure next</span>
-              </dd>
-            </div>
-          </dl>
+</dl>
         </div>
       </section>
 
@@ -330,9 +273,8 @@ jobs:
               <h2 class="display h2-big">Built in the open.</h2>
             </div>
             <p class="ink-2 head-note">
-              You can read every line that touches your cloud account. The roadmap
-              and the GCP and Azure work are public issues. If you would rather run
-              all of it yourself, you can.
+              You can read the code that plans your jobs, the agent that runs them
+              and the CLI that checks your config.
             </p>
           </div>
           <div class="repos">
@@ -359,28 +301,15 @@ jobs:
         <div class="wrap band split">
           <div class="pricing-copy">
             <p class="eyebrow mono heat">Pricing</p>
-            <h2 class="display h2-big">The code is free. The service is cheap.</h2>
+            <h2 class="display h2-big">Per second. No free minutes.</h2>
             <p class="ink-2">
-              Hosted hatchrun is billed per second, with a 60-second minimum per job,
-              per GitHub organization. Runners and hatchrun CI share one
-              subscription, each at its own rate. There are no free minutes, so an
-              organization adds a card before its first job. Your cloud provider
-              bills you for runner instances at your own rates, and we never mark
-              up compute.
+              hatchrun is billed per second, with a 60-second minimum per job, per
+              GitHub organization. The machine is in the price. There are no free
+              minutes, so an organization adds a card before its first job, and
+              sets a monthly spend cap from $50 to $10,000.
             </p>
-            <div class="selfhost">
-              <div>
-                <div class="display selfhost-title">Self-hosted</div>
-                <div class="ink-2 small">Same code, run by you. You patch the images.</div>
-              </div>
-              <div class="selfhost-price">
-                <span class="display">$0</span>
-                <a class="btn-small display" href="/docs/self-hosting/">Guide</a>
-              </div>
-            </div>
-            <p class="mono fog example">
-              AWS example: c7g.large is $0.0725 an hour, so a ten-minute job costs
-              about 1.2¢ in compute.
+<p class="mono fog example">
+              A 10-minute job on a 2 vCPU machine costs about 2¢.
             </p>
           </div>
 
@@ -408,7 +337,7 @@ jobs:
                 <li class="coffee"><span>The maintainer's coffee</span><span>✓</span></li>
               </ul>
               <hr />
-              <div class="label">Example month, billable runner minutes, each job at least 60 seconds</div>
+              <div class="label">Example month, billable minutes on 2 vCPU, each job at least 60 seconds</div>
               <ul>
                 {examples.map((example) => (
                   <li class="fog"><span>{example.minutes} billable minutes</span><span>{example.cost}</span></li>
@@ -416,9 +345,9 @@ jobs:
               </ul>
               <div class="total">
                 <span class="display">25,000 min</span>
-                <span><span class="display amount">$25.00</span></span>
+                <span><span class="display amount">$50.00</span></span>
               </div>
-              <div class="yearly">25,000 billable minutes x $0.001</div>
+              <div class="yearly">25,000 billable minutes x $0.002</div>
               <div class="note">
                 Large volume, invoicing or an SLA?{" "}
                 <a href="mailto:support@hatchrun.io">Talk to us</a>.
@@ -435,19 +364,18 @@ jobs:
     <footer class="footer">
       <div class="wrap footer-inner">
         <div class="cta">
-          <h2 class="display h2-big">Change one line. <span class="chick-text">Hatch a runner.</span></h2>
+          <h2 class="display h2-big">Add one file. <span class="chick-text">Hatch a job.</span></h2>
           <a class="btn btn-chick-flat display" href={app}>Get started</a>
         </div>
         <div class="footer-meta mono">
           <img src="/brand/hatchrun-lockup-horizontal-on-dark.svg" alt="hatchrun" width="146" height="28" />
           <nav aria-label="Footer">
             <a href="/docs/overview/">Docs</a>
-            <a href="/docs/security/">Security</a>
-            <a href="/docs/roadmap/">Roadmap</a>
+            <a href="/docs/ci/setup/billing/">Billing</a>
             <a href="https://github.com/hatchrun">GitHub</a>
             <a href="mailto:support@hatchrun.io">support@hatchrun.io</a>
           </nav>
-          <p>hatchrun is AGPL-3.0 · Not affiliated with GitHub, AWS, Google Cloud or Microsoft Azure.</p>
+          <p>hatchrun is AGPL-3.0 · Not affiliated with GitHub.</p>
         </div>
       </div>
     </footer>

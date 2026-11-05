@@ -1,167 +1,84 @@
 ---
 title: Getting started
-description: Connect a GitHub organization and an AWS account to hatchrun.io and run the first job.
+description: Install the GitHub App, add a config and run the first job on hatchrun CI.
 ---
 
-Set up hatchrun for one GitHub organization on AWS and run your first
-job. Setup starts in [app.hatchrun.io](https://app.hatchrun.io), and
-the app sends you to GitHub and the AWS console for the steps that
-happen there. GCP and Azure guides follow when those providers
-ship. To run the
-control plane yourself, see [Self-hosting](/docs/self-hosting/).
+Set up hatchrun for one GitHub organization and run a first job. Setup
+starts in [app.hatchrun.io](https://app.hatchrun.io), and the app sends
+you to GitHub for the steps that happen there.
 
-Jobs are billed per second, with a 60-second minimum, and there are no
-free minutes. Add a card under Settings in the app, through Polar,
-before the first job. See [Costs](/docs/costs/).
+Jobs are billed per second, with a 60-second minimum per job, and there
+are no free minutes. Jobs wait until the organization has a card on
+file. See [Billing](/docs/ci/setup/billing/).
 
 ## Before you start
 
 You need:
 
-- owner rights on the GitHub organization;
-- an AWS account where you can create CloudFormation stacks and IAM
-  roles.
-
-Runners launch in that AWS account and AWS bills it for them. hatchrun
-holds no access keys to it. See [Security](/docs/security/).
+- owner rights on the GitHub organization, or your own user account;
+- a repository you can push to;
+- a card, added in the app.
 
 :::steps
 
 1. ## Install the GitHub App
 
    Sign in to [app.hatchrun.io](https://app.hatchrun.io) with GitHub and
-   install the hatchrun GitHub App on your organization. GitHub shows the
-   permissions the App asks for and lets you pick the repositories it
-   sees.
+   install the hatchrun GitHub App on your organization. GitHub shows
+   the permissions the App asks for and lets you pick the repositories
+   it sees. See [Install the GitHub App](/docs/ci/setup/github-app/).
 
-   The App sends hatchrun a webhook for every queued job in those
-   repositories. hatchrun launches a runner for each job whose only label
-   is a hatchrun one.
+1. ## Add a card
 
-1. ## Subscribe to the runner images
+   Under Billing on the organization's CI page, choose Add a card. Jobs
+   do not start until a card is on file. You can also set the monthly
+   spend cap there.
 
-   Runners boot from the hatchrun images in AWS Marketplace. The images
-   are free; AWS charges only for the instances. Signed in to the AWS
-   account you connect, open both links on the setup page and subscribe
-   once.
+1. ## Add a config
 
-   :::danger[Skip this and jobs fail]
-   EC2 refuses to launch an image the account has not subscribed to, with
-   `OptInRequired`.
-   :::
+   Create `.hatchrun/config.yml` in the repository:
 
-1. ## Launch the connect stack
-
-   The connect stack is a CloudFormation stack in your account. It creates
-   the role hatchrun assumes, an IAM OIDC provider for
-   `oidc.hatchrun.io`, a launch template and an S3 bucket for job caches.
-
-   Deleting the stack keeps the cache bucket and its contents. Empty and
-   delete the bucket yourself to stop paying for its storage.
-
-   [Security](/docs/security/) lists what the role may do.
-
-   Pick the region for your runners and choose Launch Stack. The
-   CloudFormation console opens the `hatchrun` stack with your tenant ID
-   filled in. The role accepts only hatchrun requests for that tenant.
-
-   Check these parameters before you create the stack:
-
-   | Parameter | Default | What it does |
-   | --- | --- | --- |
-   | `InstanceTypes` | any size up to `8xlarge` | Instance types AWS lets hatchrun launch. Wildcards allowed. |
-   | `ExcludedInstanceTypes` | GPU, accelerator and bare metal | Types AWS refuses even when `InstanceTypes` allows them. |
-   | `VolumeSizeLimit` | 200 | Largest runner volume in GiB. |
-   | `RootVolumeSize` | 30 | Root volume in GiB for jobs that do not ask for one. |
-   | `VpcId`, `SubnetIds` | empty | Your own VPC and subnets. Empty creates a VPC with two public subnets. |
-   | `OidcProviderArn` | empty | Leave empty for the first stack in an account. |
-
-   Your own subnets need a route to the internet, through public IPs or a
-   NAT gateway. Runners make only outbound HTTPS connections.
-
-   IAM keeps one OIDC provider per URL in an account. For a second stack
-   in another region of the same account, paste the first stack's
-   `OidcProviderArn` output into the `OidcProviderArn` parameter.
-
-   Tick the box that lets the stack create IAM resources, then create
-   it.
-
-1. ## Paste the role ARN
-
-   Once the stack shows `CREATE_COMPLETE`, open its Outputs tab and copy
-   `RoleArn`. Paste it into the setup page and choose Verify and connect.
-
-   hatchrun assumes the role and reads the stack's settings parameter in
-   Systems Manager. The parameter names the launch template, subnets and
-   instance type limits. hatchrun then checks that the subnets exist.
-
-   An error here names what is wrong. Fix the stack and verify again.
-
-1. ## Run a job
-
-   Set a job's `runs-on` to `hatchrun`:
-
-   ```yaml title=".github/workflows/test.yml"
+   ```yaml title=".hatchrun/config.yml"
    jobs:
      test:
-       runs-on: hatchrun
+       runs-on: ubuntu-latest
        steps:
-         - uses: actions/checkout@v7
+         - uses: actions/checkout@v5
          - run: make test
+
+   workflows:
+     ci:
+       on:
+         push:
+           branches: [main]
+         pull_request: {}
+       jobs:
+         - test
    ```
 
-   `hatchrun` gets a runner with 2 vCPUs and 8 GiB on x86-64. Push the
-   change. The job shows on the Jobs page of the app, and a new instance
-   starts in your account, runs the job and terminates.
+   Replace `make test` with your own command. If the repository has
+   GitHub Actions workflows, `hatchrun convert` writes a first config
+   from them. Check any config with `hatchrun validate`. The
+   [Quickstart](/docs/ci/get-started/quickstart/) covers installing the
+   CLI.
 
-   The job's page in the app shows its CPU and memory use. Start with
-   `hatchrun` and move a job to a bigger profile when those numbers say it
-   needs one.
+1. ## Push and watch the check run
+
+   Push the commit to `main`, or open a pull request. A check run named
+   after the job, here `test`, appears as queued, then in progress, then
+   passes. Open it to read the live logs in the app.
+
+   If nothing appears, work through
+   [My workflow did not run](/docs/ci/troubleshooting/workflow-did-not-run/).
 
 :::
 
-## Choosing a label
+## Next steps
 
-The label names a runner profile, and the profile sets the vCPUs,
-memory and architecture:
-
-```yaml
-runs-on: hatchrun-8cpu
-runs-on: hatchrun-4cpu-arm64
-runs-on: hatchrun-4cpu/disk=200/spot=true
-```
-
-The built-in profiles are `hatchrun-2cpu`, `hatchrun-4cpu`,
-`hatchrun-8cpu` and `hatchrun-16cpu`, plus the same names ending in
-`-arm64` for Graviton. Owners add their own on the Runners page.
-
-Overrides after a `/` change one job. They are `cpu=N`, `ram=N`,
-`disk=N` and `spot=true` or `spot=false`.
-[Choosing a runner](/docs/runs-on/) has the full tables.
-
-## One label only
-
-:::caution[One label per job]
-The hatchrun label must be the only label in `runs-on`. hatchrun skips
-a job with more labels and it stays queued in GitHub. Override inside
-the label instead: `hatchrun-4cpu/disk=200/spot=true`.
-:::
-
-```yaml
-runs-on: [self-hosted, hatchrun]   # skipped
-runs-on: [hatchrun, hatchrun-8cpu] # skipped
-```
-
-GitHub gives a job any idle runner that has all of the job's labels.
-If hatchrun served combined labels, a job asking for `hatchrun` could
-take the runner launched for `[hatchrun, hatchrun-8cpu]`, and the
-bigger job would wait for a runner nobody launches.
-
-The GitHub App's webhook delivery log lists each skipped job and the
-reason.
-
-## Updating the stack
-
-Some hatchrun releases need a newer connect stack. The app then says
-what the update brings and shows the console steps and the AWS CLI
-command. Runners keep working on the old stack until you update.
+- [Secrets and variables](/docs/ci/setup/secrets/) and
+  [Environments](/docs/ci/setup/environments/) hold what jobs need at
+  run time.
+- [Choose a runner size](/docs/ci/guides/runner-size/) moves a slow job
+  to a bigger machine.
+- [Migrate from GitHub Actions](/docs/ci/guides/migrate/) moves the
+  workflows you have, one at a time.

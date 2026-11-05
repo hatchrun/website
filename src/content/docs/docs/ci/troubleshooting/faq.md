@@ -1,20 +1,12 @@
 ---
 title: FAQ
 description: Short answers to common questions about hatchrun CI.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
-## Can I use hatchrun CI today?
+## Do I need a cloud account?
 
-You can write and validate configs and convert GitHub workflows today
-with the `hatchrun` CLI. The service that runs them is not available
-yet. See [What exists today](/docs/ci/get-started/introduction/#what-exists-today).
-
-## Do I need an AWS account?
-
-No. hatchrun CI runs jobs on machines hatchrun owns. hatchrun.io
-runners are the product that uses your AWS account.
+No. hatchrun CI runs jobs on machines hatchrun owns. You need a GitHub
+organization or user account, the hatchrun GitHub App and a card.
 
 ## Can I keep some workflows on GitHub Actions?
 
@@ -78,7 +70,7 @@ The template's price per minute, charged per second, with a 60-second
 minimum per job attempt. A 10-minute job on `ubuntu-latest` is $0.02. A
 45-second job is billed as 60 seconds, $0.002. There are no free
 minutes, and the organization needs a card on file before jobs start.
-It is the same subscription as hatchrun.io runners. See
+See
 [Billing](/docs/ci/setup/billing/).
 
 ## Can I limit a secret to some repositories?

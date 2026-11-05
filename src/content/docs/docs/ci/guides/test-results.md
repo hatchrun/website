@@ -1,8 +1,6 @@
 ---
 title: Collect test results
 description: Upload JUnit XML results from a job with the test-results step.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 :::caution[Coming later]

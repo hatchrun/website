@@ -1,8 +1,6 @@
 ---
 title: Filter by branch, tag and path
 description: Start workflows only for the branches, tags and paths they care about, and set up a monorepo.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 Filters decide what runs for an event. Filters on `on:` decide whether

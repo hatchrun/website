@@ -1,14 +1,7 @@
 ---
 title: Secrets and variables
 description: Where hatchrun CI secrets and variables are set, how steps read them, and how they are protected.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-Secrets and variables are set in the hatchrun app, which is not built
-yet. The `secrets` and `vars` contexts are part of the format today.
-:::
 
 Secrets hold values a job needs but nobody should read, such as a
 deploy token. Variables hold values that are not secret, such as a

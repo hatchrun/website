@@ -1,8 +1,6 @@
 ---
 title: Write your first config by hand
 description: Build a .hatchrun/config.yml from scratch, one job and one workflow at a time.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 This guide builds a config for a Node.js project from an empty file. At

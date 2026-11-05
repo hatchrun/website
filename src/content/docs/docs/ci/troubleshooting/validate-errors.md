@@ -1,8 +1,6 @@
 ---
 title: Fix validate errors
 description: How to read hatchrun validate output and fix the errors people hit most often.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 `hatchrun validate` prints one line per problem. This page shows how

@@ -1,8 +1,6 @@
 ---
 title: Migrate a repository from GitHub Actions
 description: Convert GitHub workflows with hatchrun convert, read each warning, and fix what does not convert.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 This guide moves a repository's GitHub Actions workflows to hatchrun

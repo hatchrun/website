@@ -1,8 +1,6 @@
 ---
 title: Introduction to hatchrun CI
-description: What hatchrun CI is, what exists today, and when to use it instead of hatchrun.io runners.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
+description: What hatchrun CI is, what you get, and what a config looks like.
 ---
 
 hatchrun CI runs your whole pipeline. You add one file,
@@ -13,50 +11,25 @@ reports each job as a check run on the commit.
 GitHub Actions plays no part. GitHub sends the events and shows the
 results. hatchrun decides what runs, in what order, on which machine.
 
-## What exists today
+## What you get
 
-hatchrun CI is in preview. The file format is finished and you can
-write and check configs now. The hosted service that runs them is
-still being built.
+- Jobs run on machines hatchrun owns. Each job gets a new machine that
+  runs only that job and is then removed. You need no cloud account.
+- Live logs for every step, in the hatchrun app and linked from each
+  check run.
+- Secrets, variables and environments, set per organization, repository
+  or environment. See [Secrets and variables](/docs/ci/setup/secrets/)
+  and [Environments](/docs/ci/setup/environments/).
+- Billing per second with a 60-second minimum per job, and a monthly
+  spend cap. See [Billing](/docs/ci/setup/billing/).
 
-| Part | Status |
-| --- | --- |
-| The `.hatchrun/config.yml` format | Available today |
-| `hatchrun validate`, which checks a config | Available today |
-| `hatchrun convert`, which turns GitHub workflows into a config | Available today |
-| The GitHub App permissions and events for CI | Coming later |
-| Running jobs, check runs, logs | Coming later |
-| Secrets and variables, environments and billing | Coming later |
-| Storage for `cache`, `workspace` and `test-results` | Coming later |
-| The approval page for approval jobs | Coming later |
-| Test splitting on the runner | Coming later |
-| Docker `services:`, `container:` and `docker://` steps | A later release |
+GitHub stays your code host. You install the hatchrun GitHub App, sign
+in to the app with GitHub, and GitHub sends the push and pull request
+events that start workflows. `.github/workflows/` is ignored, so a
+workflow you have not moved keeps running on GitHub Actions.
 
-Pages that describe the hosted service carry a "Coming later" note.
-Treat them as the plan, and expect details to change before launch.
-
-## hatchrun CI or hatchrun.io runners
-
-hatchrun has two products. Both use the same GitHub App, agent and
-runner images.
-
-| | hatchrun.io runners | hatchrun CI |
-| --- | --- | --- |
-| Who runs the pipeline | GitHub Actions | hatchrun |
-| Workflow file | `.github/workflows/*.yml` | `.hatchrun/config.yml` |
-| Where jobs run | EC2 in your AWS account | Machines hatchrun owns |
-| Machine sizes | [Runner profiles](/docs/runs-on/) you can edit | A fixed set of [runner templates](/docs/ci/reference/runners/) |
-| What you pay | AWS for instances, hatchrun per second of job time | hatchrun per second of job time, machine included |
-
-Pick hatchrun.io runners when jobs must run inside your own VPC, use
-your AWS discounts or reach private resources. Pick hatchrun CI when
-you want CI without an AWS account and a low price per minute.
-Both bill on one [subscription](/docs/ci/setup/billing/), each at its own
-rate, with no free minutes.
-
-You can use both in one repository. hatchrun CI ignores
-`.github/workflows/`, so a workflow you have not moved keeps running on
-GitHub Actions.
+Docker `services:`, `container:` and `docker://` steps are not
+supported yet. Run containers with `docker run` in a step.
 
 ## What the file looks like
 

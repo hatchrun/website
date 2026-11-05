@@ -1,14 +1,7 @@
 ---
 title: A job did not start
 description: Why a planned hatchrun CI job stays queued, is skipped, or never appears.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-Job scheduling needs the hosted service. This page describes the
-planned behaviour.
-:::
 
 The workflow started, but one job did not run. Find your symptom.
 

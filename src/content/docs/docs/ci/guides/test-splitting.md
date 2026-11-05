@@ -1,8 +1,6 @@
 ---
 title: Split tests across parallel jobs
 description: Run copies of a test job with parallelism and how hatchrun will split tests between them by timing.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 :::caution[Coming later]

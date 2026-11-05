@@ -1,18 +1,11 @@
 ---
 title: My workflow did not run
 description: A checklist for a push or pull request that started no hatchrun CI workflow.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 You pushed, or opened a pull request, and no hatchrun check runs
 appeared. Work through this list in order. Each item says how to check
 it and how to fix it.
-
-:::caution[Coming later]
-Items 1 and 8 depend on the hosted service. The others you can check
-today with the config and `hatchrun validate`.
-:::
 
 ## 1. The App sees the repository
 

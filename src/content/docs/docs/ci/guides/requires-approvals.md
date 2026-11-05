@@ -1,8 +1,6 @@
 ---
 title: Run jobs in order with requires and approvals
 description: Order jobs with requires, fan out and back in, and hold a deploy until a person approves it.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 By default every job in a workflow starts at once. This guide orders
@@ -155,11 +153,6 @@ before production.
    hatchrun validate
    ```
 
-:::
-
-:::caution[Coming later]
-Approving needs the hatchrun app's approval page, which is not built
-yet. The config format for approvals works today.
 :::
 
 ## How requires works

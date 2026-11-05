@@ -1,19 +1,12 @@
 ---
 title: Concepts
 description: The parts of a hatchrun CI config and how a push becomes check runs.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 This page names each part of hatchrun CI once. The guides and the
 reference use these words with these meanings.
 
 ## From push to check runs
-
-:::caution[Coming later]
-The hosted service described in this section is not built yet. The
-planning steps run today inside `hatchrun validate`.
-:::
 
 ```text
  GitHub                       hatchrun                          machines

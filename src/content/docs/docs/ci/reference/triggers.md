@@ -1,8 +1,6 @@
 ---
 title: Triggers and filter patterns
 description: Every key of a workflow's on block, how branch, tag and path filters combine, and the filter pattern syntax.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 Each workflow has its own `on:` map with GitHub's event and filter

@@ -1,8 +1,6 @@
 ---
 title: Error and warning messages
 description: Every message hatchrun validate and hatchrun convert print, with its cause and the fix.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 This page lists the messages `hatchrun validate` and `hatchrun convert`

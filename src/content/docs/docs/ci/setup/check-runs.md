@@ -1,13 +1,7 @@
 ---
 title: Check runs and statuses
 description: What hatchrun CI shows on commits and pull requests, how to read a failed check, and where the logs are.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-Check runs need the hosted service. This page describes the plan.
-:::
 
 hatchrun reports results through GitHub check runs. You read them
 where you read GitHub Actions results today: on the commit, in the

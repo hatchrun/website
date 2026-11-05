@@ -1,18 +1,10 @@
 ---
 title: Billing
-description: How hatchrun CI is billed on one subscription with hatchrun.io, what it costs, and how to add a card.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
+description: How hatchrun CI is billed, what it costs, and how to add a card and set a spend cap.
 ---
 
-:::caution[Coming later]
-Billing needs the hosted service and the hatchrun app. This page
-describes the plan.
-:::
-
-hatchrun CI and [hatchrun.io runners](/docs/costs/) share one
-subscription per GitHub organization. An organization that already pays
-for runners has nothing to set up. Each product bills at its own rate.
+hatchrun CI is billed per GitHub organization through one
+subscription, handled by Polar.
 
 ## What it costs
 
@@ -34,9 +26,6 @@ For example, a job that runs 45 seconds on `ubuntu-latest` is billed for
 60 seconds, $0.002. A job that runs 10 minutes and 20 seconds on
 `ubuntu-26.04-4core` is billed for 620 seconds, about $0.0413.
 
-hatchrun.io runner jobs on the same subscription cost $0.001 a minute
-($0.0000167 a second), also with a 60-second minimum per job.
-
 There are no free minutes, no free units and no grace period.
 
 ## A card is required
@@ -54,13 +43,12 @@ The jobs start when the card is added, with no need to push again.
 
 1. Open the organization's CI page at
    [app.hatchrun.io](https://app.hatchrun.io), under `/o/ORG/ci`.
-2. Under Billing, choose Add a card. The checkout is the same one
-   hatchrun.io runners use. If the organization already has a card for
-   runners, the page shows "A card is on file."
+2. Under Billing, choose Add a card. Once a card is on file, the page
+   shows "A card is on file."
 3. To change the card, see invoices or cancel, choose Manage billing.
-   It opens the same billing portal as the runners.
+   It opens the billing portal.
 
-The page also shows the month's runner time, the spend so far and how
+The page also shows the month's job time, the spend so far and how
 many jobs run now.
 
 ## Spend cap and concurrent jobs
@@ -78,5 +66,4 @@ Organizations in the beta are not billed.
 ## Next steps
 
 - [Runner templates and pricing](/docs/ci/reference/runners/)
-- [Costs](/docs/costs/)
 - [A job did not start](/docs/ci/troubleshooting/job-did-not-start/)
