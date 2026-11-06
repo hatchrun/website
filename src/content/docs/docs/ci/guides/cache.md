@@ -1,14 +1,7 @@
 ---
 title: Cache dependencies
 description: Keep downloaded dependencies and build output between runs with the built-in cache step.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-The `cache` step is part of the format and `hatchrun validate` checks
-it today. The storage behind it needs the hosted service.
-:::
 
 Every job starts on a fresh machine with nothing from earlier runs.
 Downloading dependencies again each time is slow. The `cache` step

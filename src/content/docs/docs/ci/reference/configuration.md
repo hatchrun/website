@@ -1,8 +1,6 @@
 ---
 title: Configuration reference
 description: Every key of .hatchrun/config.yml with its type, whether it is required, its default and an example.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 hatchrun CI reads `.hatchrun/config.yml` at the commit of each event.

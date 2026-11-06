@@ -1,8 +1,6 @@
 ---
 title: Build a matrix
 description: Run one job over every combination of values, read the values in steps, and pass them as parameters.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 A matrix runs one job once per combination of values, such as every

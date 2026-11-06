@@ -1,8 +1,6 @@
 ---
 title: A step was skipped
 description: How if conditions and status functions decide whether a step runs, and how to make a step run after a failure.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 A step runs when its `if:` is true. A step with no `if:`, or with an

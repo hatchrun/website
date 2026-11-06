@@ -1,20 +1,17 @@
 ---
 title: Quickstart
 description: Install the hatchrun CLI, write and validate a config, and run it on hatchrun CI.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 This guide takes one repository from nothing to a green check run.
-Steps 1 to 4 work today. Steps 5 and 6 need the hosted service and are
-marked "Coming later".
+Steps 1 to 4 run on your machine. Steps 5 and 6 connect the repository
+to hatchrun.
 
 ## Prerequisites
 
 - A GitHub repository you can push to.
 - A card on file for your organization. hatchrun CI jobs wait until
-  there is one, and an organization that already pays for hatchrun.io
-  runners has one. See [Billing](/docs/ci/setup/billing/#a-card-is-required).
+  there is one. See [Billing](/docs/ci/setup/billing/#a-card-is-required).
 - A Linux machine on x86-64 or arm64 for the prebuilt CLI. On macOS
   or anything else, you need [Rust](https://rustup.rs/) to build it.
 - The [GitHub CLI](https://cli.github.com/) to download the release.
@@ -112,27 +109,15 @@ marked "Coming later".
 
 5. ## Install the GitHub App
 
-   :::caution[Coming later]
-   The CI permissions and events are not live yet.
-   :::
-
-   Install the hatchrun GitHub App on the repository. See
-   [Install the GitHub App](/docs/ci/setup/github-app/) for each screen
-   and the permissions it asks for.
+   Sign in to [app.hatchrun.io](https://app.hatchrun.io) with GitHub
+   and install the App on your organization. Add a card there too, or
+   jobs wait. See [Install the GitHub App](/docs/ci/setup/github-app/).
 
 6. ## Push and watch the check run
 
-   :::caution[Coming later]
-   Running jobs needs the hosted service.
-   :::
-
-   Push the commit to `main`, or open a pull request. The example
-   config starts only on pushes to `main` and on pull requests, so a
-   push to another branch without a pull request starts nothing. A
-   check run named after the job, here `test`, appears as queued, then
-   in progress, then passes.
-
-   If nothing appears within a minute, work through
+   Push the commit to `main`, or open a pull request. A check run named
+   `test` appears as queued, then in progress, then passes. If nothing
+   appears, see
    [My workflow did not run](/docs/ci/troubleshooting/workflow-did-not-run/).
 
 :::

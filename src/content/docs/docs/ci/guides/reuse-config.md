@@ -1,8 +1,6 @@
 ---
 title: Reuse config with commands, executors and parameters
 description: Remove repeated steps and machine labels from a config with commands, executors and typed parameters.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 Configs repeat themselves: every job checks out the code and installs

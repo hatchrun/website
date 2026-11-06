@@ -1,8 +1,6 @@
 ---
 title: Use GitHub actions in steps
 description: Run actions from the GitHub Marketplace in hatchrun CI with uses, pass inputs, and read their outputs.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 A `uses:` step runs a GitHub action, the same as in a GitHub
@@ -94,7 +92,7 @@ actions carry over unchanged.
 | Composite actions | At launch |
 | Local actions, `uses: ./path` | At launch |
 | Docker container actions | A later release |
-| `uses: docker://image` | A later release; an error today |
+| `uses: docker://image` | Not supported yet; an error |
 
 The machine provides the `github` context and the `GITHUB_*`
 variables and files that actions expect, such as `GITHUB_OUTPUT` and

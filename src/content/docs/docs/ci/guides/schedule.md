@@ -1,8 +1,6 @@
 ---
 title: Schedule a nightly workflow
 description: Run a workflow on a cron schedule, and keep scheduled jobs apart from push jobs.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 Some jobs run on a clock: a nightly dependency audit, a weekly full
@@ -89,10 +87,6 @@ config.
 Expected result: after the merge, the workflow runs at the next due
 time on the default branch's latest commit, and its check runs appear
 on that commit.
-
-:::caution[Coming later]
-The scheduler needs the hosted service.
-:::
 
 ## Good to know
 

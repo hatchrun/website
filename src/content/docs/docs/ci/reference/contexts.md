@@ -1,8 +1,6 @@
 ---
 title: Contexts
 description: The contexts hatchrun CI expressions can read, what each holds, and where each comes from.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 A context is a named object that expressions read, such as
@@ -25,11 +23,6 @@ ignore case.
 
 Any other name is an error in `validate`. GitHub's `strategy` and
 `jobs` contexts do not exist in hatchrun CI.
-
-:::caution[Coming later]
-Run-time contexts are filled in by the agent on the machine, which is
-not shipped yet. Their names and shape follow GitHub's.
-:::
 
 ## github
 

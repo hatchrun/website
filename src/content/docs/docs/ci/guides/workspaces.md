@@ -1,14 +1,7 @@
 ---
 title: Share files between jobs with workspaces
 description: Build once and pass the output to later jobs in the same workflow run.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-The `workspace` step is part of the format and `hatchrun validate`
-checks it today. The storage behind it needs the hosted service.
-:::
 
 Each job runs on its own machine. A workspace carries files from one
 job to the jobs after it in the same workflow run, such as a build

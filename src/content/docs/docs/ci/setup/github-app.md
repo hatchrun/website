@@ -1,23 +1,15 @@
 ---
 title: Install the GitHub App
 description: Install the hatchrun GitHub App for CI, choose repositories, and what each permission is for.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-hatchrun CI uses the same GitHub App as hatchrun.io runners. The extra
-permissions CI needs are not requested yet. This page describes the
-planned setup.
-:::
 
 hatchrun CI learns about pushes and pull requests through the hatchrun
 GitHub App. The App also lets hatchrun read your config and report
-check runs. Install it once per organization or user account.
+check runs. Install it once per organization. Personal accounts are not supported.
 
 ## Prerequisites
 
-- Owner rights on the GitHub organization, or your own user account.
+- Owner rights on the GitHub organization.
 - A repository with `.hatchrun/config.yml`. See the
   [Quickstart](/docs/ci/get-started/quickstart/).
 
@@ -67,8 +59,7 @@ with a `.hatchrun/config.yml` starts its workflows.
 
 ## Permissions
 
-The App already holds the permissions hatchrun.io runners use. CI adds
-these:
+The App asks for these permissions:
 
 | Permission | Access | What hatchrun does with it |
 | --- | --- | --- |
@@ -113,8 +104,7 @@ do not reach hatchrun until the CI permissions are approved.
 2. Choose Configure next to hatchrun.
 3. Under Danger zone, choose Uninstall.
 
-Uninstalling stops both hatchrun CI and hatchrun.io runners for the
-whole organization. To stop CI for one repository only, remove the
+Uninstalling stops hatchrun CI for the whole organization. To stop CI for one repository only, remove the
 repository from the App, or delete its `.hatchrun/config.yml`.
 
 ## Troubleshooting

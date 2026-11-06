@@ -1,14 +1,7 @@
 ---
 title: Webhook delivery problems
 description: What to check when GitHub events do not reach hatchrun CI, or seem to arrive twice.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-Event delivery needs the hosted service. This page describes the
-planned behaviour.
-:::
 
 hatchrun learns about pushes and pull requests from webhooks GitHub
 sends to the hatchrun GitHub App. See

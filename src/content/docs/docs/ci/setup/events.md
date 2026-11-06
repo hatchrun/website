@@ -1,15 +1,7 @@
 ---
 title: How events reach hatchrun
 description: The GitHub webhooks that start hatchrun CI workflows, schedules, manual runs, and what happens when a delivery fails or repeats.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-This page describes the planned hosted service. The matching rules in
-[Which workflows start](#which-workflows-start) are in the format and
-work today in `hatchrun validate` and the planner.
-:::
 
 A workflow starts when an event matches its `on:` block. Two of the
 four events come from GitHub webhooks. Schedules come from hatchrun's
@@ -90,7 +82,7 @@ signature and drops any delivery that fails it.
 
 GitHub does not retry a failed delivery on its own. hatchrun runs a
 reconciler on a timer that looks for events it missed and work that
-stalled, the same pattern hatchrun.io runners use today.
+stalled.
 
 GitHub can deliver one event twice. hatchrun records the delivery ID
 GitHub sends in the `X-GitHub-Delivery` header before it acts. A second

@@ -1,8 +1,6 @@
 ---
 title: Organization settings
 description: The settings hatchrun CI has for an organization and its repositories.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 hatchrun CI keeps almost everything in `.hatchrun/config.yml`, so a
@@ -23,10 +21,6 @@ live outside the file.
 See the [configuration reference](/docs/ci/reference/configuration/).
 
 ## In the hatchrun app
-
-:::caution[Coming later]
-The hatchrun app's CI settings are not built yet.
-:::
 
 | Setting | Scope | What it does |
 | --- | --- | --- |

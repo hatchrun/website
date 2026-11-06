@@ -1,8 +1,6 @@
 ---
 title: Expressions and functions
 description: The ${{ }} expression language of hatchrun CI, its literals, operators, comparison rules and functions.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 hatchrun CI uses GitHub's expression language. Expressions read

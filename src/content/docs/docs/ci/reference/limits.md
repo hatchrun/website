@@ -1,8 +1,6 @@
 ---
 title: Limits
 description: Every limit on a hatchrun CI config, the message you see when you pass it, and how to get under it.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 hatchrun plans every run from your config when an event arrives. Fixed

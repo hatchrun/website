@@ -1,8 +1,6 @@
 ---
 title: Runner templates and pricing
 description: Every runner template hatchrun CI offers, with architecture, vCPUs, memory and price.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 A job picks its machine with `runs-on`, directly or through an
@@ -30,10 +28,6 @@ cannot define your own.
 - `ubuntu-latest` and `ubuntu-26.04` are two names for one template.
 
 ## The machine
-
-:::caution[Coming later]
-The machines need the hosted service. This section describes the plan.
-:::
 
 - Each job gets a new machine that runs only that job and is then
   removed.

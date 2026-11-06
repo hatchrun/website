@@ -1,8 +1,6 @@
 ---
 title: CLI reference
 description: Every hatchrun command, argument and flag, with output formats, exit codes and sample output.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
 
 `hatchrun` checks and converts config files on your machine. It reads

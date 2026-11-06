@@ -1,14 +1,7 @@
 ---
 title: Environments
 description: Limit which branches may deploy, ask an organization admin to approve each job, and keep secrets for one deploy target.
-banner:
-  content: "Preview: hatchrun CI is not available yet. These pages document the configuration format and the planned service."
 ---
-
-:::caution[Coming later]
-Environments are set in the hatchrun app, which is not built yet. The
-`environment` key on a job is part of the format today.
-:::
 
 An environment is a named deploy target of one repository, such as
 `production` or `staging`. It can:
