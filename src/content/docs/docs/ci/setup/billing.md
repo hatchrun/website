@@ -11,20 +11,41 @@ subscription, handled by Polar.
 CI jobs are billed per second, with a 60-second minimum per job
 attempt. Usage is counted from the attempt's start to its result.
 
-| Template size | Per minute | Per second |
-| --- | --- | --- |
-| 2 vCPU | $0.002 | $0.0000333 |
-| 4 vCPU | $0.004 | $0.0000667 |
-| 8 vCPU | $0.008 | $0.0001333 |
-| 16 vCPU | $0.016 | $0.0002667 |
+| Template size | amd64 per minute | arm64 per minute | Per second |
+| --- | --- | --- | --- |
+| 2 vCPU | $0.004 | $0.0035 | $0.0000667 / $0.0000583 |
+| 4 vCPU | $0.008 | $0.0065 | $0.0001333 / $0.0001083 |
+| 8 vCPU | $0.016 | $0.012 | $0.0002667 / $0.0002 |
+| 16 vCPU | $0.032 | $0.023 | $0.0005333 / $0.0003833 |
 
-amd64 and arm64 cost the same. The price includes the machine. See
+Arm templates cost less than the same size on amd64. The price
+includes the machine. See
 [Runner templates and pricing](/docs/ci/reference/runners/) for every
 label.
 
 For example, a job that runs 45 seconds on `ubuntu-latest` is billed for
-60 seconds, $0.002. A job that runs 10 minutes and 20 seconds on
-`ubuntu-26.04-4core` is billed for 620 seconds, about $0.0413.
+60 seconds, $0.004. A job that runs 10 minutes and 20 seconds on
+`ubuntu-26.04-4core` is billed for 620 seconds, about $0.0827.
+
+## How this compares with GitHub Actions
+
+Prices below are GitHub's hosted Linux rates at the time of writing.
+GitHub rounds each job up to the nearest whole minute; hatchrun bills
+per second with a 60-second minimum.
+
+| Template size | GitHub x64 | GitHub arm64 | hatchrun amd64 | hatchrun arm64 |
+| --- | --- | --- | --- | --- |
+| 2 vCPU | $0.006 | $0.005 | $0.004 | $0.0035 |
+| 4 vCPU | $0.012 | $0.008 | $0.008 | $0.0065 |
+| 8 vCPU | $0.022 | $0.014 | $0.016 | $0.012 |
+| 16 vCPU | $0.042 | $0.026 | $0.032 | $0.023 |
+
+A 10-minute job on 2 vCPU costs $0.06 on GitHub x64 against $0.04 on
+hatchrun amd64. A 10-minute-30-second job is billed as 11 minutes on
+GitHub ($0.066) and as 630 seconds on hatchrun ($0.042). GitHub's plans
+include a monthly allowance of minutes and run public repositories for
+free on standard runners; hatchrun has no free minutes and bills every
+job, on any repository.
 
 There are no free minutes, no free units and no grace period.
 
