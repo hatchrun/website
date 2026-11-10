@@ -29,7 +29,8 @@ so a bigger machine costs more per minute and may cost less per job.
 2. ## Move slow, parallel jobs up
 
    Builds and test suites that use every core get faster with more of
-   them. Double the vCPUs and the price per minute doubles:
+   them. On amd64, double the vCPUs and the price per minute doubles.
+   Arm steps up by a little less each time, so check the table:
 
    ```yaml title=".hatchrun/config.yml"
    jobs:
