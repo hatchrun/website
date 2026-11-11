@@ -29,16 +29,11 @@ cannot define your own.
 
 ## Against GitHub Actions
 
-GitHub's hosted Linux runners bill each job rounded up to the nearest
-whole minute. hatchrun bills per second with a 60-second minimum, so a
-job that runs a little past a minute boundary costs proportionally
-less here. At the time of writing, GitHub charges $0.006 a minute for 2
-vCPU x64 against $0.004 here, $0.012 against $0.008 at 4 vCPU, $0.022
-against $0.016 at 8 vCPU, and $0.042 against $0.032 at 16 vCPU; Arm is
-$0.005, $0.008, $0.014 and $0.026 against $0.0035, $0.0065, $0.012 and
-$0.023 here. Those are GitHub's paid larger-runner rates; standard
-runners are free on public repositories. See
-[Billing](/docs/ci/setup/billing/) for the full comparison.
+GitHub rounds each job up to the nearest whole minute. hatchrun bills
+per second with a 60-second minimum, and every template costs less per
+minute than GitHub's paid rate for the same size. See
+[Billing](/docs/ci/setup/billing/#how-this-compares-with-github-actions)
+for the rates.
 
 ## The machine
 

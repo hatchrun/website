@@ -30,13 +30,12 @@ For example, a job that runs 45 seconds on `ubuntu-latest` is billed for
 ## How this compares with GitHub Actions
 
 Prices below are GitHub's paid Linux per-minute rates at the time of
-writing. They apply to private repositories past the plan allowance,
-and to larger runners everywhere: larger runners bill even on public
-repositories. Standard runners cost nothing on public repositories,
-including `ubuntu-latest`, so the 4 vCPU row compares our rate against
-GitHub's paid larger-runner rate rather than what a public repository
-pays for the standard runner. GitHub rounds each job up to the nearest
-whole minute; hatchrun bills per second with a 60-second minimum.
+writing. GitHub rounds each job up to the nearest whole minute; hatchrun
+bills per second with a 60-second minimum.
+
+On public repositories GitHub's standard runners are free, and there
+`ubuntu-latest` is a 4 vCPU machine. The 4, 8 and 16 vCPU rows use
+GitHub's larger-runner rates, which apply on public repositories too.
 
 | Template size | GitHub x64 | GitHub arm64 | hatchrun amd64 | hatchrun arm64 |
 | --- | --- | --- | --- | --- |
