@@ -68,13 +68,13 @@ const repos = [
 const rates = [
   {
     item: "2 vCPU, per minute",
-    price: "$0.002",
+    price: "$0.004",
     note: "Billed per second, 60-second minimum per job. A card is required.",
   },
   {
     item: "4, 8 and 16 vCPU",
     price: "2x, 4x, 8x",
-    note: "$0.004, $0.008 and $0.016 a minute. amd64 and arm64 cost the same.",
+    note: "$0.008, $0.016 and $0.032 a minute on amd64. Arm costs less: $0.0035, $0.0065, $0.012 and $0.023.",
   },
   {
     item: "Machine, logs, storage",
@@ -83,9 +83,9 @@ const rates = [
   },
 ];
 const examples = [
-  { minutes: "1,000", cost: "$2.00" },
-  { minutes: "10,000", cost: "$20.00" },
-  { minutes: "50,000", cost: "$100.00" },
+  { minutes: "1,000", cost: "$4.00" },
+  { minutes: "10,000", cost: "$40.00" },
+  { minutes: "50,000", cost: "$200.00" },
 ];
 
 const receipt = [
@@ -358,9 +358,9 @@ const receipt = [
               </ul>
               <div class="total">
                 <span class="display">25,000 min</span>
-                <span><span class="display amount">$50.00</span></span>
+                <span><span class="display amount">$100.00</span></span>
               </div>
-              <div class="yearly">25,000 billable minutes x $0.002</div>
+              <div class="yearly">25,000 billable minutes x $0.004</div>
               <div class="note">
                 Large volume, invoicing or an SLA?{" "}
                 <a href="mailto:support@hatchrun.io">Talk to us</a>.

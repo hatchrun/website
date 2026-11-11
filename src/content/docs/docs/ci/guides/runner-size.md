@@ -15,7 +15,7 @@ so a bigger machine costs more per minute and may cost less per job.
 
 1. ## Start on the smallest template
 
-   `ubuntu-latest` has 2 vCPUs and 8 GiB on x86-64, at $0.002 a
+   `ubuntu-latest` has 2 vCPUs and 8 GiB on x86-64, at $0.004 a
    minute. Start every job there:
 
    ```yaml title=".hatchrun/config.yml"
@@ -29,7 +29,8 @@ so a bigger machine costs more per minute and may cost less per job.
 2. ## Move slow, parallel jobs up
 
    Builds and test suites that use every core get faster with more of
-   them. Double the vCPUs and the price per minute doubles:
+   them. On amd64, double the vCPUs and the price per minute doubles.
+   Arm steps up by a little less each time, so check the table:
 
    ```yaml title=".hatchrun/config.yml"
    jobs:
@@ -42,11 +43,11 @@ so a bigger machine costs more per minute and may cost less per job.
    Jobs are billed per second, with a 60-second minimum, so a job that
    ends in 20 seconds costs the same as one that runs for 60.
 
-   If the job takes half as long, it costs the same and you wait half
-   as long. This holds only when both runs last longer than the 60-second
-   minimum: a 100-second job on `ubuntu-latest` costs $0.0033, but the same
+   If the job takes half as long, it costs the same on amd64, a little
+   less on Arm, and you wait half as long. This holds only when both runs last longer than the 60-second
+   minimum: a 100-second job on `ubuntu-latest` costs $0.0067, but the same
    job at 50 seconds on `ubuntu-26.04-4core` is billed for 60 seconds and
-   costs $0.004. If it takes as long as before, the job is not using the
+   costs $0.008. If it takes as long as before, the job is not using the
    cores; move it back.
 
 3. ## Name shared sizes with an executor
@@ -69,7 +70,7 @@ so a bigger machine costs more per minute and may cost less per job.
 
 4. ## Try Arm
 
-   Every size has an Arm template ending in `-arm`, at the same price.
+   Every size has an Arm template ending in `-arm`, at a lower price.
    Arm suits code that builds for Arm, or that has no x86-only
    dependencies:
 
@@ -96,14 +97,14 @@ so a bigger machine costs more per minute and may cost less per job.
 
 | `runs-on` | Arch | vCPU | Memory | Per minute |
 | --- | --- | --- | --- | --- |
-| `ubuntu-latest`, `ubuntu-26.04` | amd64 | 2 | 8 GiB | $0.002 |
-| `ubuntu-26.04-arm` | arm64 | 2 | 8 GiB | $0.002 |
-| `ubuntu-26.04-4core` | amd64 | 4 | 16 GiB | $0.004 |
-| `ubuntu-26.04-4core-arm` | arm64 | 4 | 16 GiB | $0.004 |
-| `ubuntu-26.04-8core` | amd64 | 8 | 32 GiB | $0.008 |
-| `ubuntu-26.04-8core-arm` | arm64 | 8 | 32 GiB | $0.008 |
-| `ubuntu-26.04-16core` | amd64 | 16 | 64 GiB | $0.016 |
-| `ubuntu-26.04-16core-arm` | arm64 | 16 | 64 GiB | $0.016 |
+| `ubuntu-latest`, `ubuntu-26.04` | amd64 | 2 | 8 GiB | $0.004 |
+| `ubuntu-26.04-arm` | arm64 | 2 | 8 GiB | $0.0035 |
+| `ubuntu-26.04-4core` | amd64 | 4 | 16 GiB | $0.008 |
+| `ubuntu-26.04-4core-arm` | arm64 | 4 | 16 GiB | $0.0065 |
+| `ubuntu-26.04-8core` | amd64 | 8 | 32 GiB | $0.016 |
+| `ubuntu-26.04-8core-arm` | arm64 | 8 | 32 GiB | $0.012 |
+| `ubuntu-26.04-16core` | amd64 | 16 | 64 GiB | $0.032 |
+| `ubuntu-26.04-16core-arm` | arm64 | 16 | 64 GiB | $0.023 |
 
 See [Runner templates and pricing](/docs/ci/reference/runners/).
 

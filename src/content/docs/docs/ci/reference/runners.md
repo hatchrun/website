@@ -11,21 +11,29 @@ cannot define your own.
 
 | `runs-on` | Arch | vCPU | Memory | Price per minute |
 | --- | --- | --- | --- | --- |
-| `ubuntu-latest`, `ubuntu-26.04` | amd64 | 2 | 8 GiB | $0.002 |
-| `ubuntu-26.04-arm` | arm64 | 2 | 8 GiB | $0.002 |
-| `ubuntu-26.04-4core` | amd64 | 4 | 16 GiB | $0.004 |
-| `ubuntu-26.04-4core-arm` | arm64 | 4 | 16 GiB | $0.004 |
-| `ubuntu-26.04-8core` | amd64 | 8 | 32 GiB | $0.008 |
-| `ubuntu-26.04-8core-arm` | arm64 | 8 | 32 GiB | $0.008 |
-| `ubuntu-26.04-16core` | amd64 | 16 | 64 GiB | $0.016 |
-| `ubuntu-26.04-16core-arm` | arm64 | 16 | 64 GiB | $0.016 |
+| `ubuntu-latest`, `ubuntu-26.04` | amd64 | 2 | 8 GiB | $0.004 |
+| `ubuntu-26.04-arm` | arm64 | 2 | 8 GiB | $0.0035 |
+| `ubuntu-26.04-4core` | amd64 | 4 | 16 GiB | $0.008 |
+| `ubuntu-26.04-4core-arm` | arm64 | 4 | 16 GiB | $0.0065 |
+| `ubuntu-26.04-8core` | amd64 | 8 | 32 GiB | $0.016 |
+| `ubuntu-26.04-8core-arm` | arm64 | 8 | 32 GiB | $0.012 |
+| `ubuntu-26.04-16core` | amd64 | 16 | 64 GiB | $0.032 |
+| `ubuntu-26.04-16core-arm` | arm64 | 16 | 64 GiB | $0.023 |
 
-- Price is $0.001 per vCPU per minute, the same on amd64 and arm64,
-  and includes the machine.
+- Price is $0.002 per vCPU per minute on amd64, a little less on
+  arm64, and includes the machine.
 - Jobs are billed per second, with a 60-second minimum per job attempt. There
   are no free minutes. See [Billing](/docs/ci/setup/billing/).
 - Memory is 4 GiB per vCPU.
 - `ubuntu-latest` and `ubuntu-26.04` are two names for one template.
+
+## Against GitHub Actions
+
+GitHub rounds each job up to the nearest whole minute. hatchrun bills
+per second with a 60-second minimum, and every template costs less per
+minute than GitHub's paid rate for the same size. See
+[Billing](/docs/ci/setup/billing/#how-this-compares-with-github-actions)
+for the rates.
 
 ## The machine
 
